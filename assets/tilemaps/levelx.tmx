@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="100" height="100" tilewidth="16" tileheight="16">
+ <tileset firstgid="1" name="dungeonTiles" tilewidth="16" tileheight="16">
+  <image source="../images/dungeonTiles.png" width="512" height="512"/>
+ </tileset>
+ <tileset firstgid="1025" source="../../../dungeonTiles.tsx"/>
+ <layer name="backgroundLayer" width="100" height="100">
+  <data encoding="base64" compression="zlib">
+   eJztwwEJAAAMBKHrX+OLDpZDwVVTVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVX/AcTg4Jk=
+  </data>
+ </layer>
+ <layer name="blockedLayer" width="100" height="100">
+  <data encoding="base64" compression="zlib">
+   eJztnFuO2zAMRe2iK2nSpc2+ir4W0nb6XXQJfa2jyocBj2BJJEXKFH0PQCSZWFRGZ2Q97MyyHPN+XZYPKT6m+LQWDgLqvCrEl+Tga4pvKZ7X8nH7eI3ojnuKNwfxKzn4neJPir/r8TH7uCPUQoNanqdG2db7Ej47y0PhtozxcQbfneWhENnHP2d5KET2MSMtH7fssQZ89BO5f4wch7WI7ENrHI48v/qxHj9aoDUOe5lf3QvPS3jrH1p4mV/Bx3ioPijARz/w4YvIPqLtX83uI9r+1ew+ou1fze7jZhiWn3kGH57abSYfGjH6b5LLmT68nYNGk37/d/nPzvKxNN6LzsMFfPig5OIBfNiwtflR25dcPIAPe/ZOan3jAXyModRXcuDDlvy81eujVb6Vu+UjspPS2NE6X9WcUJzWcrfae+9E4odSxuqeyUad1XbrmWNJnVCvn2utvWvBqU8DSnv1zHklTjTvZxiFhh9qW/WuCblOZvSRI/XBOTY/njPH4ji5qo9euHNe+LAFPspE9OEpuFDLaK6rZ+0fb5nHSNzAxxjuxMf8eQn46AM+fEHxceSmBHz0wekX8GEPp19Qxn/46IPbL+DDFvjwBXz4gvu54MMW7z64e+7UvKN9/CR+p9azD06+e5DrHxF8cFxsOeFDBuUeE46LLSd8yGj5kOaEDxlX98F9nRPVR+maovb3mOCDxtHeHfeaHrUe7uta/ZF9SN7jAh80vPpo1X/GfFeSEz5kWNxTDR9yqOtzbk5tH1pOJOOFRx/W+1et31lrTSPpD958bFCdaPvY58yDS4T+secsH6U6JFGrd4bxY48XH1rM7OOs8cOSmdaDOVf1USPq9UGPPihzhqjXB735oM7frrg+t6Tmg4L2etri/zTM5KMX7fPLDPuJnuGMvz35pC62nPDxkh4fPS62nPDxEqmPXhdbzhE+pPsl0r2vI0adr3oY6WMUpfaM7MPzOe5qPryPOfDRBj5owAe9vDQfB/igl5fm4wAf9PLSfBzgg15emo8DfNDLS/NxgA96eWk+DvBBLy/NxwE+6OWl+TiM+n4UfNDw/H01Kb0+ajmsgQ9eDmvgg5fDGvjg5bAGPnxxpo/terNFHNUHH76AD1/Ahy/gwxfw4YuZfNwQbuI/pGcmsQ==
+  </data>
+ </layer>
+ <objectgroup name="objectsLayer" width="0" height="0">
+  <object gid="1193" x="128" y="80" width="16" height="16">
+   <properties>
+    <property name="type" value="playerStart"/>
+   </properties>
+  </object>
+ </objectgroup>
+</map>
