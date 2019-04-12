@@ -15,30 +15,63 @@ TopDownGame.Menu = function(){// 开始场景
       //  bg.autoScroll(0, 200)
 
         // START 文字
-        var progressText2 = this.game.add.text(this.game.world.centerX, this.game.world.centerY-300, 'Menu', {
+        var Title = this.game.add.text(this.game.world.centerX, this.game.world.centerY-500, 'Revenge Menu Page', {
           font: '58px FC',
           align: 'center',
           fill: '#ffffff'
       })
-      progressText2.anchor = {
+      Title.anchor = {
           x: 0.5,
           y: 0.5
       }
-        var progressText2 = this.game.add.text(this.game.world.centerX, this.game.world.centerY, ' Tap to Start', {
+        var Levels = this.game.add.text(this.game.world.centerX, this.game.world.centerY, 'Levels', {
             font: '58px FC',
             align: 'center',
             fill: '#ffffff'
         })
-        progressText2.anchor = {
+        Levels.anchor = {
             x: 0.5,
             y: 0.5
         }
 
-        progressText2.inputEnabled = true // 开启输入事件
+        Levels.inputEnabled = true // 开启输入事件
 
-        progressText2.events.onInputDown.add(function() {
+        Levels.events.onInputDown.add(function() {
           this.game.state.start('Preload')
         }, this)
+
+        var Controls = this.game.add.text(this.game.world.centerX, this.game.world.centerY+100, 'Controls', {
+          font: '58px FC',
+          align: 'center',
+          fill: '#ffffff'
+      })
+      Controls.anchor = {
+          x: 0.5,
+          y: 0.5
+      }
+
+      Controls.inputEnabled = true // 开启输入事件
+
+      Controls.events.onInputDown.add(function() {
+        this.game.state.start('Preload')
+      }, this)
+
+      var Help = this.game.add.text(this.game.world.centerX, this.game.world.centerY+200, 'Help', {
+        font: '58px FC',
+        align: 'center',
+        fill: '#ffffff'
+    })
+    Help.anchor = {
+        x: 0.5,
+        y: 0.5
+    }
+
+    Help.inputEnabled = true // 开启输入事件
+
+    Help.events.onInputDown.add(function() {
+      this.game.state.start('Preload')
+    }, this)
+
     }
 
 };
