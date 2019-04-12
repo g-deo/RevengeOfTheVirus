@@ -70,6 +70,36 @@ TopDownGame.Menu = function(){// 开始场景
     Help.events.onInputDown.add(function() {
       this.game.state.start('Help')
     }, this)
+
+    var TestWin = this.game.add.text(this.game.world.centerX, this.game.world.centerY+300, 'Test win page', {
+      font: '58px FC',
+      align: 'center',
+      fill: '#ffffff'
+  })
+  TestWin.anchor = {
+      x: 0.5,
+      y: 0.5
+  }
+
+  TestWin.inputEnabled = true // 开启输入事件
+  TestWin.events.onInputDown.add(function() {
+    this.game.state.start('Win')
+  }, this)
+
+  var TestLost = this.game.add.text(this.game.world.centerX, this.game.world.centerY+400, 'Test lost page', {
+    font: '58px FC',
+    align: 'center',
+    fill: '#ffffff'
+})
+TestLost.anchor = {
+    x: 0.5,
+    y: 0.5
+}
+
+TestLost.inputEnabled = true // 开启输入事件
+TestLost.events.onInputDown.add(function() {
+  this.game.state.start('Lost')
+}, this)
   
     }
 

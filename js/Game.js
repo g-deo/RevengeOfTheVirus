@@ -5,6 +5,14 @@ TopDownGame.Game = function(){};
 
 TopDownGame.Game.prototype = {
   create: function() {
+
+
+
+    var bar = this.game.add.graphics();
+    bar.beginFill(0x000000, 0.2);
+    bar.drawRect(0, 100, 800, 100);
+
+
     this.map = this.game.add.tilemap('level1');
     this.viruses = new Array();
     this.mouseDown = false;
