@@ -37,7 +37,7 @@ TopDownGame.Menu = function(){// 开始场景
         Levels.inputEnabled = true // 开启输入事件
 
         Levels.events.onInputDown.add(function() {
-          this.game.state.start('Preload')
+          this.game.state.start('Levels')
         }, this)
 
         var Controls = this.game.add.text(this.game.world.centerX, this.game.world.centerY+100, 'Controls', {
