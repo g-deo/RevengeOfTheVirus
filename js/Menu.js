@@ -67,11 +67,10 @@ TopDownGame.Menu = function(){// 开始场景
     }
 
     Help.inputEnabled = true // 开启输入事件
-
     Help.events.onInputDown.add(function() {
       this.game.state.start('Preload')
     }, this)
-
+//tests 
     }
 
 };
