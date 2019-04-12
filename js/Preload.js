@@ -13,9 +13,8 @@ TopDownGame.Preload.prototype = {
 
     //load game assets
     
-    this.load.tilemap('level1', 'assets/tilemaps/levelx.json', null, Phaser.Tilemap.TILED_JSON);
+    this.load.tilemap('level1', 'assets/tilemaps/placeholder.json', null, Phaser.Tilemap.TILED_JSON);
     this.load.image('gameTiles', 'assets/images/dungeonTiles.png');
-    //this.load.image('player', 'assets/images/player.png');
     this.load.spritesheet('mantis', 'assets/images/praying_mantis.png', 128, 128, 4);
     
   },
