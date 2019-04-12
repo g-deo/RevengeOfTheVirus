@@ -8,9 +8,6 @@ TopDownGame.Game.prototype = {
 
 
 
-    var bar = this.game.add.graphics();
-    bar.beginFill(0x000000, 0.2);
-    bar.drawRect(0, 100, 800, 100);
 
 
     this.map = this.game.add.tilemap('level1');
@@ -24,6 +21,21 @@ TopDownGame.Game.prototype = {
     //create layer
     this.backgroundlayer = this.map.createLayer('backgroundLayer');
     this.objectLayer = this.map.createLayer('objectLayer');
+
+    
+    var text = "[Pause]";
+    var text2 = "[Help]";
+    var style = { font: "30px Arial", fill: "#ffffff", align: "center" };
+    var t = this.game.add.text(596, 0, text, style);
+    t.inputEnabled = true // 开启输入事件
+    t.events.onInputDown.add(function() {
+      this.game.state.start('Help')
+    }, this)
+    var t2 = this.game.add.text(620, 35, text2, style);
+    t2.inputEnabled = true // 开启输入事件
+    t2.events.onInputDown.add(function() {
+      this.game.state.start('Help')
+    }, this)
   },
 
  
