@@ -24,24 +24,30 @@ TopDownGame.Game.prototype = {
 
     
     var text = "[Pause]";
-    var text2 = "[Help]";
     var style = { font: "30px Arial", fill: "#ffffff", align: "center" };
     var t = this.game.add.text(596, 0, text, style);
+    
     t.inputEnabled = true // 开启输入事件
-    t.events.onInputDown.add(function() {
-      this.game.state.start('Help')
-    }, this)
-    var t2 = this.game.add.text(620, 35, text2, style);
-    t2.inputEnabled = true // 开启输入事件
-    t2.events.onInputDown.add(function() {
-      this.game.state.start('Help')
-    }, this)
+    t.events.onInputUp.add(function() { 
+      this.game.paused = true; 
+      var style = {fill : '#FFF'}; 
+      tx = this.game.add.text(this.game.width * 0.5, this.game.height * 0.5, "Game Paused", style); 
+      tx.anchor.set(0.5, 0.5); 
+  }, this); 
+  this.game.input.onDown.add(function() { 
+      if (this.game.paused) { 
+       this.game.paused = false; 
+       tx.destroy(); 
+      }  
+  }, this); 
+  t.fixedToCamera = true; 
+
   },
 
  
   update: function() {
 
-    if(this.game.input.activePointer.isDown && this.mouseDown == false){
+    if(this.game.input.activePointer.isDown && this.mouseDown == false ){
       var gameX = this.game.input.activePointer.positionDown.x + this.game.camera.x;
       var gameY = this.game.input.activePointer.positionDown.y + this.game.camera.y;
       this.viruses.unshift(this.game.add.sprite(gameX, gameY,'mantis'));
