@@ -53,7 +53,7 @@ TopDownGame.Menu = function(){// 开始场景
       Controls.inputEnabled = true // 开启输入事件
 
       Controls.events.onInputDown.add(function() {
-        this.game.state.start('Preload')
+        this.game.state.start('Controls')
       }, this)
 
       var Help = this.game.add.text(this.game.world.centerX, this.game.world.centerY+200, 'Help', {
@@ -68,9 +68,9 @@ TopDownGame.Menu = function(){// 开始场景
 
     Help.inputEnabled = true // 开启输入事件
     Help.events.onInputDown.add(function() {
-      this.game.state.start('Preload')
+      this.game.state.start('Help')
     }, this)
-//tests 
+  
     }
 
 };
