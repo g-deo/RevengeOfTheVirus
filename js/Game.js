@@ -5,9 +5,15 @@ TopDownGame.Game = function(){};
 
 TopDownGame.Game.prototype = {
   create: function() {
+
+    this.game.stage.backgroundColor = '#000000';
+    this.background = this.game.add.sprite(0,0,'gameTiles2');
+    this.background.x = this.game.world.centerX;
+    this.background.y = this.game.world.centerY;
+    this.background.anchor.set(0.5,0.5);
     
     this.game.physics.startSystem(Phaser.Physics.ARCADE);
-    this.map = this.game.add.tilemap('gameMap');
+ //   this.map = this.game.add.tilemap('gameMap');
     this.viruses = new Array();
     this.mouseDown = false;
     
@@ -25,30 +31,30 @@ TopDownGame.Game.prototype = {
     this.bullets.setAll('checkWorldBounds', true);
 
     //Initialized defender sprite
-    this.defender = this.game.add.sprite(100, 0,'defender');
+    this.defender = this.game.add.sprite(300,500,'defender');
     this.defender.anchor.set(0.5);
     this.game.physics.enable(this.defender, Phaser.Physics.ARCADE);
 
     //Created the shooting animation for defender
-    this.defender.animations.add('shoot',[0,1,2,3,4,5,6,7], 12, true);
+    var shoot =  this.defender.animations.add('shoot');
 
     //Creaded the idle animation for defender
-    this.defender.animations.add('idle',[8,9,10,11,12,13,14,15], 12, true);
+    var idle =  this.defender.animations.add('idle');
 
     //Created the dead animation for defender
-    this.defender.animations.add('dead',[16,17,18,19,20,21,22,23], 12, true);
+    var dead =  this.defender.animations.add('dead');
 
     //Setting the default animation to idle
-    this.defender.animatinos.play('idle');
+    this.defender.animations.play('idle');
 
     //Setting speed for the defender (can be changed for changing difficulty)
     this.defender.speed = 1;
     //the first parameter is the tileset name as specified in Tiled, the second is the key to the asset
-    this.map.addTilesetImage('gameTiles', 'gameTiles');
+  //  this.map.addTilesetImage('gameTiles', 'gameTiles');
 
     //create layer
-    this.backgroundlayer = this.map.createLayer('backgroundLayer');
-    this.objectLayer = this.map.createLayer('objectLayer');
+  //  this.backgroundlayer = this.map.createLayer('backgroundLayer');
+  //  this.objectLayer = this.map.createLayer('objectLayer');
     
     var text = "[Pause]";
     var style = { font: "30px Arial", fill: "#ffffff", align: "center" };
@@ -93,7 +99,7 @@ TopDownGame.Game.prototype = {
         this.viruses.splice(i,1);
       }
     }
-    getDefenderPos(this.viruses);
+   // getDefenderPos(this.viruses);
   },
   //Updates position of Defender AI 
   getDefenderPos: function(virusArray){
