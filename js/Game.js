@@ -14,6 +14,7 @@ TopDownGame.Game.prototype = {
     // Loaded in the bullet for the defender
     this.weapon = this.game.add.weapon(1,'defenderBullet');
     this.weapon.bulletAngleOffset = -90;
+    this.weapon.bulletSpeed = 400;
     this.weapon.trackSprite(this.defender, 14, 0);
 
     //Created the shooting animation for defender
