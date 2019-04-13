@@ -1,4 +1,4 @@
-TopDownGame.game = new Phaser.Game(700, 1200, Phaser.AUTO, '');
+TopDownGame.game = new Phaser.Game(1200, 1200, Phaser.AUTO, '');
 
 TopDownGame.game.state.add('Boot', TopDownGame.Boot);
 

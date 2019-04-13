@@ -5,19 +5,18 @@ TopDownGame.Game = function(){};
 
 TopDownGame.Game.prototype = {
   create: function() {
+
+    this.game.stage.backgroundColor = '#000000';
+    this.background = this.game.add.sprite(0,0,'gameTiles2');
+    this.background.x = this.game.world.centerX;
+    this.background.y = this.game.world.centerY;
+    this.background.anchor.set(0.5,0.5);
     
     this.game.physics.startSystem(Phaser.Physics.ARCADE);
-    this.map = this.game.add.tilemap('gameMap');
+ //   this.map = this.game.add.tilemap('gameMap');
     this.viruses = new Array();
     this.mouseDown = false;
     
-    //the first parameter is the tileset name as specified in Tiled, the second is the key to the asset
-    this.map.addTilesetImage('gameTiles', 'gameTiles');
-
-    //create layer
-    this.backgroundlayer = this.map.createLayer('backgroundLayer');
-    this.objectLayer = this.map.createLayer('objectLayer');
-
     // Loaded in the bullet for the defender
     this.bullets = {speed: 300};
     this.fireRate = 100;
@@ -32,25 +31,30 @@ TopDownGame.Game.prototype = {
     this.bullets.setAll('checkWorldBounds', true);
 
     //Initialized defender sprite
-    var result = this.findObjectsByType('defender', this.map, 'objectLayer');
-    this.defender = this.game.add.sprite(result[0].x, result[0].y, 'defender');
-    this.defender.anchor.set(0.5, 0.5);
-    this.defender.frame = 8;
+    this.defender = this.game.add.sprite(300,500,'defender');
+    this.defender.anchor.set(0.5);
     this.game.physics.enable(this.defender, Phaser.Physics.ARCADE);
+
     //Created the shooting animation for defender
-    var shoot = this.defender.animations.add('shoot', [0,1,2,3,4,5,6,7], 12, true);
+    var shoot =  this.defender.animations.add('shoot');
 
     //Creaded the idle animation for defender
-    var idle = this.defender.animations.add('idle',[8,9,10,11,12,13,14,15], 12, true);
+    var idle =  this.defender.animations.add('idle');
 
     //Created the dead animation for defender
-    var dead = this.defender.animations.add('dead',[16,17,18,19,20,21,22,23], 12, true);
+    var dead =  this.defender.animations.add('dead');
 
     //Setting the default animation to idle
-    this.defender.animations.play('idle',12,true);
+    this.defender.animations.play('idle');
 
     //Setting speed for the defender (can be changed for changing difficulty)
     this.defender.speed = 1;
+    //the first parameter is the tileset name as specified in Tiled, the second is the key to the asset
+  //  this.map.addTilesetImage('gameTiles', 'gameTiles');
+
+    //create layer
+  //  this.backgroundlayer = this.map.createLayer('backgroundLayer');
+  //  this.objectLayer = this.map.createLayer('objectLayer');
     
     var text = "[Pause]";
     var style = { font: "30px Arial", fill: "#ffffff", align: "center" };
@@ -95,14 +99,13 @@ TopDownGame.Game.prototype = {
         this.viruses.splice(i,1);
       }
     }
-    this.getDefenderPos(this.viruses);
+   // getDefenderPos(this.viruses);
   },
-  
   //Updates position of Defender AI 
   getDefenderPos: function(virusArray){
     var virus = virusArray[0];
     if(virus.x < this.defender.x){
-      this.defender.animations.play('idle',12,true);
+      this.defender.animatinos.play('idle');
       while(virus.x < this.defender.x){
         this.defender.body.velocity.x -= this.defender.speed;
       }
@@ -110,7 +113,7 @@ TopDownGame.Game.prototype = {
       this.defender.body.velocity.x = 0;
     }
     else if( virus.x > this.defender.x){
-      this.defender.animations.play('idle', 12, true);
+      this.defender.animatinos.play('idle');
       while(virus.x > this.defender.x){
         this.defender.body.velocity.x += this.defender.speed;
       }
@@ -118,7 +121,7 @@ TopDownGame.Game.prototype = {
       this.defender.body.velocity.x = 0;      
     }
     else{
-      this.defender.animations.play('shoot', 12, true);
+      this.defender.animatinos.play('shoot');
       this.defender.body.velocity.x = 0;
       //The defender shoots bullets when he reaches the virus's position
       this.fire();
@@ -136,19 +139,4 @@ TopDownGame.Game.prototype = {
         game.physics.arcade.moveToPointer(bullet, 300);
     }
   },
-
-  //find objects in a Tiled layer that containt a property called "type" equal to a certain value
-  findObjectsByType: function(type, map, layer) {
-    var result = new Array();
-    map.objects[layer].forEach(function(element){
-      if(element.properties.type === type) {
-        //Phaser uses top left, Tiled bottom left so we have to adjust
-        //also keep in mind that the cup images are a bit smaller than the tile which is 16x16
-        //so they might not be placed in the exact position as in Tiled
-        element.y -= map.tileHeight;
-        result.push(element);
-      }      
-    });
-    return result;
-    },
 }
