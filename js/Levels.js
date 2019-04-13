@@ -4,6 +4,11 @@ TopDownGame.Levels = function(){// 开始场景
     this.create = function() {    //loading screen will have a white background
       this.game.stage.backgroundColor = '#000000';
       
+      this.background = this.game.add.sprite(0,0,'gameTiles');
+      this.background.x = this.game.world.centerX;
+      this.background.y = this.game.world.centerY;
+      this.background.anchor.set(0.5,0.5);
+      
       //scaling options
       this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
       
@@ -37,7 +42,7 @@ TopDownGame.Levels = function(){// 开始场景
         Level1.inputEnabled = true // 开启输入事件
 
         Level1.events.onInputDown.add(function() {
-          this.game.state.start('Preload');
+          this.game.state.start('Game');
         }, this)
 
         var Level2 = this.game.add.text(this.game.world.centerX, this.game.world.centerY-100, 'Level2', {
@@ -53,7 +58,7 @@ TopDownGame.Levels = function(){// 开始场景
         Level2.inputEnabled = true // 开启输入事件
 
         Level2.events.onInputDown.add(function() {
-          this.game.state.start('Preload')
+          this.game.state.start('Game')
         }, this)
         var Level3 = this.game.add.text(this.game.world.centerX, this.game.world.centerY, 'Level3', {
             font: '58px FC',
@@ -68,7 +73,7 @@ TopDownGame.Levels = function(){// 开始场景
         Level3.inputEnabled = true // 开启输入事件
 
         Level3.events.onInputDown.add(function() {
-          this.game.state.start('Preload')
+          this.game.state.start('Game')
         }, this)
         var Level4 = this.game.add.text(this.game.world.centerX, this.game.world.centerY+100, 'Level4', {
             font: '58px FC',
@@ -83,7 +88,7 @@ TopDownGame.Levels = function(){// 开始场景
         Level4.inputEnabled = true // 开启输入事件
 
         Level4.events.onInputDown.add(function() {
-          this.game.state.start('Preload')
+          this.game.state.start('Game')
         }, this)
         var Level5 = this.game.add.text(this.game.world.centerX, this.game.world.centerY+200, 'Level5', {
             font: '58px FC',
@@ -98,7 +103,7 @@ TopDownGame.Levels = function(){// 开始场景
         Level5.inputEnabled = true // 开启输入事件
 
         Level5.events.onInputDown.add(function() {
-          this.game.state.start('Preload')
+          this.game.state.start('Game')
         }, this)
         var Level6 = this.game.add.text(this.game.world.centerX, this.game.world.centerY+300, 'Level6', {
             font: '58px FC',
@@ -113,7 +118,7 @@ TopDownGame.Levels = function(){// 开始场景
         Level6.inputEnabled = true // 开启输入事件
 
         Level6.events.onInputDown.add(function() {
-          this.game.state.start('Preload')
+          this.game.state.start('Game')
         }, this)
 
         var GoBack = this.game.add.text(this.game.world.centerX, this.game.world.centerY+450, 'Main Menu', {

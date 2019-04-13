@@ -5,20 +5,33 @@ TopDownGame.Game = function(){};
 
 TopDownGame.Game.prototype = {
   create: function() {
+    
+    this.game.physics.startSystem(Phaser.Physics.ARCADE);
     this.map = this.game.add.tilemap('gameMap');
     this.viruses = new Array();
     this.mouseDown = false;
-    //Initialized defender sprite
-    this.defender = this.game.add.sprite(100, 0,'defender');
     
     // Loaded in the bullet for the defender
-    this.weapon = this.game.add.weapon(1,'defenderBullet');
-    this.weapon.bulletAngleOffset = -90;
-    this.weapon.bulletSpeed = 400;
-    this.weapon.trackSprite(this.defender, 14, 0);
+    this.bullets = {speed: 300};
+    this.fireRate = 100;
+    this.nextFire = 0;
+    //Direction in y axis
+    this.bullets.direction = 1;
+    
+    this.bullets = this.game.add.group();
+    this.bullets.enableBody = true;
+    this.bullets.physicsBodyType = Phaser.Physics.ARCADE;
+    this.bullets.createMultiple(50, 'defenderBullet');
+    this.bullets.setAll('checkWorldBounds', true);
+
+    //Initialized defender sprite
+    this.defender = this.game.add.sprite(100, 0,'defender');
+    this.defender.anchor.set(0.5);
+    this.game.physics.enable(this.defender, Phaser.Physics.ARCADE);
 
     //Created the shooting animation for defender
     this.defender.animations.add('shoot',[0,1,2,3,4,5,6,7], 12, true);
+
     //Creaded the idle animation for defender
     this.defender.animations.add('idle',[8,9,10,11,12,13,14,15], 12, true);
 
@@ -105,7 +118,19 @@ TopDownGame.Game.prototype = {
       this.defender.animatinos.play('shoot');
       this.defender.body.velocity.x = 0;
       //The defender shoots bullets when he reaches the virus's position
-      this.weapon.fire;
+      this.fire();
     }
-  }
+  },
+  fire: function(){
+    if (this.game.time.now > nextFire && this.bullets.countDead() > 0)
+    {
+        nextFire = this.game.time.now + fireRate;
+
+        var bullet = this.bullets.getFirstDead();
+
+        bullet.reset(sprite.x - 8, sprite.y - 8);
+
+        game.physics.arcade.moveToPointer(bullet, 300);
+    }
+  },
 }

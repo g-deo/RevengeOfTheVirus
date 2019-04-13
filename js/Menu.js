@@ -2,10 +2,13 @@ var TopDownGame = TopDownGame || {};
 
 TopDownGame.Menu = function(){// 开始场景
     this.create = function() {    //loading screen will have a white background
-      
       this.game.stage.backgroundColor = '#000000';
-
-      //scaling options
+      this.background = this.game.add.sprite(0,0,'gameTiles');
+      this.background.x = this.game.world.centerX;
+      this.background.y = this.game.world.centerY;
+      this.background.anchor.set(0.5,0.5);
+      
+      //Scaling options
       this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
       
       //have the game centered horizontally
@@ -16,7 +19,7 @@ TopDownGame.Menu = function(){// 开始场景
       //  bg.autoScroll(0, 200)
 
         // START 文字
-        var Title = this.game.add.text(this.game.world.centerX, this.game.world.centerY-500, 'Revenge Menu Page', {
+        var Title = this.game.add.text(this.game.world.centerX, this.game.world.centerY-500, 'Main Menu', {
           font: '58px FC',
           align: 'center',
           fill: '#ffffff'

@@ -37,7 +37,7 @@ TopDownGame.Boot = function(){// 开始场景
         progressText.inputEnabled = true // 开启输入事件
 
         progressText.events.onInputDown.add(function() {
-          this.game.state.start('Menu')
+          this.game.state.start('Preload')
         }, this)
     }
 
