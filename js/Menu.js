@@ -2,8 +2,9 @@ var TopDownGame = TopDownGame || {};
 
 TopDownGame.Menu = function(){// 开始场景
     this.create = function() {    //loading screen will have a white background
+      
       this.game.stage.backgroundColor = '#000000';
-  
+
       //scaling options
       this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
       
@@ -53,7 +54,7 @@ TopDownGame.Menu = function(){// 开始场景
       Controls.inputEnabled = true // 开启输入事件
 
       Controls.events.onInputDown.add(function() {
-        this.game.state.start('Controls')
+        this.game.state.start('Preload')
       }, this)
 
       var Help = this.game.add.text(this.game.world.centerX, this.game.world.centerY+200, 'Help', {
@@ -68,39 +69,9 @@ TopDownGame.Menu = function(){// 开始场景
 
     Help.inputEnabled = true // 开启输入事件
     Help.events.onInputDown.add(function() {
-      this.game.state.start('Help')
+      this.game.state.start('Preload')
     }, this)
-
-    var TestWin = this.game.add.text(this.game.world.centerX, this.game.world.centerY+300, 'Test win page', {
-      font: '58px FC',
-      align: 'center',
-      fill: '#ffffff'
-  })
-  TestWin.anchor = {
-      x: 0.5,
-      y: 0.5
-  }
-
-  TestWin.inputEnabled = true // 开启输入事件
-  TestWin.events.onInputDown.add(function() {
-    this.game.state.start('Win')
-  }, this)
-
-  var TestLost = this.game.add.text(this.game.world.centerX, this.game.world.centerY+400, 'Test lost page', {
-    font: '58px FC',
-    align: 'center',
-    fill: '#ffffff'
-})
-TestLost.anchor = {
-    x: 0.5,
-    y: 0.5
-}
-
-TestLost.inputEnabled = true // 开启输入事件
-TestLost.events.onInputDown.add(function() {
-  this.game.state.start('Lost')
-}, this)
-  
+//tests 
     }
 
 };

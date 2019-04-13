@@ -3,7 +3,7 @@ var TopDownGame = TopDownGame || {};
 TopDownGame.Levels = function(){// 开始场景
     this.create = function() {    //loading screen will have a white background
       this.game.stage.backgroundColor = '#000000';
-  
+      
       //scaling options
       this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
       
@@ -37,7 +37,7 @@ TopDownGame.Levels = function(){// 开始场景
         Level1.inputEnabled = true // 开启输入事件
 
         Level1.events.onInputDown.add(function() {
-          this.game.state.start('Preload')
+          this.game.state.start('Game');
         }, this)
 
         var Level2 = this.game.add.text(this.game.world.centerX, this.game.world.centerY-100, 'Level2', {
@@ -115,34 +115,7 @@ TopDownGame.Levels = function(){// 开始场景
         Level6.events.onInputDown.add(function() {
           this.game.state.start('Preload')
         }, this)
-        var GoBack = this.game.add.text(this.game.world.centerX, this.game.world.centerY+500, 'Main Menu', {
-          font: '58px FC',
-          align: 'center',
-          fill: '#ffffff'
-      })
-      GoBack.anchor = {
-          x: 0.5,
-          y: 0.5
-      }
-    
-      GoBack.inputEnabled = true // 开启输入事件
-      GoBack.events.onInputDown.add(function() {
-        this.game.state.start('Menu')
-      }, this)
-      var GoHelp = this.game.add.text(this.game.world.centerX, this.game.world.centerY+600, 'Help', {
-        font: '58px FC',
-        align: 'center',
-        fill: '#ffffff'
-    })
-    GoHelp.anchor = {
-        x: 0.5,
-        y: 0.5
-    }
-    
-    GoHelp.inputEnabled = true // 开启输入事件
-    GoHelp.events.onInputDown.add(function() {
-      this.game.state.start('Help')
-    }, this)
+
     }
 
 };
