@@ -116,7 +116,34 @@ TopDownGame.Levels = function(){// 开始场景
           this.game.state.start('Preload')
         }, this)
 
+        var GoBack = this.game.add.text(this.game.world.centerX, this.game.world.centerY+450, 'Main Menu', {
+          font: '58px FC',
+          align: 'center',
+          fill: '#ffffff'
+      })
+      GoBack.anchor = {
+          x: 0.5,
+          y: 0.5
+      }
+    
+      GoBack.inputEnabled = true // 开启输入事件
+      GoBack.events.onInputDown.add(function() {
+        this.game.state.start('Menu')
+      }, this)
+      var GoHelp = this.game.add.text(this.game.world.centerX, this.game.world.centerY+550, 'Help', {
+        font: '58px FC',
+        align: 'center',
+        fill: '#ffffff'
+    })
+    GoHelp.anchor = {
+        x: 0.5,
+        y: 0.5
     }
-
+    
+    GoHelp.inputEnabled = true // 开启输入事件
+    GoHelp.events.onInputDown.add(function() {
+      this.game.state.start('Help')
+    }, this)
+  }
 };
 

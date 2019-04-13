@@ -36,6 +36,26 @@ TopDownGame.Game.prototype = {
     //create layer
     this.backgroundlayer = this.map.createLayer('backgroundLayer');
     this.objectLayer = this.map.createLayer('objectLayer');
+    
+    var text = "[Pause]";
+    var style = { font: "30px Arial", fill: "#ffffff", align: "center" };
+    var t = this.game.add.text(596, 0, text, style);
+    
+    t.inputEnabled = true // 开启输入事件
+    t.events.onInputUp.add(function() { 
+      this.game.paused = true; 
+      var style = {fill : '#FFF'}; 
+      tx = this.game.add.text(this.game.width * 0.5, this.game.height * 0.5, "Game Paused", style); 
+      tx.anchor.set(0.5, 0.5); 
+  }, this); 
+  this.game.input.onDown.add(function() { 
+      if (this.game.paused) { 
+       this.game.paused = false; 
+       tx.destroy(); 
+      }  
+  }, this); 
+  t.fixedToCamera = true; 
+
   },
 
  

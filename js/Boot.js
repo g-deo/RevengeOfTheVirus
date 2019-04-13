@@ -15,7 +15,7 @@ TopDownGame.Boot = function(){// 开始场景
       //  bg.autoScroll(0, 200)
 
         // START 文字
-        var progressText = this.game.add.text(this.game.world.centerX, this.game.world.centerY-300, 'Revenge of The Virus', {
+        var progressText = this.game.add.text(this.game.world.centerX, this.game.world.centerY-500, 'Revenge of The Virus', {
           font: '58px FC',
           align: 'center',
           fill: '#ffffff'
