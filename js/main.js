@@ -11,4 +11,4 @@ TopDownGame.game.state.add('Game', TopDownGame.Game);
 TopDownGame.game.state.add('Win', TopDownGame.Win);
 TopDownGame.game.state.add('Lost', TopDownGame.Lost);
 
-TopDownGame.game.state.start('Boot');
+TopDownGame.game.state.start('Preload');

@@ -20,6 +20,6 @@ TopDownGame.Preload.prototype = {
     this.load.setPreloadSprite(this.preloadBar);
   },
   create: function() {
-    this.state.start('Menu');
+    this.state.start('Boot');
   }
 };
