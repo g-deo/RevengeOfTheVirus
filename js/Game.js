@@ -6,7 +6,7 @@ TopDownGame.Game = function(){};
 TopDownGame.Game.prototype = {
   
   create: function() {
-    this.game.physics.startSystem(Phaser.Physics.P2JS);
+    this.game.physics.startSystem(Phaser.Physics.ARCADE);
     this.game.stage.backgroundColor = '#000000';
     this.background = this.game.add.sprite(0,0,'gameTiles2');
     this.background.x = this.game.world.centerX;
@@ -78,7 +78,7 @@ TopDownGame.Game.prototype = {
   }, this); 
   t.fixedToCamera = true; 
 
-  var currentvirus = "AIDS";
+  var currentvirus = "";
   var left = 10;
 
   var libtext = "Library Of Virus";
@@ -143,12 +143,27 @@ TopDownGame.Game.prototype = {
     if(this.game.input.activePointer.isDown && this.mouseDown == false){
       var gameX = this.game.input.activePointer.positionDown.x + this.game.camera.x;
       var gameY = this.game.input.activePointer.positionDown.y + this.game.camera.y;
-      this.viruses.unshift(this.game.add.sprite(gameX, gameY,'mantis'));
-      this.game.physics.arcade.enable(this.viruses[0]);
-      this.viruses[0].body.velocity.y= -50;
+     // this.viruses.unshift(this.game.add.sprite(gameX, gameY,'mantis'));
+      if (currentvirus = "virusA"){
+        var virus = this.game.add.sprite(gameX, gameY,'virusA');
+      }else if (currentvirus = "virusB"){
+        var virus = this.game.add.sprite(gameX, gameY,'virusB');
+      }else {
+        
+      }
+      
+      this.game.physics.arcade.enable(virus);
+      virus.body.collideWorldBounds = true;
+      virus.body.bounce.set(1);
+      virus.body.velocity.y= -50;
       this.mouseDown=true;
     }
+    
 
+
+    //  This boolean controls if the player should collide with the world bounds or not
+    
+    
     if(this.game.input.activePointer.isUp && this.mouseDown == true){
       this.mouseDown = false;
     }
