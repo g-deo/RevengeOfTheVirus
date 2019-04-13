@@ -5,15 +5,9 @@ TopDownGame.Game = function(){};
 
 TopDownGame.Game.prototype = {
   create: function() {
-
-    this.game.stage.backgroundColor = '#000000';
-    this.background = this.game.add.sprite(0,0,'gameTiles2');
-    this.background.x = this.game.world.centerX;
-    this.background.y = this.game.world.centerY;
-    this.background.anchor.set(0.5,0.5);
     
     this.game.physics.startSystem(Phaser.Physics.ARCADE);
- //   this.map = this.game.add.tilemap('gameMap');
+    this.map = this.game.add.tilemap('gameMap');
     this.viruses = new Array();
     this.mouseDown = false;
     
@@ -103,7 +97,7 @@ TopDownGame.Game.prototype = {
     }
     this.getDefenderPos(this.viruses);
   },
-
+  
   //Updates position of Defender AI 
   getDefenderPos: function(virusArray){
     var virus = virusArray[0];
