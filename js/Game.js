@@ -4,8 +4,9 @@ var TopDownGame = TopDownGame || {};
 TopDownGame.Game = function(){};
 
 TopDownGame.Game.prototype = {
+  
   create: function() {
-
+    this.game.physics.startSystem(Phaser.Physics.P2JS);
     this.game.stage.backgroundColor = '#000000';
     this.background = this.game.add.sprite(0,0,'gameTiles2');
     this.background.x = this.game.world.centerX;
@@ -17,6 +18,13 @@ TopDownGame.Game.prototype = {
     this.viruses = new Array();
     this.mouseDown = false;
     
+    //the first parameter is the tileset name as specified in Tiled, the second is the key to the asset
+    //this.map.addTilesetImage('gameTiles', 'gameTiles');
+
+    //create layer
+  //  this.backgroundlayer = this.map.createLayer('backgroundLayer');
+  //  this.objectLayer = this.map.createLayer('objectLayer');
+
     // Loaded in the bullet for the defender
     this.bullets = {speed: 300};
     this.fireRate = 100;
@@ -31,34 +39,29 @@ TopDownGame.Game.prototype = {
     this.bullets.setAll('checkWorldBounds', true);
 
     //Initialized defender sprite
-    this.defender = this.game.add.sprite(300,500,'defender');
-    this.defender.anchor.set(0.5);
+ //   var result = this.findObjectsByType('defender', this.map, 'objectLayer');
+    this.defender = this.game.add.sprite(100, 100, 'defender');
+    this.defender.anchor.set(0.5, 0.5);
+    this.defender.frame = 8;
     this.game.physics.enable(this.defender, Phaser.Physics.ARCADE);
-
     //Created the shooting animation for defender
-    var shoot =  this.defender.animations.add('shoot');
+    var shoot = this.defender.animations.add('shoot');
 
     //Creaded the idle animation for defender
-    var idle =  this.defender.animations.add('idle');
+    var idle = this.defender.animations.add('idle');
 
     //Created the dead animation for defender
-    var dead =  this.defender.animations.add('dead');
+    var dead = this.defender.animations.add('dead');
 
     //Setting the default animation to idle
     this.defender.animations.play('idle');
 
     //Setting speed for the defender (can be changed for changing difficulty)
     this.defender.speed = 1;
-    //the first parameter is the tileset name as specified in Tiled, the second is the key to the asset
-  //  this.map.addTilesetImage('gameTiles', 'gameTiles');
-
-    //create layer
-  //  this.backgroundlayer = this.map.createLayer('backgroundLayer');
-  //  this.objectLayer = this.map.createLayer('objectLayer');
     
     var text = "[Pause]";
     var style = { font: "30px Arial", fill: "#ffffff", align: "center" };
-    var t = this.game.add.text(596, 0, text, style);
+    var t = this.game.add.text(10, 10, text, style);
     
     t.inputEnabled = true // 开启输入事件
     t.events.onInputUp.add(function() { 
@@ -75,6 +78,63 @@ TopDownGame.Game.prototype = {
   }, this); 
   t.fixedToCamera = true; 
 
+  var currentvirus = "AIDS";
+  var left = 10;
+
+  var libtext = "Library Of Virus";
+  var libstyle = { font: "50px Arial", fill: "#ffffff", align: "center" };
+  var lib = this.game.add.text(800, 10, libtext, libstyle);
+
+  var virusA = this.game.add.image(800,100,'virusA');
+
+  var virusA_name = "Virus A";
+
+  var virusA_cost = 5;
+  var virusA_skill = "None";
+  var vAtext = virusA_name+"\nCost: "+virusA_cost+"\nSkill: "+virusA_skill;
+  var vAstyle = { font: "30px Arial", fill: "#ffffff", align: "left" };
+  var vA = this.game.add.text(900, 90, vAtext, vAstyle);
+
+  var virusB = this.game.add.image(800,250,'virusB');
+  var virusB_name = "Virus B";
+
+  var virusB_cost = 5;
+  var virusB_skill = "None";
+  var vBtext = virusB_name+"\nCost: "+virusB_cost+"\nSkill: "+virusB_skill;
+  var vBstyle = { font: "30px Arial", fill: "#ffffff", align: "left" };
+  var vB = this.game.add.text(900, 240, vBtext, vBstyle); 
+
+  
+  
+  var limittext = "Virus Left: "+left;
+  var limitstyle = { font: "30px Arial", fill: "#ffffff", align: "left" };
+  var limit = this.game.add.text(800, 1000, limittext, limitstyle); 
+  
+  
+  var currenttext = "Selected Virus: "+currentvirus;
+  var currentstyle = { font: "30px Arial", fill: "#ffffff", align: "left" };
+  var current = this.game.add.text(800, 1050, currenttext, currentstyle); 
+  virusA.inputEnabled = true;
+
+  virusA.events.onInputDown.add(function(){
+
+    currentvirus = virusA_name;
+    current.text =  "Selected Virus: "+currentvirus;
+  }
+  );
+  virusB.inputEnabled = true;
+
+  virusB.events.onInputDown.add(function(){
+
+    currentvirus = virusB_name;
+    current.text =  "Selected Virus: "+currentvirus;
+  }
+  );
+
+
+
+    
+  
   },
 
  
@@ -99,13 +159,14 @@ TopDownGame.Game.prototype = {
         this.viruses.splice(i,1);
       }
     }
-   // getDefenderPos(this.viruses);
+ //   this.getDefenderPos(this.viruses);
   },
+
   //Updates position of Defender AI 
   getDefenderPos: function(virusArray){
     var virus = virusArray[0];
     if(virus.x < this.defender.x){
-      this.defender.animatinos.play('idle');
+      this.defender.animations.play('idle',12,true);
       while(virus.x < this.defender.x){
         this.defender.body.velocity.x -= this.defender.speed;
       }
@@ -113,7 +174,7 @@ TopDownGame.Game.prototype = {
       this.defender.body.velocity.x = 0;
     }
     else if( virus.x > this.defender.x){
-      this.defender.animatinos.play('idle');
+      this.defender.animations.play('idle', 12, true);
       while(virus.x > this.defender.x){
         this.defender.body.velocity.x += this.defender.speed;
       }
@@ -121,7 +182,7 @@ TopDownGame.Game.prototype = {
       this.defender.body.velocity.x = 0;      
     }
     else{
-      this.defender.animatinos.play('shoot');
+      this.defender.animations.play('shoot', 12, true);
       this.defender.body.velocity.x = 0;
       //The defender shoots bullets when he reaches the virus's position
       this.fire();
@@ -139,4 +200,22 @@ TopDownGame.Game.prototype = {
         game.physics.arcade.moveToPointer(bullet, 300);
     }
   },
-}
+  // findObjectsByType: function(type, map, layer) {
+ //   var result = new Array();
+  //  map.objects[layer].forEach(function(element){
+ //     if(element.properties.type === type) {
+        //Phaser uses top left, Tiled bottom left so we have to adjust
+        //also keep in mind that the cup images are a bit smaller than the tile which is 16x16
+        //so they might not be placed in the exact position as in Tiled
+ //       element.y -= map.tileHeight;
+  //      result.push(element);
+ //     }      
+ //   });
+ //   return result;
+  //  },
+  
+  
+  }
+
+  //find objects in a Tiled layer that containt a property called "type" equal to a certain value
+

@@ -14,6 +14,10 @@ TopDownGame.Preload.prototype = {
     this.load.spritesheet('defender', 'assets/images/defender.png',128,128,3);
     this.load.image('defenderBullet', 'assets/images/defenderBullet.png');
     this.load.image('preloadbar', '/assets/images/preloader-bar.png');
+    
+    this.load.image('virusA', '/assets/images/virusA.png');
+    
+    this.load.image('virusB', '/assets/images/virusB.png');
     //show loading screen
 
     
