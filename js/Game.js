@@ -8,6 +8,13 @@ TopDownGame.Game.prototype = {
   
   create: function() {
 
+    //STATIC VARIABLES
+    this.startingLibSize = 2;
+    this.baseVirusSpeed = 100;
+    this.libX = 900;
+    this.libY = 140;
+    this.libOffset = 200;
+
     //
     this.game.bounds = 100;
     this.game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -92,44 +99,53 @@ TopDownGame.Game.prototype = {
  // }, this); 
 
 
-  this.currentvirus = "";
-  this.left = 2;
+  this.currentvirus = null;
+  this.left = this.startingLibSize;
+  allInfo = new Array();
 
-  var libtext = "Library Of Virus";
+  var libtext = "Library Of Viruses";
   
   var libstyle = { font: "50px Arial", fill: "#ffffff", align: "center" };
   var lib = this.game.add.text(800, 60, libtext, libstyle);
   
+  //ALL CREATED VIRUSES MUST FOLLOW THIS FORMAT
 
-  var virusA = this.game.add.image(800,150,'virusA');
+  var virusA = {
+    image: this.game.add.image(800,150,'virusA'),
+    name: "Virus A",
+    cost: 5,
+    skill: "Fast, but frail",
+    speed: this.baseVirusSpeed*1.5,
+    health: 1
+  }
+  virusA.text = this.createDisplay(virusA);
+  allInfo.push(virusA);
 
-  var virusA_name = "Virus A";
+  ///////////////////////////////////////////////////////////////////////
 
-  var virusA_cost = 5;
-  var virusA_skill = "None";
-  var vAtext = virusA_name+"\nCost: "+virusA_cost+"\nSkill: "+virusA_skill;
-  var vAstyle = { font: "30px Arial", fill: "#ffffff", align: "left" };
+  var virusB = {
+    image: this.game.add.image(800,360,'virusB'),
+    name: "Virus B",
+    cost: 10,
+    skill:"Tanky, but slow",
+    speed: this.baseVirusSpeed*0.5,
+    health: 10
+  }
+  virusB.text = this.createDisplay(virusB);
+  allInfo.push(virusB);
 
-  
-  var vA = this.game.add.text(900, 140, vAtext, vAstyle);
-  vA.disble = true;
-  var virusB = this.game.add.image(800,360,'virusB');
-  var virusB_name = "Virus B";
+  //END OF VIRUSES
 
-  var virusB_cost = 5;
-  var virusB_skill = "None";
-  var vBtext = virusB_name+"\nCost: "+virusB_cost+"\nSkill: "+virusB_skill;
-  var vBstyle = { font: "30px Arial", fill: "#ffffff", align: "left" };
-  var vB = this.game.add.text(900, 340, vBtext, vBstyle); 
-
-  
+  //set default
+  var defaultVirus = allInfo[0];
+  this.currentvirus = defaultVirus;
   
   var limittext = "Viruses Left: "+this.left;
   var limitstyle = { font: "30px Arial", fill: "#ffffff", align: "left" };
   this.limit = this.game.add.text(600, 10, limittext, limitstyle); 
   
   
-  var currenttext = "Selected Virus: "+this.currentvirus;
+  var currenttext = "Selected Virus: "+this.currentvirus.name;
   var currentstyle = { font: "30px Arial", fill: "#ffffff", align: "left" };
   var current = this.game.add.text(250, 10, currenttext, currentstyle); 
 
@@ -148,76 +164,79 @@ TopDownGame.Game.prototype = {
   var libclosestyle = { font: "30px Arial", fill: "#ffffff", align: "center" };
   var libclose = this.game.add.text(1050, 10, libclosetext, libclosestyle);
   
-  
-  lib.visible=false;
-  vB.visible=false;
-  vA.visible=false;
-  virusA.visible=false;
-  virusB.visible=false;
-  libclose.visible=false;
+  lib.visible = false;
+  for(var i = 0; i < allInfo.length; i++){
+    allInfo[i].text.visible = false;
+    allInfo[i].image.visible = false;
+  }
+
+  for(var i = 0; i < allInfo.length; i++){
+    allInfo[i].image.visible = false;
+    allInfo[i].text.visible = false;
+    libclose.visible = false;
+  }
+
+  function toggleText(){
+    lib.visible = !lib.visible;
+    for(var i = 0; i < allInfo.length; i++){
+      allInfo[i].text.visible = !allInfo[i].text.visible;
+      allInfo[i].image.visible = !allInfo[i].image.visible;
+    }
+    libclose.visible = !libclose.visible;
+  }
+  this.showing = false;
 
       
   lib2.inputEnabled = true;
   lib2.events.onInputDown.add(function(){ 
-      lib.visible=true;
-      vB.visible=true;
-      vA.visible=true;
-      virusA.visible=true;
-      virusB.visible=true;
-      libclose.visible=true;
-      
+    if(!this.showing) {
+      toggleText();
       lib2.visible=false;
-      
-      libclose.visible=true;
+      this.showing = true;
     }
-);
+  });
 
   libclose.inputEnabled = true;
   libclose.events.onInputDown.add(function(){
-    lib.visible=false;
-    vB.visible=false;
-    vA.visible=false;
-    virusA.visible=false;
-    virusB.visible=false;
-    lib2.visible=true;
-    libclose.visible=false;
-    
+    if(this.showing){
+      toggleText()
+      lib2.visible=true;
+      this.showing = false;   
+    }
+  });
+
+  for(var i = 0; i < allInfo.length; i++){
+    allInfo[i].image.inputEnabled = true;
+    allInfo[i].image.events.onInputDown.add(function(){
+      console.log(allInfo);
+      this.currentvirus = allInfo[i];
+      console.log(this.currentvirus);
+      current.text = "Selected Virus: " + this.currentvirus.name;
+    })
   }
-  );
-  virusA.inputEnabled = true;
 
-  virusA.events.onInputDown.add(function(){
-
-    this.currentvirus = virusA_name;
-    current.text =  "Selected Virus: "+this.currentvirus;
-  }
-  );
-  virusB.inputEnabled = true;
-
-  virusB.events.onInputDown.add(function(){
-    
-    this.currentvirus = virusB_name;
-    current.text =  "Selected Virus: "+this.currentvirus;
-  }
-  );
-
-   t.inputEnabled = true // 开启输入事件
- t.events.onInputUp.add(function() { 
-   this.game.paused = true; 
-   var style = {fill : '#FFF'}; 
-   tx = this.game.add.text(this.game.width * 0.5, this.game.height * 0.5, "Press Enter to continue", style); 
-   tx.anchor.set(0.5, 0.5); 
-}, this); 
-var key1 =this.game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
-key1.onDown.add(function(){
-  this.game.paused = false; 
-  tx.destroy();
-}, this);
+  t.inputEnabled = true // 开启输入事件
+  t.events.onInputUp.add(function() { 
+  this.game.paused = true; 
+  var style = {fill : '#FFF'}; 
+  tx = this.game.add.text(this.game.width * 0.5, this.game.height * 0.5, "Press Enter to continue", style); 
+  tx.anchor.set(0.5, 0.5); 
+  }, this); 
+  var key1 =this.game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
+  key1.onDown.add(function(){
+    this.game.paused = false; 
+    tx.destroy();
+  }, this);
   t.fixedToCamera = true; 
-
-
-  var virus;
   
+  },
+
+  createDisplay: function(virusA){
+    var vAtext = virusA.name + "\nCost: "+virusA.cost + "\nSkill: " + virusA.skill;
+    var vAstyle = { font: "30px Arial", fill: "#ffffff", align: "left" };
+    var vA = this.game.add.text(this.libX, this.libY, vAtext, vAstyle);
+    this.libY += this.libOffset;
+    return vA;
   },
 
  
@@ -252,15 +271,9 @@ key1.onDown.add(function(){
       
       this.limit.setText("Viruses Left: "+this.left);
       if(gameX < 1200-80 && gameY > 1000 && this.left > 0){
-        if (this.currentvirus = "virusA"){
-          var virus = this.game.add.sprite(gameX, gameY,'virusA');
-          this.game.physics.enable(virus, Phaser.Physics.ARCADE);
-          this.limit.setText("Viruses Left: "+this.left);
-        }else if (this.currentvirus = "virusB"){
-          var virus = this.game.add.sprite(gameX, gameY,'virusB');
-        }else {
-          
-        }
+        var virus = this.game.add.sprite(gameX,gameY,this.currentvirus.image.key);
+        this.game.physics.enable(virus,Phaser.Physics.ARCADE);
+        this.limit.setText("Viruses Left: " + this.left);
         this.bouncewall(virus);
         this.left = this.left-1;
         //alert(this.left);
