@@ -3,12 +3,13 @@ var TopDownGame = TopDownGame || {};
 //title screen
 TopDownGame.Game = function(){};
 
+var counter = 0;
 TopDownGame.Game.prototype = {
   
   create: function() {
 
     //
-
+    this.game.bounds = 100;
     this.game.physics.startSystem(Phaser.Physics.ARCADE);
     this.game.stage.backgroundColor = '#000000';
     this.background = this.game.add.sprite(0,0,'gameTiles');
@@ -16,8 +17,8 @@ TopDownGame.Game.prototype = {
     this.background.y = this.game.world.centerY;
     this.background.anchor.set(0.5,0.5);
 
-    this.libLine = new Phaser.Line(750, 0, 750, 1200);
-    this.spawnLine = new Phaser.Line(0, 1000, 750, 1000);
+    //this.libLine = new Phaser.Line(750, 0, 750, 1200);
+    this.spawnLine = new Phaser.Line(0, 1000, 1200, 1000);
     
     this.game.physics.startSystem(Phaser.Physics.ARCADE);
  //   this.map = this.game.add.tilemap('gameMap');
@@ -69,28 +70,37 @@ TopDownGame.Game.prototype = {
     var style = { font: "30px Arial", fill: "#ffffff", align: "center" };
     var t = this.game.add.text(10, 10, text, style);
     
-    t.inputEnabled = true // 开启输入事件
-    t.events.onInputUp.add(function() { 
-      this.game.paused = true; 
-      var style = {fill : '#FFF'}; 
-      tx = this.game.add.text(this.game.width * 0.5, this.game.height * 0.5, "Game Paused", style); 
-      tx.anchor.set(0.5, 0.5); 
-  }, this); 
-  this.game.input.onDown.add(function() { 
-      if (this.game.paused) { 
-       this.game.paused = false; 
-       tx.destroy(); 
-      }  
-  }, this); 
-  t.fixedToCamera = true; 
+    
+  
+
+    
+   
+ // var conttext = "continue";
+ //   var contstyle = { font: "30px Arial", fill: "#ffffff", align: "center" };
+ //   var cont = this.game.add.text(10, 200, conttext, contstyle);
+ //   cont.inputEnabled = true // 开启输入事件
+  //  cont.events.onInputDown.add(function() { 
+  //    if (this.game.paused){
+ //     this.game.paused = false;
+  //    tx.destroy(); 
+  //  }  }, this); 
+ // this.game.input.onDown.add(function() { 
+ //     if (this.game.paused) { 
+ //      this.game.paused = false; 
+  //     tx.destroy(); 
+ //     }  
+ // }, this); 
+
 
   var currentvirus = "";
   var left = 10;
   this.virusesLeft = left;
 
   var libtext = "Library Of Virus";
+  
   var libstyle = { font: "50px Arial", fill: "#ffffff", align: "center" };
   var lib = this.game.add.text(800, 10, libtext, libstyle);
+  
 
   var virusA = this.game.add.image(800,100,'virusA');
 
@@ -100,8 +110,10 @@ TopDownGame.Game.prototype = {
   var virusA_skill = "None";
   var vAtext = virusA_name+"\nCost: "+virusA_cost+"\nSkill: "+virusA_skill;
   var vAstyle = { font: "30px Arial", fill: "#ffffff", align: "left" };
-  var vA = this.game.add.text(900, 90, vAtext, vAstyle);
 
+  
+  var vA = this.game.add.text(900, 90, vAtext, vAstyle);
+  vA.disble = true;
   var virusB = this.game.add.image(800,250,'virusB');
   var virusB_name = "Virus B";
 
@@ -123,9 +135,50 @@ TopDownGame.Game.prototype = {
   var current = this.game.add.text(800, 1050, currenttext, currentstyle); 
 
 
- // this.wall=this.game.add.image(600,0,'wall');
+//  this.wall=this.game.add.image(600,0,'wall');
+  
+  //this.game.physics.arcade.enable(this.wall, Phaser.Physics.ARCADE);
+  lib.visible=false;
+  current.visible=false;
+  limit.visible=false;
+  vB.visible=false;
+  vA.visible=false;
+  virusA.visible=false;
+  virusB.visible=false;
 
-
+  var libtext2 = "[Lib open]";
+  var libstyle2 = { font: "30px Arial", fill: "#ffffff", align: "center" };
+  var lib2 = this.game.add.text(10, 100, libtext2, libstyle2);
+  
+    
+  lib2.inputEnabled = true;
+  lib2.events.onInputDown.add(function(){ 
+      lib.visible=true;
+      current.visible=true;
+      limit.visible=true;
+      vB.visible=true;
+      vA.visible=true;
+      virusA.visible=true;
+      virusB.visible=true;
+    }
+);
+  var libclosetext = "[Lib close]";
+  var libclosestyle = { font: "30px Arial", fill: "#ffffff", align: "center" };
+  var libclose = this.game.add.text(10, 50, libclosetext, libclosestyle);
+  
+    
+  libclose.inputEnabled = true;
+  libclose.events.onInputDown.add(function(){
+    lib.visible=false;
+    current.visible=false;
+    limit.visible=false;
+    vB.visible=false;
+    vA.visible=false;
+    virusA.visible=false;
+    virusB.visible=false;
+    libclose.
+  }
+  );
   virusA.inputEnabled = true;
 
   virusA.events.onInputDown.add(function(){
@@ -137,15 +190,28 @@ TopDownGame.Game.prototype = {
   virusB.inputEnabled = true;
 
   virusB.events.onInputDown.add(function(){
-
+    
     currentvirus = virusB_name;
     current.text =  "Selected Virus: "+currentvirus;
   }
   );
 
+   t.inputEnabled = true // 开启输入事件
+ t.events.onInputUp.add(function() { 
+   this.game.paused = true; 
+   var style = {fill : '#FFF'}; 
+   tx = this.game.add.text(this.game.width * 0.5, this.game.height * 0.5, "Press Enter to continue", style); 
+   tx.anchor.set(0.5, 0.5); 
+}, this); 
+var key1 =this.game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
+key1.onDown.add(function(){
+  this.game.paused = false; 
+  tx.destroy();
+}, this);
+  t.fixedToCamera = true; 
 
 
-    
+  var virus;
   
   },
 
@@ -174,16 +240,18 @@ TopDownGame.Game.prototype = {
         }
         this.targeting = false;
       }
-      if(gameX < this.libLine.start.x-80 && gameY > this.spawnLine.start.y){
+      if(gameX < 1200-80 && gameY > 1000){
         if (currentvirus = "virusA"){
           var virus = this.game.add.sprite(gameX, gameY,'virusA');
+          this.game.physics.enable(virus, Phaser.Physics.ARCADE);
+
         }else if (currentvirus = "virusB"){
           var virus = this.game.add.sprite(gameX, gameY,'virusB');
         }else {
           
         }
-        this.game.physics.arcade.enable(virus, Phaser.Physics.ARCADE);
-        
+        this.bouncewall(virus);
+        this.game.physics.arcade.collide(virus, this.wall);
         virus.body.immovable = false;
         virus.body.collideWorldBounds = true;
         virus.body.bounce.set(1,1);
@@ -195,7 +263,10 @@ TopDownGame.Game.prototype = {
       
     }
     
-    if(this.targeting && this.game.input.activePointer.x < this.libLine.start.x){
+
+
+
+    if(this.targeting && this.game.input.activePointer.x < 1200){
       var current = this.viruses[0];
       this.targetingLine = new Phaser.Line(current.x + current.width/2,current.y+current.height/2,this.game.input.activePointer.x,this.game.input.activePointer.y);      
     }
@@ -215,7 +286,16 @@ TopDownGame.Game.prototype = {
     }
     if(this.viruses.length >= 1){
     this.getDefenderPos(this.viruses);
+    
+    this.hide(this.virusA);
     }
+  },  bouncewall: function(virus){
+    if (virus.x>=750){
+      virus.body.velocity.x = 0;
+      virus.body.velocity.y = 0;
+    }
+
+  },hide: function(obj){
   },
 
 
@@ -259,7 +339,7 @@ TopDownGame.Game.prototype = {
       }
   },
   render: function(){
-    this.game.debug.geom(this.libLine);
+  //  this.game.debug.geom(this.libLine);
     this.game.debug.geom(this.spawnLine);
     if(this.targeting) this.game.debug.geom(this.targetingLine);
   }
