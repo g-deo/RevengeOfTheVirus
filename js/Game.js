@@ -32,7 +32,7 @@ TopDownGame.Game.prototype = {
 
     // Loaded in the bullet for the defender
     this.bullets = {speed: 300};
-    this.fireRate = 100;
+    this.fireRate = 450;
     this.nextFire = 0;
     //Direction in y axis
     this.bullets.direction = 1;
@@ -40,8 +40,6 @@ TopDownGame.Game.prototype = {
     this.bullets = this.game.add.group();
     this.bullets.enableBody = true;
     this.bullets.physicsBodyType = Phaser.Physics.ARCADE;
-    this.bullets.createMultiple(50, 'defenderBullet');
-    this.bullets.setAll('checkWorldBounds', true);
 
     //Initialized defender sprite
  //   var result = this.findObjectsByType('defender', this.map, 'objectLayer');
@@ -50,16 +48,16 @@ TopDownGame.Game.prototype = {
     this.defender.frame = 8;
     this.game.physics.enable(this.defender, Phaser.Physics.ARCADE);
     //Created the shooting animation for defender
-    var shoot = this.defender.animations.add('shoot');
+    var shoot = this.defender.animations.add('shoot', [0,1,2,3,4,5,6,7], 10, true);
 
     //Creaded the idle animation for defender
-    var idle = this.defender.animations.add('idle');
+    var idle = this.defender.animations.add('idle', [8,9,10,11,12,13,14,15], 10, true);
 
     //Created the dead animation for defender
-    var dead = this.defender.animations.add('dead');
+    var dead = this.defender.animations.add('dead', [16,17,18,19,20,21,22,23], 10, true);
 
     //Setting the default animation to idle
-    this.defender.animations.play('idle');
+    this.defender.frame = 8;
 
     //Setting speed for the defender (can be changed for changing difficulty)
     this.defender.speed = 1;
@@ -207,46 +205,49 @@ TopDownGame.Game.prototype = {
         this.viruses.splice(i,1);
       }
     }
- //   this.getDefenderPos(this.viruses);
+    if(this.viruses.length >= 1){
+    this.getDefenderPos(this.viruses);
+    }
   },
 
   //Updates position of Defender AI 
   getDefenderPos: function(virusArray){
     var virus = virusArray[0];
-    if(virus.x < this.defender.x){
-      this.defender.animations.play('idle',12,true);
-      while(virus.x < this.defender.x){
-        this.defender.body.velocity.x -= this.defender.speed;
-      }
-      //Stopping the defender
-      this.defender.body.velocity.x = 0;
+    //Equating defender.x to virus.x + defender.width/3 because they aren't
+    //lining up optherwise 
+    if(this.defender.x < (virus.x + this.defender.width/3)){
+      this.defender.x += this.defender.speed;
     }
-    else if( virus.x > this.defender.x){
-      this.defender.animations.play('idle', 12, true);
-      while(virus.x > this.defender.x){
-        this.defender.body.velocity.x += this.defender.speed;
-      }
-      //Stopping the defender
-      this.defender.body.velocity.x = 0;      
+    else if(this.defender.x > (virus.x + this.defender.width/3)){
+      this.defender.x -= this.defender.speed;
     }
-    else{
-      this.defender.animations.play('shoot', 12, true);
-      this.defender.body.velocity.x = 0;
+    //this.defender.animations.stop(null,true);
+    if (this.defender.x === Math.round(virus.x + this.defender.width/3)){
       //The defender shoots bullets when he reaches the virus's position
-      this.fire();
+      this.fire(virus);
     }
   },
-  fire: function(){
-    if (this.game.time.now > nextFire && this.bullets.countDead() > 0)
+  fire: function(virus){
+    this.defender.animations.play('shoot', 18, true);
+    //Loading the bullets
+    this.bullets.createMultiple(1, 'defenderBullet');
+    this.bullets.setAll('checkWorldBounds', true);
+    if (this.game.time.now > this.nextFire && this.bullets.countDead() > 0)
     {
-        nextFire = this.game.time.now + fireRate;
+        this.nextFire = this.game.time.now + this.fireRate;
 
         var bullet = this.bullets.getFirstDead();
 
-        bullet.reset(sprite.x - 8, sprite.y - 8);
+        bullet.reset(this.defender.x - 8, this.defender.y - 8);
 
-        game.physics.arcade.moveToPointer(bullet, 300);
+        this.game.physics.arcade.moveToObject(bullet, virus, 500);
     }
+    //If hit by a bullet destroy the virus
+    if(this.game.physics.arcade.overlap(this.bullets, virus)){
+        virus.destroy();
+        this.viruses[0] = null;
+        this.viruses.splice(0,1);
+      }
   },
   render: function(){
     this.game.debug.geom(this.libLine);
