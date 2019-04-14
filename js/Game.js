@@ -176,7 +176,7 @@ TopDownGame.Game.prototype = {
     vA.visible=false;
     virusA.visible=false;
     virusB.visible=false;
-    libclose.
+    
   }
   );
   virusA.inputEnabled = true;
