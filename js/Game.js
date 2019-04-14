@@ -99,10 +99,10 @@ TopDownGame.Game.prototype = {
   var libtext = "Library Of Virus";
   
   var libstyle = { font: "50px Arial", fill: "#ffffff", align: "center" };
-  var lib = this.game.add.text(800, 10, libtext, libstyle);
+  var lib = this.game.add.text(800, 60, libtext, libstyle);
   
 
-  var virusA = this.game.add.image(800,100,'virusA');
+  var virusA = this.game.add.image(800,150,'virusA');
 
   var virusA_name = "Virus A";
 
@@ -112,70 +112,77 @@ TopDownGame.Game.prototype = {
   var vAstyle = { font: "30px Arial", fill: "#ffffff", align: "left" };
 
   
-  var vA = this.game.add.text(900, 90, vAtext, vAstyle);
+  var vA = this.game.add.text(900, 140, vAtext, vAstyle);
   vA.disble = true;
-  var virusB = this.game.add.image(800,250,'virusB');
+  var virusB = this.game.add.image(800,360,'virusB');
   var virusB_name = "Virus B";
 
   var virusB_cost = 5;
   var virusB_skill = "None";
   var vBtext = virusB_name+"\nCost: "+virusB_cost+"\nSkill: "+virusB_skill;
   var vBstyle = { font: "30px Arial", fill: "#ffffff", align: "left" };
-  var vB = this.game.add.text(900, 240, vBtext, vBstyle); 
+  var vB = this.game.add.text(900, 340, vBtext, vBstyle); 
 
   
   
   var limittext = "Virus Left: "+left;
   var limitstyle = { font: "30px Arial", fill: "#ffffff", align: "left" };
-  var limit = this.game.add.text(800, 1000, limittext, limitstyle); 
+  var limit = this.game.add.text(600, 10, limittext, limitstyle); 
   
   
   var currenttext = "Selected Virus: "+currentvirus;
   var currentstyle = { font: "30px Arial", fill: "#ffffff", align: "left" };
-  var current = this.game.add.text(800, 1050, currenttext, currentstyle); 
+  var current = this.game.add.text(250, 10, currenttext, currentstyle); 
 
 
 //  this.wall=this.game.add.image(600,0,'wall');
   
   //this.game.physics.arcade.enable(this.wall, Phaser.Physics.ARCADE);
+
+
+  var libtext2 = "[Lib open]";
+  var libstyle2 = { font: "30px Arial", fill: "#ffffff", align: "center" };
+  var lib2 = this.game.add.text(1050, 10, libtext2, libstyle2);
+  
+
+  var libclosetext = "[Lib close]";
+  var libclosestyle = { font: "30px Arial", fill: "#ffffff", align: "center" };
+  var libclose = this.game.add.text(1050, 10, libclosetext, libclosestyle);
+  
+  
   lib.visible=false;
-  current.visible=false;
-  limit.visible=false;
   vB.visible=false;
   vA.visible=false;
   virusA.visible=false;
   virusB.visible=false;
+  libclose.visible=false;
 
-  var libtext2 = "[Lib open]";
-  var libstyle2 = { font: "30px Arial", fill: "#ffffff", align: "center" };
-  var lib2 = this.game.add.text(10, 100, libtext2, libstyle2);
-  
-    
+      
   lib2.inputEnabled = true;
   lib2.events.onInputDown.add(function(){ 
       lib.visible=true;
-      current.visible=true;
-      limit.visible=true;
       vB.visible=true;
       vA.visible=true;
       virusA.visible=true;
       virusB.visible=true;
+      libclose.visible=true;
+      
+      lib2.visible=false;
+      
+      libclose.visible=true;
     }
 );
-  var libclosetext = "[Lib close]";
-  var libclosestyle = { font: "30px Arial", fill: "#ffffff", align: "center" };
-  var libclose = this.game.add.text(10, 50, libclosetext, libclosestyle);
-  
-    
+
   libclose.inputEnabled = true;
   libclose.events.onInputDown.add(function(){
     lib.visible=false;
-    current.visible=false;
-    limit.visible=false;
     vB.visible=false;
     vA.visible=false;
     virusA.visible=false;
     virusB.visible=false;
+  
+    lib2.visible=true;
+    libclose.visible=false;
     
   }
   );
@@ -340,7 +347,7 @@ key1.onDown.add(function(){
   },
   render: function(){
   //  this.game.debug.geom(this.libLine);
-    this.game.debug.geom(this.spawnLine);
+  this.game.debug.geom(this.spawnLine);
     if(this.targeting) this.game.debug.geom(this.targetingLine);
   }
 

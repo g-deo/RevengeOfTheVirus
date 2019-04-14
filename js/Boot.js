@@ -20,9 +20,9 @@ TopDownGame.Boot = function(){// 开始场景
 
         // START 文字
         var progressText = this.game.add.text(this.game.world.centerX, this.game.world.centerY-500, 'Revenge of The Virus', {
-          font: '58px FC',
+          font: '100px FC',
           align: 'center',
-          fill: '#000000'
+          fill: '#ffffff'
       })
       progressText.anchor = {
           x: 0.5,
@@ -31,7 +31,7 @@ TopDownGame.Boot = function(){// 开始场景
         var progressText = this.game.add.text(this.game.world.centerX, this.game.world.centerY, ' TAP TO START', {
             font: '58px FC',
             align: 'center',
-            fill: '#000000'
+            fill: '#ffffff'
         })
         progressText.anchor = {
             x: 0.5,

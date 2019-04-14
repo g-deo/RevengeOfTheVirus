@@ -20,7 +20,7 @@ TopDownGame.Win = function(){// 开始场景
         // START 文字
 
       var text = this.game.add.text(this.game.world.centerX, this.game.world.centerY-100, 'Congratulations!', {
-        font: '70px FC',
+        font: '100px FC',
         
         fill: '#ffffff'
     })   
@@ -30,7 +30,7 @@ TopDownGame.Win = function(){// 开始场景
     }
 
     var text = this.game.add.text(this.game.world.centerX, this.game.world.centerY, 'You Win!',{
-        font: '70px FC',
+        font: '100px FC',
         
         fill: '#ffffff'
     })  

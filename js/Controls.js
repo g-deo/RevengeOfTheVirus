@@ -27,6 +27,16 @@ TopDownGame.Controls = function(){// 开始场景
           x: 0.5,
           y: 0.5
       }
+      var Title = this.game.add.text(this.game.world.centerX, this.game.world.centerY-100, 'Virus Generate:\nOpen library to choose virus. \nThen click once to determine position and click twice to dertermine direction.\n\nSkill Use:\nClick on virus to use its skill.\n\nWinning Condition:\n\nKill all white blood cells\n\nLose Condition:\nAll virus got killed.', {
+        font: '30px FC',
+        align: 'left',
+        fill: '#ffffff'
+    })
+    Title.anchor = {
+        x: 0.5,
+        y: 0.5
+    }
+
       var text = this.game.add.text(this.game.world.centerX-330, this.game.world.centerY-400, '', {
         font: '25px FC',
         

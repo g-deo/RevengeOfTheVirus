@@ -19,7 +19,7 @@ TopDownGame.Help = function(){// 开始场景
 
         // START 文字
         var Title = this.game.add.text(this.game.world.centerX, this.game.world.centerY-500, 'Help Page', {
-          font: '58px FC',
+          font: '100px FC',
           align: 'center',
           fill: '#ffffff'
       })
@@ -27,19 +27,19 @@ TopDownGame.Help = function(){// 开始场景
           x: 0.5,
           y: 0.5
       }
-      var text = this.game.add.text(this.game.world.centerX-330, this.game.world.centerY-400, 'BackGround: \nIt is year 2040. An unprecedented virus outbreak has \nplagued the nation, with its deadliest quality being its\nability to mimic the form of other viruses, and even \nbacteria, on the fly. As the central hivemind of these \nmutant viruses, the player commands them to shift form \nand move strategically in an attempt to overwhelm the \nimmune systems of the only remaining uninfected \nhumans.', {
-        font: '25px FC',
-        
+      var text = this.game.add.text(this.game.world.centerX-560, this.game.world.centerY-400, 'BackGround: \nIt is year 2040. An unprecedented virus outbreak has plagued the nation, with \nits deadliest quality being its ability to mimic the form of other viruses, and even \nbacteria, on the fly. As the central hivemind of these mutant viruses, the player \ncommands them to shift form and move strategically in an attempt to \noverwhelm the immune systems of the only remaining uninfected humans.', {
+        font: '30px FC',
+        align: 'left',
         fill: '#ffffff'
     })
-    var text = this.game.add.text(this.game.world.centerX-330, this.game.world.centerY+100, 'Developers: \n   William Chen\n   Gaorav Deo\n   Lijiqing Tang',{
-        font: '25px FC',
-        
+    var text = this.game.add.text(this.game.world.centerX-560, this.game.world.centerY+100, 'Developers: \nWilliam Chen\nGaorav Deo\nLijiqing Tang',{
+        font: '30px FC',
+        align: 'left',
         fill: '#ffffff'
     })
         var GoBack = this.game.add.text(this.game.world.centerX, this.game.world.centerY+500, 'Main Menu', {
           font: '58px FC',
-          align: 'center',
+          align: 'left',
           fill: '#ffffff'
       })
       GoBack.anchor = {
