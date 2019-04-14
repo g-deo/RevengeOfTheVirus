@@ -6,6 +6,9 @@ TopDownGame.Game = function(){};
 TopDownGame.Game.prototype = {
   
   create: function() {
+
+    //
+
     this.game.physics.startSystem(Phaser.Physics.ARCADE);
     this.game.stage.backgroundColor = '#000000';
     this.background = this.game.add.sprite(0,0,'gameTiles');
@@ -144,6 +147,20 @@ TopDownGame.Game.prototype = {
  
   update: function() {
     
+    this.game.physics.startSystem(Phaser.Physics.P2JS);
+
+    //  Turn on impact events for the world, without this we get no collision callbacks
+    this.game.physics.p2.setImpactEvents(true);
+
+    this.game.physics.p2.restitution = 0.8;
+
+    //  Create our collision groups. One for the player, one for the pandas
+    var pandaCollisionGroup = this.game.physics.p2.createCollisionGroup();
+    this.game.physics.p2.updateBoundsCollisionGroup();
+   // this.game.physics.arcade.enable(virus, Phaser.Physics.ARCADE);
+    var pandas = this.game.add.group();
+    pandas.enableBody = true;
+    pandas.physicsBodyType = Phaser.Physics.P2JS;
     //Creates an array of virus instances with virus[0] being the latest addition to the map
     if(this.game.input.activePointer.isDown && this.mouseDown == false){
       var gameX = this.game.input.activePointer.positionDown.x + this.game.camera.x;
@@ -166,19 +183,24 @@ TopDownGame.Game.prototype = {
         }
         this.targeting = false;
       }
+
+
+
       if(gameX < this.libLine.start.x-80 && gameY > this.spawnLine.start.y){
         if (currentvirus = "virusA"){
-          var virus = this.game.add.sprite(gameX, gameY,'virusA');
+          var virus = pandas.create(gameX, gameY, 'virusB');
+          virus.body.setCollisionGroup(pandaCollisionGroup);
+          virus.body.collides([pandaCollisionGroup]);
         }else if (currentvirus = "virusB"){
           var virus = this.game.add.sprite(gameX, gameY,'virusB');
         }else {
           
         }
-        this.game.physics.arcade.enable(virus, Phaser.Physics.ARCADE);
-        
+
+
         virus.body.immovable = false;
         virus.body.collideWorldBounds = true;
-        virus.body.bounce.set(1,1);
+      //  virus.body.bounce.set(1,1);
         //virus.body.velocity.y= -50;
         this.mouseDown=true;
         this.renderingLine = true;
