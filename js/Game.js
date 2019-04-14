@@ -19,7 +19,9 @@ TopDownGame.Game.prototype = {
     this.game.physics.startSystem(Phaser.Physics.ARCADE);
  //   this.map = this.game.add.tilemap('gameMap');
     this.viruses = new Array();
+
     this.mouseDown = false;
+    this.targeting = false;
     
     //the first parameter is the tileset name as specified in Tiled, the second is the key to the asset
     //this.map.addTilesetImage('gameTiles', 'gameTiles');
@@ -148,6 +150,24 @@ TopDownGame.Game.prototype = {
     if(this.game.input.activePointer.isDown && this.mouseDown == false){
       var gameX = this.game.input.activePointer.positionDown.x + this.game.camera.x;
       var gameY = this.game.input.activePointer.positionDown.y + this.game.camera.y;
+      if(this.targeting){
+        var difX = this.targetingLine.end.x - this.targetingLine.start.x;
+        var difY = this.targetingLine.end.y - this.targetingLine.start.y;
+        if(difX == 0) {
+          if(difY < 0) this.viruses[0].body.velocity.y = -100;
+          if(difY > 0) this.viruses[0].body.velocity.y = 100;
+        }
+        else if(difY == 0){
+          if(difY < 0) this.viruses[0].body.velocity.y = -100;
+          if(difY > 0) this.viruses[0].body.velocity.y = 100;
+        }
+        else{
+          var pythag = Math.sqrt(Math.pow(difX,2) + Math.pow(difY,2));
+          this.viruses[0].body.velocity.y = difY/pythag*100;
+          this.viruses[0].body.velocity.x = difX/pythag*100;
+        }
+        this.targeting = false;
+      }
       if(gameX < this.libLine.start.x-80 && gameY > this.spawnLine.start.y){
         if (currentvirus = "virusA"){
           var virus = this.game.add.sprite(gameX, gameY,'virusA');
@@ -161,19 +181,24 @@ TopDownGame.Game.prototype = {
         virus.body.immovable = false;
         virus.body.collideWorldBounds = true;
         virus.body.bounce.set(1,1);
-        virus.body.velocity.y= -50;
+        //virus.body.velocity.y= -50;
         this.mouseDown=true;
+        this.renderingLine = true;
         this.viruses.unshift(virus);
       }
       
     }
     
-
+    if(this.targeting && this.game.input.activePointer.x < this.libLine.start.x){
+      var current = this.viruses[0];
+      this.targetingLine = new Phaser.Line(current.x + current.width/2,current.y+current.height/2,this.game.input.activePointer.x,this.game.input.activePointer.y);      
+    }
 
     //  This boolean controls if the player should collide with the world bounds or not
     
     if(this.game.input.activePointer.isUp && this.mouseDown == true){
       this.mouseDown = false;
+      this.targeting = true;
     }
 
     for(var i = 0; i < this.viruses.length; i++){
@@ -226,6 +251,7 @@ TopDownGame.Game.prototype = {
   render: function(){
     this.game.debug.geom(this.libLine);
     this.game.debug.geom(this.spawnLine);
+    if(this.targeting) this.game.debug.geom(this.targetingLine);
   }
 
   // findObjectsByType: function(type, map, layer) {
