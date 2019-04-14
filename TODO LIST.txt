@@ -1,0 +1,9 @@
+COLLISION:
+Make viruses collide WITH EACH OTHER
+Make viruses collide WITH THE LIBRARY WALL (not the actual wall)
+
+VIRUS LIBRARY:
+ON CLICK, the current virus should CHANGE TO THE SELECTED
+Give each virus some JS properties (i.e. SPEED so we can change them dynamically)
+	IDEALLY change to a uniform JSON format which we can read, but if no time its fine
+
