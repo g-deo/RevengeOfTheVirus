@@ -21,7 +21,7 @@ TopDownGame.Levels = function(){// 开始场景
 
         // START 文字
         var Title = this.game.add.text(this.game.world.centerX, this.game.world.centerY-500, 'Level Selecting Page', {
-          font: '58px FC',
+          font: '100px FC',
           align: 'center',
           fill: '#ffffff'
       })

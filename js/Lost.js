@@ -20,7 +20,7 @@ TopDownGame.Lost = function(){// 开始场景
         // START 文字
 
       var text = this.game.add.text(this.game.world.centerX, this.game.world.centerY-100, 'You Lost.', {
-        font: '70px FC',
+        font: '100px FC',
         
         fill: '#ffffff'
     })   
@@ -30,7 +30,7 @@ TopDownGame.Lost = function(){// 开始场景
     }
 
     var text = this.game.add.text(this.game.world.centerX, this.game.world.centerY, 'Try again!',{
-        font: '70px FC',
+        font: '100px FC',
         
         fill: '#ffffff'
     })  

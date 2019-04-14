@@ -20,7 +20,7 @@ TopDownGame.Menu = function(){// 开始场景
 
         // START 文字
         var Title = this.game.add.text(this.game.world.centerX, this.game.world.centerY-500, 'Main Menu', {
-          font: '58px FC',
+          font: '100px FC',
           align: 'center',
           fill: '#ffffff'
       })
