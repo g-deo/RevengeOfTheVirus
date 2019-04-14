@@ -93,8 +93,7 @@ TopDownGame.Game.prototype = {
 
 
   var currentvirus = "";
-  var left = 10;
-  this.virusesLeft = left;
+  this.left = 1;
 
   var libtext = "Library Of Virus";
   
@@ -125,9 +124,9 @@ TopDownGame.Game.prototype = {
 
   
   
-  var limittext = "Virus Left: "+left;
+  limittext = "Viruses Left: "+this.left;
   var limitstyle = { font: "30px Arial", fill: "#ffffff", align: "left" };
-  var limit = this.game.add.text(800, 1000, limittext, limitstyle); 
+  limit = this.game.add.text(800, 1000, limittext, limitstyle); 
   
   
   var currenttext = "Selected Virus: "+currentvirus;
@@ -217,6 +216,10 @@ key1.onDown.add(function(){
 
  
   update: function() {
+
+    if(this.viruses.length == 0 && this.left == 0){
+      this.game.state.start('Lost')
+    }
     
     //Creates an array of virus instances with virus[0] being the latest addition to the map
     if(this.game.input.activePointer.isDown && this.mouseDown == false){
@@ -240,17 +243,19 @@ key1.onDown.add(function(){
         }
         this.targeting = false;
       }
-      if(gameX < 1200-80 && gameY > 1000){
-        if (currentvirus = "virusB"){
+      if(gameX < 1200-80 && gameY > 1000 && this.left > 0){
+        if (currentvirus = "virusA"){
           var virus = this.game.add.sprite(gameX, gameY,'virusA');
           this.game.physics.enable(virus, Phaser.Physics.ARCADE);
 
-        }else if (currentvirus = "virusA"){
+        }else if (currentvirus = "virusB"){
           var virus = this.game.add.sprite(gameX, gameY,'virusB');
         }else {
           
         }
         this.bouncewall(virus);
+        this.left = this.left-1;
+        //alert(this.left);
         this.game.physics.arcade.collide(virus, this.wall);
         virus.body.immovable = false;
         virus.body.collideWorldBounds = true;
@@ -266,7 +271,7 @@ key1.onDown.add(function(){
 
 
 
-    if(this.targeting && this.game.input.activePointer.x < 1200){
+    if(this.targeting && this.game.input.activePointer.x < 1200 && this.viruses.length > 0){
       var current = this.viruses[0];
       this.targetingLine = new Phaser.Line(current.x + current.width/2,current.y+current.height/2,this.game.input.activePointer.x,this.game.input.activePointer.y);      
     }
