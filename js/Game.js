@@ -92,8 +92,8 @@ TopDownGame.Game.prototype = {
  // }, this); 
 
 
-  var currentvirus = "";
-  this.left = 1;
+  this.currentvirus = "";
+  this.left = 2;
 
   var libtext = "Library Of Virus";
   
@@ -124,12 +124,12 @@ TopDownGame.Game.prototype = {
 
   
   
-  limittext = "Viruses Left: "+this.left;
+  var limittext = "Viruses Left: "+this.left;
   var limitstyle = { font: "30px Arial", fill: "#ffffff", align: "left" };
-  var limit = this.game.add.text(600, 10, limittext, limitstyle); 
+  this.limit = this.game.add.text(600, 10, limittext, limitstyle); 
   
   
-  var currenttext = "Selected Virus: "+currentvirus;
+  var currenttext = "Selected Virus: "+this.currentvirus;
   var currentstyle = { font: "30px Arial", fill: "#ffffff", align: "left" };
   var current = this.game.add.text(250, 10, currenttext, currentstyle); 
 
@@ -179,7 +179,6 @@ TopDownGame.Game.prototype = {
     vA.visible=false;
     virusA.visible=false;
     virusB.visible=false;
-  
     lib2.visible=true;
     libclose.visible=false;
     
@@ -189,16 +188,16 @@ TopDownGame.Game.prototype = {
 
   virusA.events.onInputDown.add(function(){
 
-    currentvirus = virusA_name;
-    current.text =  "Selected Virus: "+currentvirus;
+    this.currentvirus = virusA_name;
+    current.text =  "Selected Virus: "+this.currentvirus;
   }
   );
   virusB.inputEnabled = true;
 
   virusB.events.onInputDown.add(function(){
     
-    currentvirus = virusB_name;
-    current.text =  "Selected Virus: "+currentvirus;
+    this.currentvirus = virusB_name;
+    current.text =  "Selected Virus: "+this.currentvirus;
   }
   );
 
@@ -250,12 +249,14 @@ key1.onDown.add(function(){
         }
         this.targeting = false;
       }
+      
+      this.limit.setText("Viruses Left: "+this.left);
       if(gameX < 1200-80 && gameY > 1000 && this.left > 0){
-        if (currentvirus = "virusA"){
+        if (this.currentvirus = "virusA"){
           var virus = this.game.add.sprite(gameX, gameY,'virusA');
           this.game.physics.enable(virus, Phaser.Physics.ARCADE);
-
-        }else if (currentvirus = "virusB"){
+          this.limit.setText("Viruses Left: "+this.left);
+        }else if (this.currentvirus = "virusB"){
           var virus = this.game.add.sprite(gameX, gameY,'virusB');
         }else {
           
