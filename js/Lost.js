@@ -1,6 +1,6 @@
 var TopDownGame = TopDownGame || {};
 
-TopDownGame.Win = function(){// 开始场景
+TopDownGame.Lost = function(){// 开始场景
     this.create = function() {    //loading screen will have a white background
       this.game.stage.backgroundColor = '#000000';
       this.background = this.game.add.sprite(0,0,'gameTiles');
@@ -19,7 +19,7 @@ TopDownGame.Win = function(){// 开始场景
 
         // START 文字
 
-      var text = this.game.add.text(this.game.world.centerX, this.game.world.centerY-100, 'Congratulations!', {
+      var text = this.game.add.text(this.game.world.centerX, this.game.world.centerY-100, 'You Lost.', {
         font: '70px FC',
         
         fill: '#ffffff'
@@ -29,7 +29,7 @@ TopDownGame.Win = function(){// 开始场景
         y: 0.5
     }
 
-    var text = this.game.add.text(this.game.world.centerX, this.game.world.centerY, 'You Win!',{
+    var text = this.game.add.text(this.game.world.centerX, this.game.world.centerY, 'Try again!',{
         font: '70px FC',
         
         fill: '#ffffff'

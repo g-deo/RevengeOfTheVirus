@@ -241,11 +241,11 @@ key1.onDown.add(function(){
         this.targeting = false;
       }
       if(gameX < 1200-80 && gameY > 1000){
-        if (currentvirus = "virusA"){
+        if (currentvirus = "virusB"){
           var virus = this.game.add.sprite(gameX, gameY,'virusA');
           this.game.physics.enable(virus, Phaser.Physics.ARCADE);
 
-        }else if (currentvirus = "virusB"){
+        }else if (currentvirus = "virusA"){
           var virus = this.game.add.sprite(gameX, gameY,'virusB');
         }else {
           

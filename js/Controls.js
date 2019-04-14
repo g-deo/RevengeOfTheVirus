@@ -1,12 +1,12 @@
 var TopDownGame = TopDownGame || {};
 
-TopDownGame.Win = function(){// 开始场景
+TopDownGame.Controls = function(){// 开始场景
     this.create = function() {    //loading screen will have a white background
       this.game.stage.backgroundColor = '#000000';
       this.background = this.game.add.sprite(0,0,'gameTiles');
       this.background.x = this.game.world.centerX;
       this.background.y = this.game.world.centerY;
-      this.background.anchor.set(0.5,0.5);
+      this.background.anchor.set(0.5,0.5);  
       //scaling options
       this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
       
@@ -18,26 +18,25 @@ TopDownGame.Win = function(){// 开始场景
       //  bg.autoScroll(0, 200)
 
         // START 文字
-
-      var text = this.game.add.text(this.game.world.centerX, this.game.world.centerY-100, 'Congratulations!', {
-        font: '70px FC',
+        var Title = this.game.add.text(this.game.world.centerX, this.game.world.centerY-500, 'Control Page', {
+          font: '58px FC',
+          align: 'center',
+          fill: '#ffffff'
+      })
+      Title.anchor = {
+          x: 0.5,
+          y: 0.5
+      }
+      var text = this.game.add.text(this.game.world.centerX-330, this.game.world.centerY-400, '', {
+        font: '25px FC',
         
         fill: '#ffffff'
-    })   
-    text.anchor = {
-        x: 0.5,
-        y: 0.5
-    }
-
-    var text = this.game.add.text(this.game.world.centerX, this.game.world.centerY, 'You Win!',{
-        font: '70px FC',
+    })
+    var text = this.game.add.text(this.game.world.centerX-330, this.game.world.centerY+100, '',{
+        font: '25px FC',
         
         fill: '#ffffff'
-    })  
-    text.anchor = {
-        x: 0.5,
-        y: 0.5
-    }
+    })
         var GoBack = this.game.add.text(this.game.world.centerX, this.game.world.centerY+500, 'Main Menu', {
           font: '58px FC',
           align: 'center',
