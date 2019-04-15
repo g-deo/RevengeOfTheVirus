@@ -58,7 +58,7 @@ TopDownGame.Game.prototype = {
     this.game.physics.enable(this.defender, Phaser.Physics.ARCADE);
     //Created the shooting animation for defender
     var shoot = this.defender.animations.add('shoot', [0,1,2,3,4,5,6,7], 10, true);
-
+    
     //Creaded the idle animation for defender
     var idle = this.defender.animations.add('idle', [8,9,10,11,12,13,14,15], 10, true);
 
@@ -112,6 +112,7 @@ TopDownGame.Game.prototype = {
   //ALL CREATED VIRUSES MUST FOLLOW THIS FORMAT
 
   var virusA = {
+    spritesheet: 'virusA_sprite',
     image: this.game.add.image(800,150,'virusA'),
     name: "Virus A",
     cost: 5,
@@ -129,7 +130,8 @@ TopDownGame.Game.prototype = {
 
   ///////////////////////////////////////////////////////////////////////
 
-  var virusB = {
+  var virusB = { 
+    spritesheet:'virusB_sprite',
     image: this.game.add.image(800,360,'virusB'),
     name: "Virus B",
     cost: 10,
@@ -282,7 +284,9 @@ TopDownGame.Game.prototype = {
       this.limit.setText("Viruses Left: "+this.left);
       if(gameX < 1200-80 && gameY > 1000 && this.left > 0 &&  this.left-this.currentvirus.cost>=0){
         //console.log(this.currentvirus);
-        var virus = this.game.add.sprite(gameX,gameY,this.currentvirus.image.key);
+        var virus = this.game.add.sprite(gameX,gameY,this.currentvirus.spritesheet);
+        var virusmove = virus.animations.add('move', [0,1,2,3], 10, true);
+        virus.animations.play('move', 18, true);
         this.game.physics.enable(virus,Phaser.Physics.ARCADE);
         this.limit.setText("Viruses Left: " + this.left);
         this.bouncewall(virus);
