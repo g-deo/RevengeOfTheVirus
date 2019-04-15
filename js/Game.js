@@ -45,9 +45,7 @@ TopDownGame.Game.prototype = {
     this.bullets = {speed: 300};
     this.fireRate = 450;
     this.nextFire = 0;
-    //Direction in y axis
-    this.bullets.direction = 1;
-    
+   
     this.bullets = this.game.add.group();
     this.bullets.enableBody = true;
     this.bullets.physicsBodyType = Phaser.Physics.ARCADE;
@@ -72,7 +70,10 @@ TopDownGame.Game.prototype = {
 
     //Setting speed for the defender (can be changed for changing difficulty)
     this.defender.speed = 1;
-    
+
+    //Setting the HP of the defender
+    this.defender.hp = 100;
+
     var text = "[Pause]";
     var style = { font: "30px Arial", fill: "#ffffff", align: "center" };
     var t = this.game.add.text(10, 10, text, style);
@@ -243,7 +244,7 @@ TopDownGame.Game.prototype = {
   update: function() {
 
     if(this.viruses.length == 0 && this.left == 0){
-      this.game.state.start('Lost')
+      this.game.state.start('Lost');
     }
     
     //Creates an array of virus instances with virus[0] being the latest addition to the map
@@ -312,9 +313,9 @@ TopDownGame.Game.prototype = {
       }
     }
     if(this.viruses.length >= 1){
-    this.getDefenderPos(this.viruses);
+      this.ai(this.viruses);
     
-    this.hide(this.virusA);
+      this.hide(this.virusA);
     }
   },  bouncewall: function(virus){
     if (virus.x>=750){
@@ -326,8 +327,8 @@ TopDownGame.Game.prototype = {
   },
 
 
-  //Updates position of Defender AI 
-  getDefenderPos: function(virusArray){
+  //Updates the Defender AI
+  ai: function(virusArray){
     var virus = virusArray[0];
     //Equating defender.x to virus.x + defender.width/3 because they aren't
     //lining up optherwise 
@@ -337,10 +338,26 @@ TopDownGame.Game.prototype = {
     else if(this.defender.x > (virus.x + this.defender.width/3)){
       this.defender.x -= this.defender.speed;
     }
-    //this.defender.animations.stop(null,true);
+
     if (this.defender.x === Math.round(virus.x + this.defender.width/3)){
       //The defender shoots bullets when he reaches the virus's position
       this.fire(virus);
+    }
+    //Destroys the collided virus and reduces hp of defender
+    for(var i=0; i<this.viruses.length; i++){
+    if(this.game.physics.arcade.overlap(this.defender, this.viruses[i])){
+      this.defender.hp -= 50;
+      this.viruses[i].destroy();
+      this.viruses[i] = null;
+      this.viruses.splice(i,1);
+      }
+    }
+    //Win condition
+    if(this.defender.hp <= 0){
+      this.defender.animations.play('dead',12, true);
+      //Waits for 10 seconds;
+      for(var i=0; i<10; i++){}
+      this.game.state.start('Win');
     }
   },
   fire: function(virus){
