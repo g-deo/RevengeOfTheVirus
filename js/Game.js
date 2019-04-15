@@ -9,7 +9,7 @@ TopDownGame.Game.prototype = {
   create: function() {
 
     //STATIC VARIABLES
-    this.startingLibSize = 2;
+    this.startingLibSize = 20;
     this.baseVirusSpeed = 100;
     this.libX = 900;
     this.libY = 140;
@@ -98,7 +98,7 @@ TopDownGame.Game.prototype = {
  //     }  
  // }, this); 
 
-
+  this.currentImage ="nothing";
   this.currentvirus = null;
   this.left = this.startingLibSize;
   allInfo = new Array();
@@ -109,28 +109,27 @@ TopDownGame.Game.prototype = {
   var lib = this.game.add.text(800, 60, libtext, libstyle);
   
   //ALL CREATED VIRUSES MUST FOLLOW THIS FORMAT
-
+ var  imageA = this.game.add.image(800,150,'virusA');
   var virusA = {
-    image: this.game.add.image(800,150,'virusA'),
     name: "Virus A",
     cost: 5,
     skill: "Fast, but frail",
     speed: this.baseVirusSpeed*1.5,
     health: 1
-  }
+  };
   virusA.text = this.createDisplay(virusA);
   allInfo.push(virusA);
 
   ///////////////////////////////////////////////////////////////////////
 
+  var imageB= this.game.add.image(800,360,'virusB');
   var virusB = {
-    image: this.game.add.image(800,360,'virusB'),
     name: "Virus B",
     cost: 10,
     skill:"Tanky, but slow",
     speed: this.baseVirusSpeed*0.5,
     health: 10
-  }
+  };
   virusB.text = this.createDisplay(virusB);
   allInfo.push(virusB);
 
@@ -145,7 +144,7 @@ TopDownGame.Game.prototype = {
   this.limit = this.game.add.text(600, 10, limittext, limitstyle); 
   
   
-  var currenttext = "Selected Virus: "+this.currentvirus.name;
+  var currenttext = "Selected Virus: ";
   var currentstyle = { font: "30px Arial", fill: "#ffffff", align: "left" };
   var current = this.game.add.text(250, 10, currenttext, currentstyle); 
 
@@ -155,32 +154,36 @@ TopDownGame.Game.prototype = {
   //this.game.physics.arcade.enable(this.wall, Phaser.Physics.ARCADE);
 
 
-  var libtext2 = "[Lib open]";
+  var libtext2 = "[Library on]";
   var libstyle2 = { font: "30px Arial", fill: "#ffffff", align: "center" };
-  var lib2 = this.game.add.text(1050, 10, libtext2, libstyle2);
+  var lib2 = this.game.add.text(1040, 10, libtext2, libstyle2);
   
 
-  var libclosetext = "[Lib close]";
+  var libclosetext = "[Library off]";
   var libclosestyle = { font: "30px Arial", fill: "#ffffff", align: "center" };
-  var libclose = this.game.add.text(1050, 10, libclosetext, libclosestyle);
+  var libclose = this.game.add.text(1040, 10, libclosetext, libclosestyle);
   
   lib.visible = false;
   for(var i = 0; i < allInfo.length; i++){
     allInfo[i].text.visible = false;
-    allInfo[i].image.visible = false;
+    imageA.visible = false;
+    imageB.visible = false;
   }
 
   for(var i = 0; i < allInfo.length; i++){
-    allInfo[i].image.visible = false;
+    imageA.visible = false;
+    imageB.visible = false;
     allInfo[i].text.visible = false;
     libclose.visible = false;
   }
 
   function toggleText(){
     lib.visible = !lib.visible;
+    imageA.visible=!imageA.visible;
+    imageB.visible=!imageB.visible;
     for(var i = 0; i < allInfo.length; i++){
       allInfo[i].text.visible = !allInfo[i].text.visible;
-      allInfo[i].image.visible = !allInfo[i].image.visible;
+    //  allInfo[i].image.visible = !allInfo[i].image.visible;
     }
     libclose.visible = !libclose.visible;
   }
@@ -205,15 +208,28 @@ TopDownGame.Game.prototype = {
     }
   });
 
-  for(var i = 0; i < allInfo.length; i++){
-    allInfo[i].image.inputEnabled = true;
-    allInfo[i].image.events.onInputDown.add(function(){
-      console.log(allInfo);
-      this.currentvirus = allInfo[i];
-      console.log(this.currentvirus);
-      current.text = "Selected Virus: " + this.currentvirus.name;
-    })
-  }
+ // var virusA = this.game.add.image(800,360,'virusB');
+ // virusA.inputEnabled = true;
+ // virusA.events.onInputDown.add(function(){
+ //   this.currentvirus = virusA.name;
+ //   current.setText= "Selected Virus: " +this.currentvirus;
+
+//});
+  
+ // for(var i = 0; i < allInfo.length; i++){
+  //  this.game.physics.enable(allInfo[i], Phaser.Physics.ARCADE);
+   // console.log(allInfo);
+  //  console.log(this.currentvirus);
+  //  console.log(this.currentvirus.name);
+ //   var result = this.currentvirus.name
+  //  allInfo[i].image.inputEnabled = true;
+ //   console.log(allInfo[i]);
+  //  console.log(allInfo[i].image);
+  //  allInfo[i].image.events.onInputDown.add(function(){
+  //    console.log(this.currentvirus);
+  //    this.current.setText = "Selected Virus: " +result;
+  //  })
+  //}
 
   t.inputEnabled = true // 开启输入事件
   t.events.onInputUp.add(function() { 
@@ -228,6 +244,24 @@ TopDownGame.Game.prototype = {
     tx.destroy();
   }, this);
   t.fixedToCamera = true; 
+
+
+
+imageA.inputEnabled= true;
+imageA.events.onInputDown.add(function(){
+    this.currentImage = "virusA";
+    current.text =  "Selected Virus: "+virusA.name;
+});
+
+imageB.inputEnabled= true;
+imageB.events.onInputDown.add(function(){
+  this.currentImage = "virusB";
+    current.text =  "Selected Virus: "+virusB.name;
+
+});
+
+
+
   
   },
 
@@ -270,13 +304,30 @@ TopDownGame.Game.prototype = {
       }
       
       this.limit.setText("Viruses Left: "+this.left);
-      if(gameX < 1200-80 && gameY > 1000 && this.left > 0){
-        var virus = this.game.add.sprite(gameX,gameY,this.currentvirus.image.key);
+      if(gameX < 1200-80 && gameY > 1000 && this.left > 0 && typeof currentImage !== 'undefined'){
+        
+        var result = currentImage;
+        if (result =="virusA" && this.left-5 >= 0){
+          var virus = this.game.add.sprite(gameX,gameY,"virusA");
+          this.game.physics.enable(virus,Phaser.Physics.ARCADE);
+          this.limit.setText("Viruses Left: " + this.left);
+          this.bouncewall(virus);
+          this.left = this.left-5;
+          this.game.physics.arcade.collide(virus, this.wall);
+          virus.body.immovable = false;
+          virus.body.collideWorldBounds = true;
+          virus.body.bounce.set(1,1);
+          //virus.body.velocity.y= -50;
+          this.mouseDown=true;
+          this.renderingLine = true;
+          this.viruses.unshift(virus);
+        }else if (result =="virusB" && this.left-10 >= 0){
+          
+        var virus = this.game.add.sprite(gameX,gameY,"virusB");
         this.game.physics.enable(virus,Phaser.Physics.ARCADE);
         this.limit.setText("Viruses Left: " + this.left);
         this.bouncewall(virus);
-        this.left = this.left-1;
-        //alert(this.left);
+        this.left = this.left-10;
         this.game.physics.arcade.collide(virus, this.wall);
         virus.body.immovable = false;
         virus.body.collideWorldBounds = true;
@@ -285,16 +336,20 @@ TopDownGame.Game.prototype = {
         this.mouseDown=true;
         this.renderingLine = true;
         this.viruses.unshift(virus);
-      }
-      
+        }else{
+          
+        }
+        //alert(this.left);
+        
+      }    
     }
     
 
 
 
     if(this.targeting && this.game.input.activePointer.x < 1200 && this.viruses.length > 0){
-      var current = this.viruses[0];
-      this.targetingLine = new Phaser.Line(current.x + current.width/2,current.y+current.height/2,this.game.input.activePointer.x,this.game.input.activePointer.y);      
+      var current2 = this.viruses[0];
+      this.targetingLine = new Phaser.Line(current2.x + current2.width/2,current2.y+current2.height/2,this.game.input.activePointer.x,this.game.input.activePointer.y);      
     }
 
     //  This boolean controls if the player should collide with the world bounds or not
@@ -388,4 +443,3 @@ TopDownGame.Game.prototype = {
   }
 
   //find objects in a Tiled layer that containt a property called "type" equal to a certain value
-
