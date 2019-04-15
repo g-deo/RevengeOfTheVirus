@@ -148,6 +148,17 @@ TopDownGame.Game.prototype = {
   allInfo.push(virusB);
 
   ////////////////////////////////////////////////////////////////////////
+  /*
+  for(var i = 0; i < allInfo.length; i++){
+    var virus = allInfo[i];
+    virus.text = this.createDisplay(virus);
+    virus.image.inputEnabled = true;
+    virus.image.events.onInputDown.add(function(){
+      this.global.currentvirus = virus;
+      current.text = "Selected Virus: " + this.global.currentvirus.name;
+    }, {global: this});
+  }*/
+  //an attempt to be more modular that does not work
 
   //set default
   var defaultVirus = allInfo[0];
@@ -286,6 +297,7 @@ TopDownGame.Game.prototype = {
         //console.log(this.currentvirus);
         var virus = this.game.add.sprite(gameX,gameY,this.currentvirus.image.key);
         virus.scale.setTo(this.currentvirus.size);
+        virus.health = this.currentvirus.health;
         this.game.physics.enable(virus,Phaser.Physics.ARCADE);
         this.limit.setText("Viruses Left: " + this.left);
         this.bouncewall(virus);
