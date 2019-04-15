@@ -117,7 +117,8 @@ TopDownGame.Game.prototype = {
     cost: 5,
     skill: "Fast, but frail",
     speed: this.baseVirusSpeed*1.5,
-    health: 1
+    health: 1,
+    size: 0.7
   };
   virusA.text = this.createDisplay(virusA);
   virusA.image.inputEnabled = true;
@@ -135,7 +136,8 @@ TopDownGame.Game.prototype = {
     cost: 10,
     skill:"Tanky, but slow",
     speed: this.baseVirusSpeed*0.5,
-    health: 10
+    health: 10,
+    size: 1.0
   }
   virusB.text = this.createDisplay(virusB);
   virusB.image.inputEnabled = true;
@@ -275,6 +277,7 @@ TopDownGame.Game.prototype = {
       if(gameX < 1200-80 && gameY > 1000 && this.left > 0){
         //console.log(this.currentvirus);
         var virus = this.game.add.sprite(gameX,gameY,this.currentvirus.image.key);
+        virus.scale.setTo(this.currentvirus.size);
         this.game.physics.enable(virus,Phaser.Physics.ARCADE);
         this.limit.setText("Viruses Left: " + this.left);
         this.bouncewall(virus);
