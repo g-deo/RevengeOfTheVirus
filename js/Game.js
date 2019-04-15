@@ -10,7 +10,7 @@ TopDownGame.Game.prototype = {
 
     //STATIC VARIABLES
     this.startingLibSize = 2;
-    this.baseVirusSpeed = 100;
+    this.baseVirusSpeed = 200;
     this.libX = 900;
     this.libY = 140;
     this.libOffset = 200;
@@ -260,20 +260,21 @@ TopDownGame.Game.prototype = {
       var gameX = this.game.input.activePointer.positionDown.x + this.game.camera.x;
       var gameY = this.game.input.activePointer.positionDown.y + this.game.camera.y;
       if(this.targeting){
+        var speed = this.currentvirus.speed;
         var difX = this.targetingLine.end.x - this.targetingLine.start.x;
         var difY = this.targetingLine.end.y - this.targetingLine.start.y;
         if(difX == 0) {
-          if(difY < 0) this.viruses[0].body.velocity.y = -100;
-          if(difY > 0) this.viruses[0].body.velocity.y = 100;
+          if(difY < 0) this.viruses[0].body.velocity.y = -speed;
+          if(difY > 0) this.viruses[0].body.velocity.y = speed;
         }
         else if(difY == 0){
-          if(difY < 0) this.viruses[0].body.velocity.y = -100;
-          if(difY > 0) this.viruses[0].body.velocity.y = 100;
+          if(difY < 0) this.viruses[0].body.velocity.y = -speed;
+          if(difY > 0) this.viruses[0].body.velocity.y = speed;
         }
         else{
           var pythag = Math.sqrt(Math.pow(difX,2) + Math.pow(difY,2));
-          this.viruses[0].body.velocity.y = difY/pythag*100;
-          this.viruses[0].body.velocity.x = difX/pythag*100;
+          this.viruses[0].body.velocity.y = difY/pythag*speed;
+          this.viruses[0].body.velocity.x = difX/pythag*speed;
         }
         this.targeting = false;
       }
