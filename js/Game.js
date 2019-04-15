@@ -56,6 +56,8 @@ TopDownGame.Game.prototype = {
     this.defender.frame = 8;
     this.defender.anchor.set(0.5, 0.5);
     this.game.physics.enable(this.defender, Phaser.Physics.ARCADE);
+    this.defender.healthbar = this.game.add.sprite(this.defender.x - this.defender.width*.28,this.defender.y-this.defender.height*.90,'healthbar');
+    this.defender.healthbar.frame = 0;
     //Created the shooting animation for defender
     var shoot = this.defender.animations.add('shoot', [0,1,2,3,4,5,6,7], 10, true);
     
@@ -71,8 +73,8 @@ TopDownGame.Game.prototype = {
     //Setting speed for the defender (can be changed for changing difficulty)
     this.defender.speed = 1;
 
-    //Setting the HP of the defender
-    this.defender.hp = 100;
+    //Setting the Health of the defender
+    this.defender.health = 100;
 
     var text = "[Pause]";
     var style = { font: "30px Arial", fill: "#ffffff", align: "center" };
@@ -120,7 +122,7 @@ TopDownGame.Game.prototype = {
     speed: this.baseVirusSpeed*1.5,
     health: 1,
     size: 0.7,
-    damage: 10
+    damage: 5
   };
   virusA.text = this.createDisplay(virusA);
   virusA.image.inputEnabled = true;
@@ -141,7 +143,7 @@ TopDownGame.Game.prototype = {
     speed: this.baseVirusSpeed*0.5,
     health: 10,
     size: 1.0,
-    damage: 40
+    damage: 20
   }
   virusB.text = this.createDisplay(virusB);
   virusB.image.inputEnabled = true;
@@ -365,26 +367,29 @@ TopDownGame.Game.prototype = {
     //lining up optherwise 
     if(this.defender.x < (virus.x + this.defender.width/3)){
       this.defender.x += this.defender.speed;
+      this.defender.healthbar.x += this.defender.speed;
     }
     else if(this.defender.x > (virus.x + this.defender.width/3)){
       this.defender.x -= this.defender.speed;
+      this.defender.healthbar.x -= this.defender.speed;
     }
 
     if (this.defender.x === Math.round(virus.x + this.defender.width/3)){
       //The defender shoots bullets when he reaches the virus's position
       this.fire(virus);
     }
-    //Destroys the collided virus and reduces hp of defender
+    //Destroys the collided virus and reduces health of defender
     for(var i=0; i<this.viruses.length; i++){
     if(this.game.physics.arcade.overlap(this.defender, this.viruses[i])){
-      this.defender.hp -= 10;
+      this.defender.health -= 10;
+      this.updateHealthBar(this.defender,this.defender.healthbar);
       this.viruses[i].destroy();
       this.viruses[i] = null;
       this.viruses.splice(i,1);
       }
     }
     //Win condition
-    if(this.defender.hp <= 0){
+    if(this.defender.health <= 0){
       this.defender.animations.play('dead',12, true);
       //Waits for 10 seconds;
       this.game.time.events.loop(Phaser.Timer.SECOND, 2000, this);
@@ -419,8 +424,18 @@ TopDownGame.Game.prototype = {
       }      
   },
   //Updates the health of the virus or defender
-  updateHealthBar: function(){
-
+  updateHealthBar: function(sprite,healthbar){
+    if(sprite.health>=100){healthbar.frame = 0;}
+    else if(sprite.health>=90){healthbar.frame = 1;}
+    else if(sprite.health>=80){healthbar.frame = 2;}
+    else if(sprite.health>=70){healthbar.frame = 3;}
+    else if(sprite.health>=60){healthbar.frame = 4;}
+    else if(sprite.health>=50){healthbar.frame = 5;}
+    else if(sprite.health>=40){healthbar.frame = 6;}
+    else if(sprite.health>=30){healthbar.frame = 7;}
+    else if(sprite.health>=20){healthbar.frame = 8;}
+    else if(sprite.health>=10){healthbar.frame = 9;}
+    else {healthbar.frame = 9;}
   },
   render: function(){
   //  this.game.debug.geom(this.libLine);

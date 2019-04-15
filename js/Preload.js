@@ -24,7 +24,7 @@ TopDownGame.Preload.prototype = {
     this.load.image('wall', '/assets/images/wall.png');
 
     //health bar percentages starting at 100%
-    this.load.image('healthbar', '/assets/images/healthbar.png',80,80,10);
+    this.load.spritesheet('healthbar', '/assets/images/healthbar.png',80,80,10);
     //show loading screen
 
     
