@@ -9,7 +9,7 @@ TopDownGame.Game.prototype = {
   create: function() {
 
     //STATIC VARIABLES
-    this.startingLibSize = 2;
+    this.startingLibSize = 50;
     this.baseVirusSpeed = 200;
     this.libX = 900;
     this.libY = 140;
@@ -280,13 +280,13 @@ TopDownGame.Game.prototype = {
       }
       
       this.limit.setText("Viruses Left: "+this.left);
-      if(gameX < 1200-80 && gameY > 1000 && this.left > 0){
+      if(gameX < 1200-80 && gameY > 1000 && this.left > 0 &&  this.left-this.currentvirus.cost>=0){
         //console.log(this.currentvirus);
         var virus = this.game.add.sprite(gameX,gameY,this.currentvirus.image.key);
         this.game.physics.enable(virus,Phaser.Physics.ARCADE);
         this.limit.setText("Viruses Left: " + this.left);
         this.bouncewall(virus);
-        this.left = this.left-1;
+        this.left = this.left-this.currentvirus.cost;
         //alert(this.left);
         this.game.physics.arcade.collide(virus, this.wall);
         virus.body.immovable = false;
