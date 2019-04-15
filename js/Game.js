@@ -9,7 +9,7 @@ TopDownGame.Game.prototype = {
   create: function() {
 
     //STATIC VARIABLES
-    this.startingLibSize = 2;
+    this.startingLibSize = 50;
     this.baseVirusSpeed = 200;
     this.libX = 900;
     this.libY = 140;
@@ -177,10 +177,11 @@ TopDownGame.Game.prototype = {
   var libclosestyle = { font: "30px Arial", fill: "#ffffff", align: "center" };
   var libclose = this.game.add.text(1050, 10, libclosetext, libclosestyle);
   
-  lib.visible = false;
+  
   for(var i = 0; i < allInfo.length; i++){
     allInfo[i].text.visible = false;
     allInfo[i].image.visible = false;
+    lib.visible = false;
   }
 
   for(var i = 0; i < allInfo.length; i++){
@@ -190,6 +191,7 @@ TopDownGame.Game.prototype = {
   }
 
   function toggleText(){
+
     lib.visible = !lib.visible;
     for(var i = 0; i < allInfo.length; i++){
       allInfo[i].text.visible = !allInfo[i].text.visible;
@@ -202,19 +204,24 @@ TopDownGame.Game.prototype = {
       
   lib2.inputEnabled = true;
   lib2.events.onInputDown.add(function(){ 
+    console.log(this.showing);
+    this.showing = false;
     if(!this.showing) {
       toggleText();
       lib2.visible=false;
       this.showing = true;
+      console.log("after:"+this.showing);
     }
   });
 
   libclose.inputEnabled = true;
   libclose.events.onInputDown.add(function(){
+    console.log(this.showing);
     if(this.showing){
-      toggleText()
+      toggleText();
       lib2.visible=true;
       this.showing = false;   
+      console.log("after:"+this.showing);
     }
   });
 
@@ -247,6 +254,7 @@ TopDownGame.Game.prototype = {
 
     if(this.viruses.length == 0 && this.left == 0){
       this.game.state.start('Lost');
+      
     }
     
     //Creates an array of virus instances with virus[0] being the latest addition to the map
@@ -274,14 +282,14 @@ TopDownGame.Game.prototype = {
       }
       
       this.limit.setText("Viruses Left: "+this.left);
-      if(gameX < 1200-80 && gameY > 1000 && this.left > 0){
+      if(gameX < 1200-80 && gameY > 1000 && this.left > 0 &&  this.left-this.currentvirus.cost>=0){
         //console.log(this.currentvirus);
         var virus = this.game.add.sprite(gameX,gameY,this.currentvirus.image.key);
         virus.scale.setTo(this.currentvirus.size);
         this.game.physics.enable(virus,Phaser.Physics.ARCADE);
         this.limit.setText("Viruses Left: " + this.left);
         this.bouncewall(virus);
-        this.left = this.left-1;
+        this.left = this.left-this.currentvirus.cost;
         //alert(this.left);
         this.game.physics.arcade.collide(virus, this.wall);
         virus.body.immovable = false;
