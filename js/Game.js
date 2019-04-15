@@ -175,10 +175,11 @@ TopDownGame.Game.prototype = {
   var libclosestyle = { font: "30px Arial", fill: "#ffffff", align: "center" };
   var libclose = this.game.add.text(1050, 10, libclosetext, libclosestyle);
   
-  lib.visible = false;
+  
   for(var i = 0; i < allInfo.length; i++){
     allInfo[i].text.visible = false;
     allInfo[i].image.visible = false;
+    lib.visible = false;
   }
 
   for(var i = 0; i < allInfo.length; i++){
@@ -188,6 +189,7 @@ TopDownGame.Game.prototype = {
   }
 
   function toggleText(){
+
     lib.visible = !lib.visible;
     for(var i = 0; i < allInfo.length; i++){
       allInfo[i].text.visible = !allInfo[i].text.visible;
@@ -200,19 +202,24 @@ TopDownGame.Game.prototype = {
       
   lib2.inputEnabled = true;
   lib2.events.onInputDown.add(function(){ 
+    console.log(this.showing);
+    this.showing = false;
     if(!this.showing) {
       toggleText();
       lib2.visible=false;
       this.showing = true;
+      console.log("after:"+this.showing);
     }
   });
 
   libclose.inputEnabled = true;
   libclose.events.onInputDown.add(function(){
+    console.log(this.showing);
     if(this.showing){
-      toggleText()
+      toggleText();
       lib2.visible=true;
       this.showing = false;   
+      console.log("after:"+this.showing);
     }
   });
 
@@ -245,6 +252,7 @@ TopDownGame.Game.prototype = {
 
     if(this.viruses.length == 0 && this.left == 0){
       this.game.state.start('Lost');
+      
     }
     
     //Creates an array of virus instances with virus[0] being the latest addition to the map
