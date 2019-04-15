@@ -14,7 +14,7 @@ TopDownGame.Game.prototype = {
     this.libX = 900;
     this.libY = 140;
     this.libOffset = 200;
-
+    
     //
     this.game.bounds = 100;
     this.game.physics.startSystem(Phaser.Physics.ARCADE);
