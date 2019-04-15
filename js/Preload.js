@@ -17,6 +17,9 @@ TopDownGame.Preload.prototype = {
     
     this.load.image('virusA', '/assets/images/virusA.png');
     
+    this.load.spritesheet('virusA_sprite', '/assets/images/virusA_sprite.png',80,80,4);
+    
+    this.load.spritesheet('virusB_sprite', '/assets/images/virusB_sprite.png',80,80,4);
     this.load.image('virusB', '/assets/images/virusB.png');
     this.load.image('wall', '/assets/images/wall.png');
     //show loading screen
