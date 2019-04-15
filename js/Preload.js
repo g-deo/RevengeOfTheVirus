@@ -22,6 +22,9 @@ TopDownGame.Preload.prototype = {
     this.load.spritesheet('virusB_sprite', '/assets/images/virusB_sprite.png',80,80,4);
     this.load.image('virusB', '/assets/images/virusB.png');
     this.load.image('wall', '/assets/images/wall.png');
+
+    //health bar percentages starting at 100%
+    this.load.image('healthbar', '/assets/images/healthbar.png',80,80,10);
     //show loading screen
 
     

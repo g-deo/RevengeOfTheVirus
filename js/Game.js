@@ -53,8 +53,8 @@ TopDownGame.Game.prototype = {
     //Initialized defender sprite
  //   var result = this.findObjectsByType('defender', this.map, 'objectLayer');
     this.defender = this.game.add.sprite(100, 100, 'defender');
-    this.defender.anchor.set(0.5, 0.5);
     this.defender.frame = 8;
+    this.defender.anchor.set(0.5, 0.5);
     this.game.physics.enable(this.defender, Phaser.Physics.ARCADE);
     //Created the shooting animation for defender
     var shoot = this.defender.animations.add('shoot', [0,1,2,3,4,5,6,7], 10, true);
@@ -119,7 +119,8 @@ TopDownGame.Game.prototype = {
     skill: "Fast, but frail",
     speed: this.baseVirusSpeed*1.5,
     health: 1,
-    size: 0.7
+    size: 0.7,
+    damage: 10
   };
   virusA.text = this.createDisplay(virusA);
   virusA.image.inputEnabled = true;
@@ -139,7 +140,8 @@ TopDownGame.Game.prototype = {
     skill:"Tanky, but slow",
     speed: this.baseVirusSpeed*0.5,
     health: 10,
-    size: 1.0
+    size: 1.0,
+    damage: 40
   }
   virusB.text = this.createDisplay(virusB);
   virusB.image.inputEnabled = true;
@@ -375,7 +377,7 @@ TopDownGame.Game.prototype = {
     //Destroys the collided virus and reduces hp of defender
     for(var i=0; i<this.viruses.length; i++){
     if(this.game.physics.arcade.overlap(this.defender, this.viruses[i])){
-      this.defender.hp -= 50;
+      this.defender.hp -= 10;
       this.viruses[i].destroy();
       this.viruses[i] = null;
       this.viruses.splice(i,1);
@@ -385,7 +387,7 @@ TopDownGame.Game.prototype = {
     if(this.defender.hp <= 0){
       this.defender.animations.play('dead',12, true);
       //Waits for 10 seconds;
-      for(var i=0; i<10; i++){}
+      this.game.time.events.loop(Phaser.Timer.SECOND, 2000, this);
       this.game.state.start('Win');
     }
   },
@@ -403,13 +405,22 @@ TopDownGame.Game.prototype = {
         bullet.reset(this.defender.x - 8, this.defender.y - 8);
 
         this.game.physics.arcade.moveToObject(bullet, virus, 500);
-    }
-    //If hit by a bullet destroy the virus
-    if(this.game.physics.arcade.overlap(this.bullets, virus)){
-        virus.destroy();
-        this.viruses[0] = null;
-        this.viruses.splice(0,1);
       }
+      //Destroys viruses.
+      for(var i = 0; i<this.viruses.length; i++){
+        if(this.game.physics.arcade.overlap(this.bullets, this.viruses[i])){
+          this.viruses[i].health -= 1;
+        }
+        if(this.viruses[i].health<=0){
+          this.viruses[i].destroy()
+          this.viruses[i] = null;
+          this.viruses.splice(i,1);
+        }
+      }      
+  },
+  //Updates the health of the virus or defender
+  updateHealthBar: function(){
+
   },
   render: function(){
   //  this.game.debug.geom(this.libLine);
