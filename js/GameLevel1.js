@@ -19,27 +19,29 @@ TopDownGame.GameLevel1.prototype = {
     this.game.bounds = 100;
     this.game.physics.startSystem(Phaser.Physics.ARCADE);
     this.game.stage.backgroundColor = '#000000';
+    /* 
     this.background = this.game.add.sprite(0,0,'gameTiles');
     this.background.x = this.game.world.centerX;
     this.background.y = this.game.world.centerY;
-    this.background.anchor.set(0.5,0.5);
+    this.background.anchor.set(0.5,0.5);*/
 
     //this.libLine = new Phaser.Line(750, 0, 750, 1200);
     this.spawnLine = new Phaser.Line(0, 1000, 1200, 1000);
     
     this.game.physics.startSystem(Phaser.Physics.ARCADE);
- //   this.map = this.game.add.tilemap('gameMap');
+    this.map = this.game.add.tilemap('gameMap');
     this.viruses = new Array();
 
     this.mouseDown = false;
     this.targeting = false;
     
     //the first parameter is the tileset name as specified in Tiled, the second is the key to the asset
-    //this.map.addTilesetImage('gameTiles', 'gameTiles');
+    this.map.addTilesetImage('gameTiles', 'gameTiles');
 
     //create layer
-  //  this.backgroundlayer = this.map.createLayer('backgroundLayer');
-  //  this.objectLayer = this.map.createLayer('objectLayer');
+    this.backgroundlayer = this.map.createLayer('backgroundLayer');
+    this.objectLayer = this.map.createLayer('objectLayer');
+    this.blockedLayer = this.map.createLayer('blockedLayer');
 
     // Loaded in the bullet for the defender
     this.bullets = {speed: 300};
@@ -51,7 +53,7 @@ TopDownGame.GameLevel1.prototype = {
     this.bullets.physicsBodyType = Phaser.Physics.ARCADE;
 
     //Initialized defender sprite
- //   var result = this.findObjectsByType('defender', this.map, 'objectLayer');
+    this.map.setCollisionBetween(1,5625, true, 'blockedLayer');
     this.defender = this.game.add.sprite(100, 100, 'defender');
     this.defender.frame = 8;
     this.defender.anchor.set(0.5, 0.5);
@@ -242,13 +244,13 @@ TopDownGame.GameLevel1.prototype = {
       
   lib2.inputEnabled = true;
   lib2.events.onInputDown.add(function(){ 
-    console.log(this.showing);
+    //console.log(this.showing);
     this.showing = false;
     if(!this.showing) {
       toggleText();
       lib2.visible=false;
       this.showing = true;
-      console.log("after:"+this.showing);
+      //console.log("after:"+this.showing);
     }
   });
 
