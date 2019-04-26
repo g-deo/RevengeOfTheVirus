@@ -16,3 +16,6 @@ js/Game.js
 js/Game.js
 js/Menu.js
 js/Controls.js
+js/GameLevel1.js
+.gitignore
+js/GameLevel8.js

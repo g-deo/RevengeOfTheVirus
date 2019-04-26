@@ -137,6 +137,7 @@ TopDownGame.GameLevel1.prototype = {
   };
   virusA.text = this.createDisplay(virusA);
   virusA.image.inputEnabled = true;
+  virusA.image.bringToTop();
   virusA.image.events.onInputDown.add(function(){
     this.global.currentvirus = virusA;
     current.text = "Selected Virus: " + this.global.currentvirus.name;
@@ -158,6 +159,7 @@ TopDownGame.GameLevel1.prototype = {
   }
   virusB.text = this.createDisplay(virusB);
   virusB.image.inputEnabled = true;
+  virusB.image.bringToTop();
   virusB.image.events.onInputDown.add(function(){
     this.global.currentvirus = virusB;
     current.text = "Selected Virus: " + this.global.currentvirus.name;
@@ -184,11 +186,13 @@ TopDownGame.GameLevel1.prototype = {
   var limittext = "Viruses Left: "+this.left;
   var limitstyle = { font: "30px Arial", fill: "#ffffff", align: "left" };
   this.limit = this.game.add.text(600, 10, limittext, limitstyle); 
+  this.limit.bringToTop();
   
   
   var currenttext = "Selected Virus: " + this.currentvirus.name;
   var currentstyle = { font: "30px Arial", fill: "#ffffff", align: "left" };
   var current = this.game.add.text(250, 10, currenttext, currentstyle); 
+  current.bringToTop();
 
 
 //  this.wall=this.game.add.image(600,0,'wall');
@@ -199,17 +203,18 @@ TopDownGame.GameLevel1.prototype = {
   var libtext2 = "[Lib open]";
   var libstyle2 = { font: "30px Arial", fill: "#ffffff", align: "center" };
   var lib2 = this.game.add.text(1050, 10, libtext2, libstyle2);
+  lib2.bringToTop();
 
   
   var invincible = "[invincible]";
   var libstyle2 = { font: "30px Arial", fill: "#ffffff", align: "center" };
   var invincibletext = this.game.add.text(850, 10, invincible, libstyle2);
-  
+  invincibletext.bringToTop();
 
   var libclosetext = "[Lib close]";
   var libclosestyle = { font: "30px Arial", fill: "#ffffff", align: "center" };
   var libclose = this.game.add.text(1050, 10, libclosetext, libclosestyle);
-  
+  libclose.bringToTop();
   
   for(var i = 0; i < allInfo.length; i++){
     allInfo[i].text.visible = false;
@@ -261,14 +266,46 @@ TopDownGame.GameLevel1.prototype = {
   t.inputEnabled = true // 开启输入事件
   t.events.onInputUp.add(function() { 
   this.game.paused = true; 
+
+
+ librarybackground = this.game.add.sprite(200, 100, 'library');
+
+
   var style = {fill : '#FFF'}; 
-  tx = this.game.add.text(this.game.width * 0.5, this.game.height * 0.5, "Press Enter to continue", style); 
+  tx = this.game.add.text(this.game.width * 0.5, this.game.height -200, "          Press Enter to continue\n\n*Use hot keys to change current virus.", style); 
   tx.anchor.set(0.5, 0.5); 
+
+  libtext = this.game.add.text(this.game.width * 0.5, 150, "Library Of The Virus", style); 
+  libtext.anchor.set(0.5, 0.5); 
+
+
+  var vAtext = virusA.name+"    Hot Key: 1" + "\nCost: "+virusA.cost + "\nSkill: " + virusA.skill;
+  var vAstyle = { font: "30px Arial", fill: "#ffffff", align: "left" };
+   vA = this.game.add.text(330, 200, vAtext, vAstyle);
+
+   imageA =  this.game.add.image(220,210,'virusA');
+
+   
+  var vBtext = virusA.name+"    Hot Key: 2"+ "\nCost: "+virusB.cost +"\nSkill: " + virusB.skill;
+  var vBstyle = { font: "30px Arial", fill: "#ffffff", align: "left" };
+   vB = this.game.add.text(330, 400, vBtext, vBstyle);
+
+   imageB =  this.game.add.image(220,410,'virusB');
+
+
+
+
   }, this); 
   var keyenter =this.game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
   keyenter.onDown.add(function(){
     this.game.paused = false; 
+    libtext.destroy();
+    imageA.destroy();
+    vA.destroy();
+    imageB.destroy();
+    vB.destroy();
     tx.destroy();
+    librarybackground.destroy();
   }, this);
   t.fixedToCamera = true; 
 
