@@ -32,7 +32,7 @@ TopDownGame.Help = function(){// 开始场景
         align: 'left',
         fill: '#ffffff'
     })
-    var text = this.game.add.text(this.game.world.centerX-560, this.game.world.centerY+100, 'Developers: \nWilliam Chen\nGaorav Deo\nLijiqing Tang',{
+    var text = this.game.add.text(this.game.world.centerX-560, this.game.world.centerY+100, 'Developers: \nWilliam Chen\nGaurav Deo\nLijiqing Tang',{
         font: '30px FC',
         align: 'left',
         fill: '#ffffff'
