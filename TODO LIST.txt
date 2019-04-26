@@ -1,9 +1,28 @@
-COLLISION:
-Make viruses collide WITH EACH OTHER
-Make viruses collide WITH THE LIBRARY WALL (not the actual wall)
-
-VIRUS LIBRARY:
-ON CLICK, the current virus should CHANGE TO THE SELECTED
-Give each virus some JS properties (i.e. SPEED so we can change them dynamically)
-	IDEALLY change to a uniform JSON format which we can read, but if no time its fine
-
+AI：
+    1.shooting straightly
+    2.increasing shooting speed
+    3.targeting oldest virus
+    4.2D movement
+   
+Tiled Map:
+    1.collide objects
+    2.dropped items
+    
+GUI:
+    1.Level cheats
+    2.Help Button in game
+    3.Back Button in game
+    4.Level switch in game
+    
+Virus Design:
+   	name   speed    size   hp   cost skill
+   1.  basic  middle   middle  1     1    none
+   2.   fast    fast    small  1     2    none
+   3.   tank    slow      big  2     4    none
+   4.   boom  middle   middle  1     10   explode
+   5.   pass  middle   middle  1     4    pass the obstacle / speed up
+   6.   icey  middle   middle  1     8    freeze the cell
+   7.
+   
+Others:
+   invisible cheat button, to make virus invisible 
