@@ -37,7 +37,7 @@ TopDownGame.GameLevel1.prototype = {
     
     //the first parameter is the tileset name as specified in Tiled, the second is the key to the asset
     this.map.addTilesetImage('gameTiles', 'gameTiles');
-
+    this.map.addTilesetImage('redBloodCell', 'redBloodCell');
     //create layer
     this.backgroundlayer = this.map.createLayer('backgroundLayer');
     this.objectLayer = this.map.createLayer('objectLayer');
