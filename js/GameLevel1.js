@@ -330,6 +330,7 @@ TopDownGame.GameLevel1.prototype = {
           this.viruses[0].body.velocity.x = difX/pythag*speed;
         }
         this.targeting = false;
+        this.viruses[0].invincible = false;
       }
       
       this.limit.setText("Viruses Left: "+this.left);
@@ -341,6 +342,7 @@ TopDownGame.GameLevel1.prototype = {
         virus.animations.play('move', 18, true);
         virus.scale.setTo(this.currentvirus.size);
         virus.health = this.currentvirus.health;
+        virus.invincible = true;
         this.game.physics.enable(virus,Phaser.Physics.ARCADE);
         this.limit.setText("Viruses Left: " + this.left);
         this.bouncewall(virus);
@@ -447,7 +449,7 @@ TopDownGame.GameLevel1.prototype = {
       }
       //Destroys viruses.
       for(var i = 0; i<this.viruses.length; i++){
-        if(this.game.physics.arcade.overlap(this.bullets, this.viruses[i])){
+        if(this.viruses[i].invincible == false && this.game.physics.arcade.overlap(this.bullets, this.viruses[i])){
           this.viruses[i].health -= 1;
         }
         if(this.viruses[i].health<=0){
