@@ -4,6 +4,7 @@ TopDownGame.game.state.add('Boot', TopDownGame.Boot);
 
 TopDownGame.game.state.add('Help', TopDownGame.Help);
 TopDownGame.game.state.add('Controls', TopDownGame.Controls);
+TopDownGame.game.state.add('ControlsHelp', TopDownGame.ControlsHelp);
 TopDownGame.game.state.add('Menu', TopDownGame.Menu);
 TopDownGame.game.state.add('Levels', TopDownGame.Levels);
 TopDownGame.game.state.add('Preload', TopDownGame.Preload);

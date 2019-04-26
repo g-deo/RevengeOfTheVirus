@@ -81,8 +81,19 @@ TopDownGame.GameLevel1.prototype = {
     var t = this.game.add.text(10, 10, text, style);
     
     
-  
 
+    var back = "[Levels]";
+    var backstyle = { font: "30px Arial", fill: "#ffffff", align: "center" };
+    var backtext = this.game.add.text(10, 50, back, backstyle);
+  
+    backtext.inputEnabled = true // 开启输入事件
+    backtext.events.onInputUp.add(function() { 
+    
+  this.game.state.start('Levels')
+    
+    
+    
+    }, this); 
     
    
  // var conttext = "continue";
@@ -188,6 +199,11 @@ TopDownGame.GameLevel1.prototype = {
   var libtext2 = "[Lib open]";
   var libstyle2 = { font: "30px Arial", fill: "#ffffff", align: "center" };
   var lib2 = this.game.add.text(1050, 10, libtext2, libstyle2);
+
+  
+  var invincible = "[invincible]";
+  var libstyle2 = { font: "30px Arial", fill: "#ffffff", align: "center" };
+  var invincibletext = this.game.add.text(850, 10, invincible, libstyle2);
   
 
   var libclosetext = "[Lib close]";

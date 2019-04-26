@@ -24,3 +24,5 @@ Virus Design:
    6.   icey  middle   middle  1     8    freeze the cell
    7.
    
+Others:
+   invisible cheat button, to make virus invisible 
