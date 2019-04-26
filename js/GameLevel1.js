@@ -137,6 +137,7 @@ TopDownGame.GameLevel1.prototype = {
   };
   virusA.text = this.createDisplay(virusA);
   virusA.image.inputEnabled = true;
+  virusA.image.bringToTop();
   virusA.image.events.onInputDown.add(function(){
     this.global.currentvirus = virusA;
     current.text = "Selected Virus: " + this.global.currentvirus.name;
@@ -158,6 +159,7 @@ TopDownGame.GameLevel1.prototype = {
   }
   virusB.text = this.createDisplay(virusB);
   virusB.image.inputEnabled = true;
+  virusB.image.bringToTop();
   virusB.image.events.onInputDown.add(function(){
     this.global.currentvirus = virusB;
     current.text = "Selected Virus: " + this.global.currentvirus.name;
@@ -184,11 +186,13 @@ TopDownGame.GameLevel1.prototype = {
   var limittext = "Viruses Left: "+this.left;
   var limitstyle = { font: "30px Arial", fill: "#ffffff", align: "left" };
   this.limit = this.game.add.text(600, 10, limittext, limitstyle); 
+  this.limit.bringToTop();
   
   
   var currenttext = "Selected Virus: " + this.currentvirus.name;
   var currentstyle = { font: "30px Arial", fill: "#ffffff", align: "left" };
   var current = this.game.add.text(250, 10, currenttext, currentstyle); 
+  current.bringToTop();
 
 
 //  this.wall=this.game.add.image(600,0,'wall');
@@ -199,17 +203,18 @@ TopDownGame.GameLevel1.prototype = {
   var libtext2 = "[Lib open]";
   var libstyle2 = { font: "30px Arial", fill: "#ffffff", align: "center" };
   var lib2 = this.game.add.text(1050, 10, libtext2, libstyle2);
+  lib2.bringToTop();
 
   
   var invincible = "[invincible]";
   var libstyle2 = { font: "30px Arial", fill: "#ffffff", align: "center" };
   var invincibletext = this.game.add.text(850, 10, invincible, libstyle2);
-  
+  invincibletext.bringToTop();
 
   var libclosetext = "[Lib close]";
   var libclosestyle = { font: "30px Arial", fill: "#ffffff", align: "center" };
   var libclose = this.game.add.text(1050, 10, libclosetext, libclosestyle);
-  
+  libclose.bringToTop();
   
   for(var i = 0; i < allInfo.length; i++){
     allInfo[i].text.visible = false;
