@@ -265,12 +265,30 @@ TopDownGame.GameLevel1.prototype = {
   tx = this.game.add.text(this.game.width * 0.5, this.game.height * 0.5, "Press Enter to continue", style); 
   tx.anchor.set(0.5, 0.5); 
   }, this); 
-  var key1 =this.game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
-  key1.onDown.add(function(){
+  var keyenter =this.game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
+  keyenter.onDown.add(function(){
     this.game.paused = false; 
     tx.destroy();
   }, this);
   t.fixedToCamera = true; 
+
+  key1 = this.game.input.keyboard.addKey(Phaser.Keyboard.ONE);
+  key1.onDown.add(function(){
+    this.global.currentvirus = virusA;
+    current.text = "Selected Virus: " + this.global.currentvirus.name;
+
+
+  }, {global:this});
+
+  key2 = this.game.input.keyboard.addKey(Phaser.Keyboard.TWO);
+  key2.onDown.add(function(){
+    this.global.currentvirus = virusB;
+    current.text = "Selected Virus: " + this.global.currentvirus.name;
+
+
+  }, {global:this});
+
+
   
   },
 

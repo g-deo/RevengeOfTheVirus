@@ -27,7 +27,7 @@ TopDownGame.ControlsHelp = function(){// 开始场景
           x: 0.5,
           y: 0.5
       }
-      var Title = this.game.add.text(this.game.world.centerX, this.game.world.centerY-100, 'Virus Generate:\nOpen the library to select virus. \nThen click once to determine position and click twice to dertermine direction.\n\nSkill Use:\nClick on virus to use its skill.\n\nWinning Condition:\nKill all white blood cells\n\nLose Condition:\nAll virus got killed.', {
+      var Title = this.game.add.text(this.game.world.centerX, this.game.world.centerY-100, 'Virus Generate:\nOpen the library to select virus. \nThen click once to determine position and click twice to dertermine direction.\nHint: You can use number key to change current virus\n\nSkill Use:\nClick on virus to use its skill.\n\nWinning Condition:\nKill all white blood cells\n\nLose Condition:\nAll virus got killed.', {
         font: '30px FC',
         align: 'left',
         fill: '#ffffff'
