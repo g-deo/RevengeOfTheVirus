@@ -261,14 +261,46 @@ TopDownGame.GameLevel1.prototype = {
   t.inputEnabled = true // 开启输入事件
   t.events.onInputUp.add(function() { 
   this.game.paused = true; 
+
+
+ librarybackground = this.game.add.sprite(200, 100, 'library');
+
+
   var style = {fill : '#FFF'}; 
-  tx = this.game.add.text(this.game.width * 0.5, this.game.height * 0.5, "Press Enter to continue", style); 
+  tx = this.game.add.text(this.game.width * 0.5, this.game.height -200, "          Press Enter to continue\n\n*Use hot keys to change current virus.", style); 
   tx.anchor.set(0.5, 0.5); 
+
+  libtext = this.game.add.text(this.game.width * 0.5, 150, "Library Of The Virus", style); 
+  libtext.anchor.set(0.5, 0.5); 
+
+
+  var vAtext = virusA.name+"    Hot Key: 1" + "\nCost: "+virusA.cost + "\nSkill: " + virusA.skill;
+  var vAstyle = { font: "30px Arial", fill: "#ffffff", align: "left" };
+   vA = this.game.add.text(330, 200, vAtext, vAstyle);
+
+   imageA =  this.game.add.image(220,210,'virusA');
+
+   
+  var vBtext = virusA.name+"    Hot Key: 2"+ "\nCost: "+virusB.cost +"\nSkill: " + virusB.skill;
+  var vBstyle = { font: "30px Arial", fill: "#ffffff", align: "left" };
+   vB = this.game.add.text(330, 400, vBtext, vBstyle);
+
+   imageB =  this.game.add.image(220,410,'virusB');
+
+
+
+
   }, this); 
   var keyenter =this.game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
   keyenter.onDown.add(function(){
     this.game.paused = false; 
+    libtext.destroy();
+    imageA.destroy();
+    vA.destroy();
+    imageB.destroy();
+    vB.destroy();
     tx.destroy();
+    librarybackground.destroy();
   }, this);
   t.fixedToCamera = true; 
 
