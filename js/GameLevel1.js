@@ -342,6 +342,22 @@ TopDownGame.GameLevel1.prototype = {
  
   update: function() {
 
+    //DO COLLISIONS
+
+    //this.game.physics.arcade.collide(this.viruses, this.blockedLayer);
+    //this.game.physics.arcade.collide(this.viruses, this.wall);
+    
+    for(var i = 0; i < this.viruses.length; i++){
+      if(this.viruses[i] != undefined && this.viruses[i] != null){
+        var virus = this.viruses[i];
+        this.game.physics.arcade.enable(virus);
+        //console.log(virus);
+        console.log(this.blockedLayer);
+        this.game.physics.arcade.collide(virus, this.blockedLayer);
+        this.game.physics.arcade.collide(virus, this.wall);
+      }
+    }
+
     if(this.viruses.length == 0 && this.left == 0){
       this.game.state.start('Lost');
       
@@ -382,12 +398,16 @@ TopDownGame.GameLevel1.prototype = {
         virus.scale.setTo(this.currentvirus.size);
         virus.health = this.currentvirus.health;
         virus.invincible = true;
-        this.game.physics.enable(virus,Phaser.Physics.ARCADE);
+        //this.game.physics.enable(virus,Phaser.Physics.ARCADE);
         this.limit.setText("Viruses Left: " + this.left);
         this.bouncewall(virus);
         this.left = this.left-this.currentvirus.cost;
         //alert(this.left);
-        this.game.physics.arcade.collide(virus, this.wall);
+
+        this.game.physics.arcade.enable(virus);
+        //this.game.physics.arcade.collide(virus, this.blockedLayer);
+        //this.game.physics.arcade.collide(virus, this.wall);
+        
         virus.body.immovable = false;
         virus.body.collideWorldBounds = true;
         virus.body.bounce.set(1,1);
@@ -414,12 +434,6 @@ TopDownGame.GameLevel1.prototype = {
       this.targeting = true;
     }
 
-    for(var i = 0; i < this.viruses.length; i++){
-      if(this.viruses[i].y < -this.viruses[i].height){
-        this.viruses[i].destroy();
-        this.viruses.splice(i,1);
-      }
-    }
     if(this.viruses.length >= 1){
       this.ai(this.viruses);
     
