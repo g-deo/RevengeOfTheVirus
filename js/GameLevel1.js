@@ -46,8 +46,7 @@ TopDownGame.GameLevel1.prototype = {
     // Loaded in the bullet for the defender
     this.bullets = {speed: 300};
     this.fireRate = 450;
-    this.nextFire = 0;
-   
+    this.nextFire = 0; 
     this.bullets = this.game.add.group();
     this.bullets.enableBody = true;
     this.bullets.physicsBodyType = Phaser.Physics.ARCADE;
@@ -351,8 +350,6 @@ TopDownGame.GameLevel1.prototype = {
       if(this.viruses[i] != undefined && this.viruses[i] != null){
         var virus = this.viruses[i];
         this.game.physics.arcade.enable(virus);
-        //console.log(virus);
-        console.log(this.blockedLayer);
         this.game.physics.arcade.collide(virus, this.blockedLayer);
         this.game.physics.arcade.collide(virus, this.wall);
       }
@@ -496,7 +493,7 @@ TopDownGame.GameLevel1.prototype = {
 
         var bullet = this.bullets.getFirstDead();
 
-        bullet.reset(this.defender.x - 8, this.defender.y - 8);
+        bullet.reset(this.defender.x, this.defender.y);
 
         this.game.physics.arcade.moveToObject(bullet, virus, 500);
       }
@@ -504,6 +501,8 @@ TopDownGame.GameLevel1.prototype = {
       for(var i = 0; i<this.viruses.length; i++){
         if(this.viruses[i].invincible == false && this.game.physics.arcade.overlap(this.bullets, this.viruses[i])){
           this.viruses[i].health -= 1;
+          var bullet = this.bullets.getFirstAlive();
+          bullet.kill();
         }
         if(this.viruses[i].health<=0){
           this.viruses[i].destroy()
