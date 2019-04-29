@@ -495,6 +495,7 @@ TopDownGame.GameLevel5.prototype = {
       virus.body.velocity.x = 0;
       virus.body.velocity.y = 0;
     }
+  },hide: function(obj){
   },
 
 
