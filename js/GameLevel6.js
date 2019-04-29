@@ -414,7 +414,6 @@ TopDownGame.GameLevel6.prototype = {
 
     if(this.viruses.length == 0 && this.left == 0){
       this.game.state.start('Lost');
-      
     }
     
     //Creates an array of virus instances with virus[0] being the latest addition to the map
