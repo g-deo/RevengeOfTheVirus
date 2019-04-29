@@ -33,7 +33,6 @@ TopDownGame.GameLevel3.prototype = {
     //this.libLine = new Phaser.Line(750, 0, 750, 1200);
     this.spawnLine = new Phaser.Line(0, 1000, 1200, 1000);
     
-    this.game.physics.startSystem(Phaser.Physics.ARCADE);
     this.map = this.game.add.tilemap('gameMap');
     this.viruses = new Array();
 
@@ -61,6 +60,8 @@ TopDownGame.GameLevel3.prototype = {
     this.defenderEasy(this.defenders[0], this.bullets[0]);
     this.defenderMedium(this.defenders[1], this.bullets[1]);
 
+    //Setting Defender physics
+    this.game.physics.arcade.enable(this.defenders);
 
     var text = "[Pause]";
     var style = { font: "30px Arial", fill: "#ffffff", align: "center" };
@@ -374,6 +375,15 @@ TopDownGame.GameLevel3.prototype = {
         this.game.physics.arcade.collide(virus, this.wall);
       }
     }
+
+    for(var i = 0; i< this.defenders.length; i++){
+      var current = this.defenders[i];
+      for(var j = i; j< this.defenders.length -1; j++){
+        var next = this.defenders[j+1];
+        this.game.physics.arcade.collide(current, next);
+      }
+    }
+
     if(this.viruses.length == 0 && this.left == 0){
       this.game.state.start('Lost');
     }
