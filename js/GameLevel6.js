@@ -8,6 +8,11 @@ TopDownGame.GameLevel6.prototype = {
   
   create: function() {
 
+    this.bounceSound = this.game.add.audio('bounce');
+    this.explosionSound = this.game.add.audio('explosion');
+    this.freezeSound = this.game.add.audio('freeze');
+    this.hitSound = this.game.add.audio('hit');
+
     //STATIC VARIABLES
     this.startingLibSize = 50;
     this.baseVirusSpeed = 200;
@@ -175,7 +180,7 @@ TopDownGame.GameLevel6.prototype = {
   var virusD = { 
     spritesheet:'virusD_sprite',
     image: this.game.add.image(800,780,'virusD'),
-    name: "icey",
+    name: "icy",
     cost: 10,
     skill:"Freeze!",
     speed: this.baseVirusSpeed*1,
@@ -465,6 +470,7 @@ TopDownGame.GameLevel6.prototype = {
         virus.scale.setTo(this.currentvirus.size);
         virus.health = this.currentvirus.health;
         virus.invincible = true;
+        virus.type = this.currentvirus.name;
         //this.game.physics.enable(virus,Phaser.Physics.ARCADE);
         this.limit.setText("Viruses Left: " + this.left);
         this.left = this.left-this.currentvirus.cost;
@@ -501,8 +507,15 @@ TopDownGame.GameLevel6.prototype = {
     }
     for(var i=0; i< this.defenders.length; i++){
       if(this.viruses.length >= 1){
-        this.ai(this.viruses,this.defenders[i], this.bullets[i]);
-        this.hide(this.virusA);
+        if(this.defenders[i].hasOwnProperty('iced') && this.defenders[i].iced == true){
+          this.defenders[i].icedCounter--;
+          if(this.defenders[i].icedCounter <= 0) this.defenders[i].iced=false;
+          this.defenders[i].body.velocity.x=0;
+        }
+        else{
+          this.ai(this.viruses,this.defenders[i], this.bullets[i]);
+        }
+        //this.hide(this.virusA);
       }
     }
   },  bouncewall: function(virus){
@@ -537,6 +550,12 @@ TopDownGame.GameLevel6.prototype = {
       //Destroys the collided virus and reduces health of defender
       for(var i=0; i<this.viruses.length; i++){
         if(this.game.physics.arcade.overlap(defender, this.viruses[i])){
+          if(this.viruses[i].type == "icy"){
+            defender.iced = true;
+            defender.icedCounter = 5;
+            this.freezeSound.play();
+            defender.body.velocity.x=0;
+          }
           defender.damage(10);
           this.updateHealthBar(defender,defender.healthbar);
           this.viruses[i].destroy();

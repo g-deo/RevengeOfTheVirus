@@ -8,6 +8,11 @@ TopDownGame.GameLevel5.prototype = {
   
   create: function() {
 
+    this.bounceSound = this.game.add.audio('bounce');
+    this.explosionSound = this.game.add.audio('explosion');
+    this.freezeSound = this.game.add.audio('freeze');
+    this.hitSound = this.game.add.audio('hit');
+    
     //STATIC VARIABLES
     this.startingLibSize = 50;
     this.baseVirusSpeed = 200;
