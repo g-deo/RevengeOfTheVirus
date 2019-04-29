@@ -506,8 +506,9 @@ TopDownGame.GameLevel3.prototype = {
       if(defender.health <= 0){
         defender.animations.play('dead',12, true);
         //Waits for 10 seconds;
-        this.game.time.events.loop(Phaser.Timer.SECOND, 2000, this);
         ind = this.defenders.indexOf(defender);
+        //Destroying HealthBar
+        defender.healthbar.destroy();
         defender.destroy();
         this.defenders[ind]=null;
         this.defenders.splice(ind,1);
@@ -548,9 +549,12 @@ TopDownGame.GameLevel3.prototype = {
       if(defender.health <= 0){
         defender.animations.play('dead',12, true);
         //Waits for 10 seconds;
-        this.game.time.events.loop(Phaser.Timer.SECOND, 2000, this);
         ind = this.defenders.indexOf(defender);
+        
+        //Destroying HealthBar
+        defender.healthbar.destroy();
         defender.destroy();
+
         this.defenders[ind]=null;
         this.defenders.splice(ind,1);
         //Destroying Bullets
@@ -590,14 +594,14 @@ TopDownGame.GameLevel3.prototype = {
       if(defender.health <= 0){
         defender.animations.play('dead',12, true);
         //Waits for 10 seconds;
-        this.game.time.events.loop(Phaser.Timer.SECOND, 2000, this);
         ind = this.defenders.indexOf(defender);
+        //Destroying HealthBar
+        defender.healthbar.destroy();
         defender.destroy();
+
         this.defenders[ind]=null;
         this.defenders.splice(ind,1);
 
-        //Destroying HealthBar
-        
         //Destroying Bullets
         ind2 = this.bullets.indexOf(bullets);
         bullets.destroy();
