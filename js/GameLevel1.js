@@ -7,7 +7,11 @@ var counter = 0;
 TopDownGame.GameLevel1.prototype = {
   
   create: function() {
+
     //Music
+    this.game.currentBGM.pause();
+    this.game.currentBGM = this.game.BGMs[0];
+    this.game.currentBGM.play();
     this.bounceSound = this.game.add.audio('bounce');
     this.explosionSound = this.game.add.audio('explosion');
     this.freezeSound = this.game.add.audio('freeze');

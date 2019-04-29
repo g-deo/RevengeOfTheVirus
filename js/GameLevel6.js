@@ -8,6 +8,10 @@ TopDownGame.GameLevel6.prototype = {
   
   create: function() {
 
+    this.game.currentBGM.pause();
+    this.game.currentBGM = this.game.BGMs[5];
+    this.game.currentBGM.play();
+
     this.bounceSound = this.game.add.audio('bounce');
     this.explosionSound = this.game.add.audio('explosion');
     this.freezeSound = this.game.add.audio('freeze');
