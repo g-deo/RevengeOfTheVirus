@@ -128,10 +128,10 @@ TopDownGame.GameLevel3.prototype = {
   var virusA = {
     spritesheet: 'virusA_sprite',
     image: this.game.add.image(800,150,'virusA'),
-    name: "Virus A",
-    cost: 5,
-    skill: "Fast, but frail",
-    speed: this.baseVirusSpeed*1.5,
+    name: "basic",
+    cost: 1,
+    skill: "very very normal",
+    speed: this.baseVirusSpeed,
     health: 1,
     size: 0.7,
     damage: 5
@@ -149,14 +149,14 @@ TopDownGame.GameLevel3.prototype = {
 
   var virusB = { 
     spritesheet:'virusB_sprite',
-    image: this.game.add.image(800,360,'virusB'),
-    name: "Virus B",
-    cost: 10,
+    image: this.game.add.image(800,570,'virusB'),
+    name: "tanky",
+    cost: 2,
     skill:"Tanky, but slow",
     speed: this.baseVirusSpeed*0.5,
-    health: 10,
+    health: 2,
     size: 1.0,
-    damage: 20
+    damage: 5
   }
   virusB.text = this.createDisplay(virusB);
   virusB.image.inputEnabled = true;
@@ -167,6 +167,27 @@ TopDownGame.GameLevel3.prototype = {
   }, {global: this});
   allInfo.push(virusB);
 
+  ///////////////////////////////////////////////////////////////////////
+
+  var virusC = { 
+    spritesheet:'virusC_sprite',
+    image: this.game.add.image(800,360,'virusC'),
+    name: "fast",
+    cost: 2,
+    skill:"Fast",
+    speed: this.baseVirusSpeed*1.5,
+    health: 1,
+    size: 0.5,
+    damage: 5
+  }
+  virusC.text = this.createDisplay(virusC);
+  virusC.image.inputEnabled = true;
+  virusC.image.bringToTop();
+  virusC.image.events.onInputDown.add(function(){
+    this.global.currentvirus = virusB;
+    current.text = "Selected Virus: " + this.global.currentvirus.name;
+  }, {global: this});
+  allInfo.push(virusC);
   ////////////////////////////////////////////////////////////////////////
   /*
   for(var i = 0; i < allInfo.length; i++){
@@ -287,13 +308,17 @@ TopDownGame.GameLevel3.prototype = {
    imageA =  this.game.add.image(220,210,'virusA');
 
    
-  var vBtext = virusA.name+"    Hot Key: 2"+ "\nCost: "+virusB.cost +"\nSkill: " + virusB.skill;
+  var vBtext = virusB.name+"    Hot Key: 2"+ "\nCost: "+virusB.cost +"\nSkill: " + virusB.skill;
   var vBstyle = { font: "30px Arial", fill: "#ffffff", align: "left" };
    vB = this.game.add.text(330, 400, vBtext, vBstyle);
 
    imageB =  this.game.add.image(220,410,'virusB');
 
-
+   var vCtext = virusC.name+"    Hot Key: 3"+ "\nCost: "+virusC.cost +"\nSkill: " + virusC.skill;
+   var vCstyle = { font: "30px Arial", fill: "#ffffff", align: "left" };
+    vC = this.game.add.text(330, 600, vCtext, vCstyle);
+ 
+    imageC =  this.game.add.image(220,610,'virusC');
 
 
   }, this); 
@@ -303,6 +328,8 @@ TopDownGame.GameLevel3.prototype = {
     libtext.destroy();
     imageA.destroy();
     vA.destroy();
+    imageC.destroy();
+    vC.destroy();
     imageB.destroy();
     vB.destroy();
     tx.destroy();
@@ -321,6 +348,13 @@ TopDownGame.GameLevel3.prototype = {
   key2 = this.game.input.keyboard.addKey(Phaser.Keyboard.TWO);
   key2.onDown.add(function(){
     this.global.currentvirus = virusB;
+    current.text = "Selected Virus: " + this.global.currentvirus.name;
+
+
+  }, {global:this});
+  key3 = this.game.input.keyboard.addKey(Phaser.Keyboard.THREE);
+  key3.onDown.add(function(){
+    this.global.currentvirus = virusC;
     current.text = "Selected Virus: " + this.global.currentvirus.name;
 
 
@@ -398,7 +432,6 @@ TopDownGame.GameLevel3.prototype = {
         virus.invincible = true;
         //this.game.physics.enable(virus,Phaser.Physics.ARCADE);
         this.limit.setText("Viruses Left: " + this.left);
-        this.bouncewall(virus);
         this.left = this.left-this.currentvirus.cost;
         //alert(this.left);
 
@@ -435,15 +468,7 @@ TopDownGame.GameLevel3.prototype = {
     if(this.viruses.length >= 1){
       this.ai(this.viruses);
     
-      this.hide(this.virusA);
     }
-  },  bouncewall: function(virus){
-    if (virus.x>=750){
-      virus.body.velocity.x = 0;
-      virus.body.velocity.y = 0;
-    }
-
-  },hide: function(obj){
   },
 
 

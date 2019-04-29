@@ -397,7 +397,6 @@ TopDownGame.GameLevel1.prototype = {
         virus.invincible = true;
         //this.game.physics.enable(virus,Phaser.Physics.ARCADE);
         this.limit.setText("Viruses Left: " + this.left);
-        this.bouncewall(virus);
         this.left = this.left-this.currentvirus.cost;
         //alert(this.left);
 
@@ -434,15 +433,7 @@ TopDownGame.GameLevel1.prototype = {
     if(this.viruses.length >= 1){
       this.ai(this.viruses);
     
-      this.hide(this.virusA);
     }
-  },  bouncewall: function(virus){
-    if (virus.x>=750 && virus.body != null){
-      virus.body.velocity.x = 0;
-      virus.body.velocity.y = 0;
-    }
-
-  },hide: function(obj){
   },
 
 
