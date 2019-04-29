@@ -427,6 +427,14 @@ TopDownGame.GameLevel4.prototype = {
       }
     }
 
+    for(var i = 0; i< this.defenders.length-1; i++){
+      var current = this.defenders[i];
+      for(var j = i+1; j< this.defenders.length; j++){
+        var next = this.defenders[j];
+        this.game.physics.arcade.collide(current, next);
+      }
+    }
+
     if(this.viruses.length == 0 && this.left == 0){
       this.game.state.start('Lost');
       
@@ -543,20 +551,20 @@ TopDownGame.GameLevel4.prototype = {
 },
 
   //Updates the Defender AI
-  ai: function(virusArray,defender,bullets){
+    ai: function(virusArray,defender,bullets){
     var virus = virusArray[0];
     if(defender.difficulty === "easy"){
       //Equating defender.x to virus.x + defender.width/3 because they aren't
       //lining up optherwise 
       if(defender.x < (virus.x + defender.width/3)){
-        defender.x += defender.speed;
-        defender.healthbar.x += defender.speed;
+        defender.body.velocity.x += defender.speed;
+        defender.healthbar.x = defender.x - defender.width*.28
       }
       else if(defender.x > (virus.x + defender.width/3)){
-        defender.x -= defender.speed;
-        defender.healthbar.x -= defender.speed;
+        defender.body.velocity.x -= defender.speed;
+        defender.healthbar.x = defender.x - defender.width*.28
       }
-
+      
       if (defender.x < Math.round(virus.x + defender.width/3) + this.baseDefenderAiming*1 && defender.x > Math.round(virus.x + defender.width/3) - this.baseDefenderAiming*1){
         //The defender shoots bullets when he reaches the virus's position
         this.fire(virus,defender,bullets);
@@ -564,7 +572,7 @@ TopDownGame.GameLevel4.prototype = {
       //Destroys the collided virus and reduces health of defender
       for(var i=0; i<this.viruses.length; i++){
         if(this.game.physics.arcade.overlap(defender, this.viruses[i])){
-          defender.health -= 10;
+          defender.damage(10);
           this.updateHealthBar(defender,defender.healthbar);
           this.viruses[i].destroy();
           this.viruses[i] = null;
@@ -575,13 +583,14 @@ TopDownGame.GameLevel4.prototype = {
       if(defender.health <= 0){
         defender.animations.play('dead',12, true);
         //Waits for 10 seconds;
-        this.game.time.events.loop(Phaser.Timer.SECOND, 2000, this);
         ind = this.defenders.indexOf(defender);
+        //Destroying HealthBar
+        defender.healthbar.destroy();
         defender.destroy();
         this.defenders[ind]=null;
         this.defenders.splice(ind,1);
         //Destroying Bullets
-        ind2 = this.bullets.indexOf(bullet);
+        ind2 = this.bullets.indexOf(bullets);
         bullets.destroy();
         this.bullets[ind2] = null;
         this.bullets.splice(ind2,1);
@@ -591,12 +600,12 @@ TopDownGame.GameLevel4.prototype = {
       //Equating defender.x to virus.x + defender.width/3 because they aren't
       //lining up optherwise 
       if(defender.x < (virus.x + defender.width/3)){
-        defender.x += defender.speed;
-        defender.healthbar.x += defender.speed;
+        defender.body.velocity.x += defender.speed;
+        defender.healthbar.x = defender.x - defender.width*.28
       }
       else if(defender.x > (virus.x + defender.width/3)){
-        defender.x -= defender.speed;
-        defender.healthbar.x -= defender.speed;
+        defender.body.velocity.x -= defender.speed;
+        defender.healthbar.x = defender.x - defender.width*.28
       }
 
       if (defender.x < Math.round(virus.x + defender.width/3) + this.baseDefenderAiming*1.2 && defender.x > Math.round(virus.x + defender.width/3) - this.baseDefenderAiming*1.2){
@@ -606,7 +615,7 @@ TopDownGame.GameLevel4.prototype = {
       //Destroys the collided virus and reduces health of defender
       for(var i=0; i<this.viruses.length; i++){
         if(this.game.physics.arcade.overlap(defender, this.viruses[i])){
-          defender.health -= 10;
+          defender.damage(10);
           this.updateHealthBar(defender,defender.healthbar);
           this.viruses[i].destroy();
           this.viruses[i] = null;
@@ -617,13 +626,16 @@ TopDownGame.GameLevel4.prototype = {
       if(defender.health <= 0){
         defender.animations.play('dead',12, true);
         //Waits for 10 seconds;
-        this.game.time.events.loop(Phaser.Timer.SECOND, 2000, this);
         ind = this.defenders.indexOf(defender);
+        
+        //Destroying HealthBar
+        defender.healthbar.destroy();
         defender.destroy();
+
         this.defenders[ind]=null;
         this.defenders.splice(ind,1);
         //Destroying Bullets
-        ind2 = this.bullets.indexOf(bullet);
+        ind2 = this.bullets.indexOf(bullets);
         bullets.destroy();
         this.bullets[ind2] = null;
         this.bullets.splice(ind2,1);
@@ -633,12 +645,12 @@ TopDownGame.GameLevel4.prototype = {
       //Equating defender.x to virus.x + defender.width/3 because they aren't
       //lining up optherwise 
       if(defender.x < (virus.x + defender.width/3)){
-        defender.x += defender.speed;
-        defender.healthbar.x += defender.speed;
+        defender.body.velocity.x += defender.speed;
+        defender.healthbar.x = defender.x - defender.width*.28
       }
       else if(defender.x > (virus.x + defender.width/3)){
-        defender.x -= defender.speed;
-        defender.healthbar.x -= defender.speed;
+        defender.body.velocity.x -= defender.speed;
+        defender.healthbar.x = defender.x - defender.width*.28
       }
 
       if (defender.x < Math.round(virus.x + defender.width/3) + this.baseDefenderAiming*1.7 && defender.x > Math.round(virus.x + defender.width/3) - this.baseDefenderAiming*1.7){
@@ -648,7 +660,7 @@ TopDownGame.GameLevel4.prototype = {
       //Destroys the collided virus and reduces health of defender
       for(var i=0; i<this.viruses.length; i++){
         if(this.game.physics.arcade.overlap(defender, this.viruses[i])){
-          defender.health -= 10;
+          defender.damage(10);
           this.updateHealthBar(defender,defender.healthbar);
           this.viruses[i].destroy();
           this.viruses[i] = null;
@@ -659,13 +671,15 @@ TopDownGame.GameLevel4.prototype = {
       if(defender.health <= 0){
         defender.animations.play('dead',12, true);
         //Waits for 10 seconds;
-        this.game.time.events.loop(Phaser.Timer.SECOND, 2000, this);
         ind = this.defenders.indexOf(defender);
+        //Destroying HealthBar
+        defender.healthbar.destroy();
         defender.destroy();
+
         this.defenders[ind]=null;
         this.defenders.splice(ind,1);
         //Destroying Bullets
-        ind2 = this.bullets.indexOf(bullet);
+        ind2 = this.bullets.indexOf(bullets);
         bullets.destroy();
         this.bullets[ind2] = null;
         this.bullets.splice(ind2,1);
@@ -703,11 +717,7 @@ TopDownGame.GameLevel4.prototype = {
           this.viruses[i] = null;
           this.viruses.splice(i,1);
         }
-
-
-      }
-      
-  
+      }      
   },
   //Updates the health of the virus or defender
   updateHealthBar: function(sprite,healthbar){
@@ -757,11 +767,49 @@ TopDownGame.GameLevel4.prototype = {
         //Setting the Health of the defender
         defender.health = 100;
 
+        //Damage dealt to defender
+        defender.damage = function(val){this.health-=val;}
+
         //Setting the difficulty of the defender
         defender.difficulty = "none";
+        
+        //Sets defender bounce to 0
+        defender.body.bounce.set(0,0)
+        
         defArr.push(defender);
     }
     return defArr;
+  },
+  //Sets the defenders stats to easy
+  defenderEasy: function(defender,bullet){
+    defender.difficulty = "easy";
+    defender.speed = this.baseDefenderSpeed*1
+    
+  },
+  //Sets the defenders stats to medium.
+  defenderMedium: function(defender,bullet){
+    defender.difficulty = "medium";
+    defender.speed = this.baseDefenderSpeed*1.5
+    this.baseBulletSpeed
+  },
+  //Sets the defender's stats to hard.
+  defenderHard: function(defender,bullet){
+    defender.difficulty = "hard";
+    defender.speed = this.baseDefenderSpeed*1.7
+  },
+  createBullets: function(num){
+    var arr = new Array();
+    for(var i=0; i<num; i++){    
+      // Loaded in the bullet for the defender
+      var bullets = {speed: 300};
+      this.fireRate = this.baseBulletSpeed;
+      this.nextFire = 0; 
+      bullets = this.game.add.group();
+      bullets.enableBody = true;
+      bullets.physicsBodyType = Phaser.Physics.ARCADE;
+      arr.push(bullets);
+    }
+    return arr;
   },
   //Sets the defenders stats to easy
   defenderEasy: function(defender,bullet){
