@@ -61,7 +61,11 @@ TopDownGame.GameLevel3.prototype = {
     this.defenderMedium(this.defenders[1], this.bullets[1]);
 
     //Setting Defender physics
-    this.game.physics.arcade.enable(this.defenders);
+    //this.game.physics.arcade.enable(this.defenders);
+    for(var i = 0; i < this.defenders.length; i++){
+      this.game.physics.arcade.enable(this.defenders[i]);
+      this.defenders[i].immovable = false;
+    }
 
     var text = "[Pause]";
     var style = { font: "30px Arial", fill: "#ffffff", align: "center" };
@@ -376,10 +380,10 @@ TopDownGame.GameLevel3.prototype = {
       }
     }
 
-    for(var i = 0; i< this.defenders.length; i++){
+    for(var i = 0; i< this.defenders.length-1; i++){
       var current = this.defenders[i];
-      for(var j = i; j< this.defenders.length -1; j++){
-        var next = this.defenders[j+1];
+      for(var j = i+1; j< this.defenders.length; j++){
+        var next = this.defenders[j];
         this.game.physics.arcade.collide(current, next);
       }
     }
