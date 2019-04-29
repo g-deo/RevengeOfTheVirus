@@ -61,8 +61,8 @@ TopDownGame.GameLevel4.prototype = {
     this.bullets = this.createBullets(2);
 
     //Set defender and bullet difficulty
-    this.defenderMedium(this.defenders[0], this.bullets[0]);
-    this.defenderMedium(this.defenders[1], this.bullets[1]);
+    this.defenderEasy(this.defenders[0], this.bullets[0]);
+    this.defenderHard(this.defenders[1], this.bullets[1]);
 
     var text = "[Pause]";
     var style = { font: "30px Arial", fill: "#ffffff", align: "center" };
@@ -428,7 +428,10 @@ TopDownGame.GameLevel4.prototype = {
       var current = this.defenders[i];
       for(var j = i+1; j< this.defenders.length; j++){
         var next = this.defenders[j];
-        this.game.physics.arcade.collide(current, next);
+        if(this.game.physics.arcade.overlap(current, next)){
+          current.x = current.x - 1;
+          next.x = next.x + 1;
+        }
       }
     }
 
@@ -547,17 +550,17 @@ TopDownGame.GameLevel4.prototype = {
 },
 
   //Updates the Defender AI
-    ai: function(virusArray,defender,bullets){
+  ai: function(virusArray,defender,bullets){
     var virus = virusArray[0];
     if(defender.difficulty === "easy"){
       //Equating defender.x to virus.x + defender.width/3 because they aren't
       //lining up optherwise 
       if(defender.x < (virus.x + defender.width/3)){
-        defender.body.velocity.x += defender.speed;
+        defender.x += defender.speed;
         defender.healthbar.x = defender.x - defender.width*.28
       }
       else if(defender.x > (virus.x + defender.width/3)){
-        defender.body.velocity.x -= defender.speed;
+        defender.x -= defender.speed;
         defender.healthbar.x = defender.x - defender.width*.28
       }
       
@@ -596,11 +599,11 @@ TopDownGame.GameLevel4.prototype = {
       //Equating defender.x to virus.x + defender.width/3 because they aren't
       //lining up optherwise 
       if(defender.x < (virus.x + defender.width/3)){
-        defender.body.velocity.x += defender.speed;
+        defender.x += defender.speed;
         defender.healthbar.x = defender.x - defender.width*.28
       }
       else if(defender.x > (virus.x + defender.width/3)){
-        defender.body.velocity.x -= defender.speed;
+        defender.x -= defender.speed;
         defender.healthbar.x = defender.x - defender.width*.28
       }
 
@@ -641,11 +644,11 @@ TopDownGame.GameLevel4.prototype = {
       //Equating defender.x to virus.x + defender.width/3 because they aren't
       //lining up optherwise 
       if(defender.x < (virus.x + defender.width/3)){
-        defender.body.velocity.x += defender.speed;
+        defender.body.x += defender.speed;
         defender.healthbar.x = defender.x - defender.width*.28
       }
       else if(defender.x > (virus.x + defender.width/3)){
-        defender.body.velocity.x -= defender.speed;
+        defender.body.x -= defender.speed;
         defender.healthbar.x = defender.x - defender.width*.28
       }
 
@@ -681,9 +684,11 @@ TopDownGame.GameLevel4.prototype = {
         this.bullets.splice(ind2,1);
         }
       }
+      
       if(this.defenders.length <=0){
         this.game.state.start('Win');
       }
+
   },
   fire: function(virus, defender, bullets){
     defender.animations.play('shoot', 18, true);
@@ -703,9 +708,9 @@ TopDownGame.GameLevel4.prototype = {
       }
       //Destroys viruses.
       for(var i = 0; i<this.viruses.length; i++){
+        var bullet = bullets.getFirstAlive();
         if(this.viruses[i].invincible == false && this.game.physics.arcade.overlap(bullets, this.viruses[i])){
           this.viruses[i].health -= 1;
-          var bullet = bullets.getFirstAlive();
           bullet.kill();
         }
         if(this.viruses[i].health<=0){

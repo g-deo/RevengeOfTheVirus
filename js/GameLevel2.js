@@ -536,8 +536,9 @@ TopDownGame.GameLevel2.prototype = {
       }
       //Destroys viruses.
       for(var i = 0; i<this.viruses.length; i++){
-        if(this.viruses[i].invincible == false && this.game.physics.arcade.overlap(this.bullets, this.viruses[i])){
+        if(this.viruses[i].invincible === false && this.game.physics.arcade.overlap(this.bullets, this.viruses[i])){
           this.viruses[i].health -= 1;
+          //this.hitSound.play();
           var bullet = this.bullets.getFirstAlive();
           bullet.kill();
         }
@@ -546,7 +547,7 @@ TopDownGame.GameLevel2.prototype = {
           this.viruses[i] = null;
           this.viruses.splice(i,1);
         }
-      }      
+      }        
   },
   //Updates the health of the virus or defender
   updateHealthBar: function(sprite,healthbar){
