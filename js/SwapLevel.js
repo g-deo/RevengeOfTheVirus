@@ -19,7 +19,7 @@ TopDownGame.GameLevel1.prototype = {
     this.initializeTiled();
     this.initializeTargeting();
     this.initializeDefenders();
-    this.initializeVirusTypes(this.buildUI());
+    this.initializeVirusTypes(this.buildUI);
 
     this.virus = this.game.add.sprite(50,50,this.allInfo[0].spritesheet);
     this.game.physics.arcade.enable(this.virus);
@@ -27,132 +27,132 @@ TopDownGame.GameLevel1.prototype = {
 
   },
 
-  buildUI: function(){
+  buildUI: function(app){
     //Pause button
     var text = "[Pause]";
     var style = { font: "30px Arial", fill: "#ffffff", align: "center" };
-    var t = this.game.add.text(10, 10, text, style);
+    var t = app.game.add.text(10, 10, text, style);
        
     //levels button
     var back = "[Levels]";
     var backstyle = { font: "30px Arial", fill: "#ffffff", align: "center" };
-    var backtext = this.game.add.text(10, 50, back, backstyle); 
+    var backtext = app.game.add.text(10, 50, back, backstyle); 
     backtext.inputEnabled = true // 开启输入事件
     backtext.events.onInputUp.add(function() {   
-      this.game.state.start('Levels')
-    }, this); 
+      app.game.state.start('Levels')
+    }, app); 
   
     //Initialize current virus and number of virus points
-    this.left = this.startingLibSize;
+    app.left = app.startingLibSize;
 
     //Library title
     var libtext = "Library Of Viruses";    
     var libstyle = { font: "50px Arial", fill: "#ffffff", align: "center" };
-    var lib = this.game.add.text(800, 60, libtext, libstyle);
+    var lib = app.game.add.text(800, 60, libtext, libstyle);
 
     //Virus point counter
-    var limittext = "Viruses Left: "+this.left;
+    var limittext = "Viruses Left: "+app.left;
     var limitstyle = { font: "30px Arial", fill: "#ffffff", align: "left" };
-    this.limit = this.game.add.text(600, 10, limittext, limitstyle); 
-    this.limit.bringToTop();
+    app.limit = app.game.add.text(600, 10, limittext, limitstyle); 
+    app.limit.bringToTop();
     
     //Current virus display
-    var currenttext = "Selected Virus: " + this.currentvirus.name;
+    var currenttext = "Selected Virus: " + app.currentvirus.name;
     var currentstyle = { font: "30px Arial", fill: "#ffffff", align: "left" };
-    var current = this.game.add.text(250, 10, currenttext, currentstyle); 
+    var current = app.game.add.text(250, 10, currenttext, currentstyle); 
     current.bringToTop();
 
     //Lib open button
     var libtext2 = "[Lib open]";
     var libstyle2 = { font: "30px Arial", fill: "#ffffff", align: "center" };
-    var lib2 = this.game.add.text(1050, 10, libtext2, libstyle2);
+    var lib2 = app.game.add.text(1050, 10, libtext2, libstyle2);
     lib2.bringToTop();
 
     //Invincible cheat button
     var invincible = "[invincible]";
     var libstyle2 = { font: "30px Arial", fill: "#ffffff", align: "center" };
-    var invincibletext = this.game.add.text(850, 10, invincible, libstyle2);
+    var invincibletext = app.game.add.text(850, 10, invincible, libstyle2);
     invincibletext.bringToTop();
 
     //Lib close button
     var libclosetext = "[Lib close]";
     var libclosestyle = { font: "30px Arial", fill: "#ffffff", align: "center" };
-    var libclose = this.game.add.text(1050, 10, libclosetext, libclosestyle);
+    var libclose = app.game.add.text(1050, 10, libclosetext, libclosestyle);
     libclose.bringToTop();
 
     //Hide virus library
-    for(var i = 0; i < this.allInfo.length; i++){
-      this.allInfo[i].image.visible = false;
-      this.allInfo[i].text.visible = false;
+    for(var i = 0; i < app.allInfo.length; i++){
+      app.allInfo[i].image.visible = false;
+      app.allInfo[i].text.visible = false;
       libclose.visible = false;
     }
 
     //Helper function to toggle libtext
     function toggleText(){
       lib.visible = !lib.visible;
-      for(var i = 0; i < this.allInfo.length; i++){
-        this.allInfo[i].text.visible = !this.allInfo[i].text.visible;
-        this.allInfo[i].image.visible = !this.allInfo[i].image.visible;
+      for(var i = 0; i < app.allInfo.length; i++){
+        app.allInfo[i].text.visible = !app.allInfo[i].text.visible;
+        app.allInfo[i].image.visible = !app.allInfo[i].image.visible;
       }
       libclose.visible = !libclose.visible;
     }
 
-    this.showing = false;
+    app.showing = false;
 
     //Open library
     lib2.inputEnabled = true;
     lib2.events.onInputDown.add(function(){ 
-      //console.log(this.showing);
-      this.showing = false;
-      if(!this.showing) {
+      //console.log(app.showing);
+      app.showing = false;
+      if(!app.showing) {
         toggleText();
         lib2.visible=false;
-        this.showing = true;
-        //console.log("after:"+this.showing);
+        app.showing = true;
+        //console.log("after:"+app.showing);
       }
     });
 
     //Close library
     libclose.inputEnabled = true;
     libclose.events.onInputDown.add(function(){
-      if(this.showing){
+      if(app.showing){
         toggleText();
         lib2.visible=true;
-        this.showing = false;   
-        //console.log("after:"+this.showing);
+        app.showing = false;   
+        //console.log("after:"+app.showing);
       }
     });
     
     //Pause button
     t.inputEnabled = true // 开启输入事件
     t.events.onInputUp.add(function() { 
-      this.game.paused = true; 
-      librarybackground = this.game.add.sprite(200, 100, 'library');
+      app.game.paused = true; 
+      librarybackground = app.game.add.sprite(200, 100, 'library');
       var style = {fill : '#FFF'}; 
-      tx = this.game.add.text(this.game.width * 0.5, this.game.height -200, "          Press Enter to continue\n\n*Use hot keys to change current virus.", style); 
+      tx = app.game.add.text(app.game.width * 0.5, app.game.height -200, "          Press Enter to continue\n\n*Use hot keys to change current virus.", style); 
       tx.anchor.set(0.5, 0.5); 
   
-      libtext = this.game.add.text(this.game.width * 0.5, 150, "Library Of The Virus", style); 
+      libtext = app.game.add.text(app.game.width * 0.5, 150, "Library Of The Virus", style); 
       libtext.anchor.set(0.5, 0.5);
   
       var vAtext = virusA.name+"    Hot Key: 1" + "\nCost: "+virusA.cost + "\nSkill: " + virusA.skill;
       var vAstyle = { font: "30px Arial", fill: "#ffffff", align: "left" };
-      vA = this.game.add.text(330, 200, vAtext, vAstyle);
+      vA = app.game.add.text(330, 200, vAtext, vAstyle);
   
-      imageA =  this.game.add.image(220,210,'virusA');
+      imageA =  app.game.add.image(220,210,'virusA');
   
       
       var vBtext = virusA.name+"    Hot Key: 2"+ "\nCost: "+virusB.cost +"\nSkill: " + virusB.skill;
       var vBstyle = { font: "30px Arial", fill: "#ffffff", align: "left" };
-      vB = this.game.add.text(330, 400, vBtext, vBstyle);
+      vB = app.game.add.text(330, 400, vBtext, vBstyle);
   
-      imageB =  this.game.add.image(220,410,'virusB');
-    }, this); 
+      imageB =  app.game.add.image(220,410,'virusB');
+    }, app); 
 
     //Unpause
-    var keyenter =this.game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
+    var keyenter =app.game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
     keyenter.onDown.add(function(){
-      this.game.paused = false; 
+      app.game.paused = false; 
       libtext.destroy();
       imageA.destroy();
       vA.destroy();
@@ -160,24 +160,24 @@ TopDownGame.GameLevel1.prototype = {
       vB.destroy();
       tx.destroy();
       librarybackground.destroy();
-    }, this);
+    }, app);
     t.fixedToCamera = true; 
 
-    key1 = this.game.input.keyboard.addKey(Phaser.Keyboard.ONE);
+    key1 = app.game.input.keyboard.addKey(Phaser.Keyboard.ONE);
     key1.onDown.add(function(){
-      this.global.currentvirus = virusA;
-      current.text = "Selected Virus: " + this.global.currentvirus.name;
+      app.global.currentvirus = virusA;
+      current.text = "Selected Virus: " + app.global.currentvirus.name;
 
 
-    }, {global:this});
+    }, {global:app});
 
-    key2 = this.game.input.keyboard.addKey(Phaser.Keyboard.TWO);
+    key2 = app.game.input.keyboard.addKey(Phaser.Keyboard.TWO);
     key2.onDown.add(function(){
-      this.global.currentvirus = virusB;
-      current.text = "Selected Virus: " + this.global.currentvirus.name;
+      app.global.currentvirus = virusB;
+      current.text = "Selected Virus: " + app.global.currentvirus.name;
 
 
-    }, {global:this});
+    }, {global:app});
   },
 
   initializeDefenders: function(){
@@ -262,7 +262,7 @@ TopDownGame.GameLevel1.prototype = {
     //initialize default virus
     var defaultVirus = this.allInfo[0];
     this.currentvirus = defaultVirus;
-    callback();
+    callback(this);
   },
 
   createDisplay: function(virusA){

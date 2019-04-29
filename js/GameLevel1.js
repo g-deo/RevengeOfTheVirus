@@ -42,7 +42,7 @@ TopDownGame.GameLevel1.prototype = {
     this.backgroundlayer = this.map.createLayer('backgroundLayer');
     this.objectLayer = this.map.createLayer('objectLayer');
     this.blockedLayer = this.map.createLayer('blockedLayer');
-    this.map.setCollisionBetween(1,5625, true, 'blockedLayer');
+    this.map.setCollisionBetween(5626,6000, true, 'blockedLayer');
     this.game.physics.enable(this.blockedLayer, Phaser.Physics.ARCADE)
 
     // Load in the bullet for the defender
@@ -296,6 +296,11 @@ TopDownGame.GameLevel1.prototype = {
     }, {global:this});
 
     //GUI IMPLEMENTATION ENDS HERE   
+
+
+    this.testvirus = this.game.add.sprite(50,50,'virusB_sprite');
+    this.game.physics.arcade.enable(this.testvirus);
+    this.testvirus.body.velocity.y = 100;
   },
 
   createDisplay: function(virusA){
@@ -314,14 +319,14 @@ TopDownGame.GameLevel1.prototype = {
     //this.game.physics.arcade.collide(this.viruses, this.blockedLayer);
     //this.game.physics.arcade.collide(this.viruses, this.wall);
     
-    /*for(var i = 0; i < this.viruses.length; i++){
+    for(var i = 0; i < this.viruses.length; i++){
       if(this.viruses[i] != undefined && this.viruses[i] != null){
         var virus = this.viruses[i];
         this.game.physics.arcade.enable(virus);
         this.game.physics.arcade.collide(virus, this.blockedLayer);
         this.game.physics.arcade.collide(virus, this.wall);
       }
-    }*/
+    }
 
     if(this.viruses.length == 0 && this.left == 0){
       this.game.state.start('Lost');
