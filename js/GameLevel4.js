@@ -21,7 +21,7 @@ TopDownGame.GameLevel4.prototype = {
 
   this.spaceKey = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
   this.game.input.keyboard.addKeyCapture([Phaser.Keyboard.SPACEBAR ]);
-    this.startingLibSize = 50;
+    this.startingLibSize = 150;
     this.baseVirusSpeed = 200;
     this.libX = 900;
     this.libY = 140;
@@ -122,12 +122,12 @@ TopDownGame.GameLevel4.prototype = {
     spritesheet: 'virusA_sprite',
     image: this.game.add.image(800,150,'virusA'),
     name: "basic",
-    cost: 1,
+    cost: 5,
     skill: "very very normal",
     speed: this.baseVirusSpeed,
     health: 1,
     size: 0.7,
-    damage: 5
+    damage: 20
   };
   virusA.text = this.createDisplay(virusA);
   virusA.image.inputEnabled = true;
@@ -144,12 +144,12 @@ TopDownGame.GameLevel4.prototype = {
     spritesheet:'virusB_sprite',
     image: this.game.add.image(800,360,'virusB'),
     name: "tanky",
-    cost: 2,
+    cost: 10,
     skill:"Tanky, but slow",
     speed: this.baseVirusSpeed*0.5,
     health: 2,
     size: 1.0,
-    damage: 5
+    damage: 20
   }
   virusB.text = this.createDisplay(virusB);
   virusB.image.inputEnabled = true;
@@ -166,12 +166,12 @@ TopDownGame.GameLevel4.prototype = {
     spritesheet:'virusC_sprite',
     image: this.game.add.image(800,570,'virusC'),
     name: "fast",
-    cost: 2,
+    cost:10,
     skill:"Fast",
     speed: this.baseVirusSpeed*1.5,
     health: 1,
     size: 0.5,
-    damage: 5
+    damage: 20
   }
   virusC.text = this.createDisplay(virusC);
   virusC.image.inputEnabled = true;
@@ -187,12 +187,12 @@ TopDownGame.GameLevel4.prototype = {
     spritesheet:'virusD_sprite',
     image: this.game.add.image(800,780,'virusD'),
     name: "Mr.boom",
-    cost: 10,
+    cost: 80,
     skill:"Explode!(Use spacebar)",
     speed: this.baseVirusSpeed*1,
     health: 1,
     size: 1,
-    damage: 20
+    damage: 50
   }
   virusD.text = this.createDisplay(virusD);
   virusD.image.inputEnabled = true;
@@ -536,7 +536,7 @@ TopDownGame.GameLevel4.prototype = {
             var b =(Math.abs(this.viruses[i].y-this.defenders[j].y)< 500);
             if (a&&b){
             
-            this.defenders[j].damage(100);
+            this.defenders[j].damage(80);
             this.updateHealthBar(this.defenders[j],this.defenders[j].healthbar);
 
         }
@@ -578,7 +578,7 @@ TopDownGame.GameLevel4.prototype = {
       //Destroys the collided virus and reduces health of defender
       for(var i=0; i<this.viruses.length; i++){
         if(this.game.physics.arcade.overlap(defender, this.viruses[i])){
-          defender.damage(10);
+          defender.damage(20);
           this.updateHealthBar(defender,defender.healthbar);
           this.viruses[i].destroy();
           this.viruses[i] = null;

@@ -19,7 +19,7 @@ TopDownGame.GameLevel3.prototype = {
     this.hitSound = this.game.add.audio('hit');
 
     //STATIC VARIABLES
-    this.startingLibSize = 50;
+    this.startingLibSize = 150;
     this.baseVirusSpeed = 200;
     this.libX = 900;
     this.libY = 140;
@@ -126,12 +126,12 @@ TopDownGame.GameLevel3.prototype = {
     spritesheet: 'virusA_sprite',
     image: this.game.add.image(800,150,'virusA'),
     name: "basic",
-    cost: 1,
+    cost: 5,
     skill: "very very normal",
     speed: this.baseVirusSpeed,
     health: 1,
     size: 0.7,
-    damage: 5
+    damage: 20
   };
   virusA.text = this.createDisplay(virusA);
   virusA.image.inputEnabled = true;
@@ -148,12 +148,12 @@ TopDownGame.GameLevel3.prototype = {
     spritesheet:'virusB_sprite',
     image: this.game.add.image(800,570,'virusB'),
     name: "tanky",
-    cost: 2,
+    cost: 10,
     skill:"Tanky, but slow",
     speed: this.baseVirusSpeed*0.5,
     health: 2,
     size: 1.0,
-    damage: 5
+    damage: 20
   }
   virusB.text = this.createDisplay(virusB);
   virusB.image.inputEnabled = true;
@@ -170,12 +170,12 @@ TopDownGame.GameLevel3.prototype = {
     spritesheet:'virusC_sprite',
     image: this.game.add.image(800,360,'virusC'),
     name: "fast",
-    cost: 2,
+    cost: 10,
     skill:"Fast",
-    speed: this.baseVirusSpeed*1.5,
+    speed: this.baseVirusSpeed*2,
     health: 1,
     size: 0.5,
-    damage: 5
+    damage: 20
   }
   virusC.text = this.createDisplay(virusC);
   virusC.image.inputEnabled = true;
@@ -512,7 +512,7 @@ TopDownGame.GameLevel3.prototype = {
       //Destroys the collided virus and reduces health of defender
       for(var i=0; i<this.viruses.length; i++){
         if(this.game.physics.arcade.overlap(defender, this.viruses[i])){
-          defender.damage(10);
+          defender.damage(20);
           this.updateHealthBar(defender,defender.healthbar);
           this.viruses[i].destroy();
           this.viruses[i] = null;
