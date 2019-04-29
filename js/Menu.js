@@ -12,7 +12,7 @@ TopDownGame.Menu = function(){// 开始场景
       this.game.BGMs = new Array();
       this.game.BGMs.push(bgm1,bgm2,bgm3,bgm4,bgm5,bgm6);
 
-      if(this.game.hasOwnProperty(currentBGM)){
+      if(this.game.hasOwnProperty('currentBGM')){
         this.game.currentBGM.pause();
       }
       this.game.currentBGM = this.game.BGMs[0];
