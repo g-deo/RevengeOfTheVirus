@@ -296,11 +296,6 @@ TopDownGame.GameLevel1.prototype = {
     }, {global:this});
 
     //GUI IMPLEMENTATION ENDS HERE   
-
-
-    this.testvirus = this.game.add.sprite(50,50,'virusB_sprite');
-    this.game.physics.arcade.enable(this.testvirus);
-    this.testvirus.body.velocity.y = 100;
   },
 
   createDisplay: function(virusA){
