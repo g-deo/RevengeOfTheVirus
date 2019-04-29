@@ -7,6 +7,10 @@ var counter = 0;
 TopDownGame.GameLevel1.prototype = {
   
   create: function() {
+    //Music
+    music = new Phaser.Sound(this.game,'bgm',1,true);
+
+    music.play();
 
     //STATIC VARIABLES
     this.startingLibSize = 50;

@@ -8,6 +8,9 @@ TopDownGame.GameLevel4.prototype = {
   
   create: function() {
 
+    music = new Phaser.Sound(this.game,'bgm',1,true);
+    music.play();
+
     //STATIC VARIABLES
     this.startingLibSize = 50;
     this.baseVirusSpeed = 200;

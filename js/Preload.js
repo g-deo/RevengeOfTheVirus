@@ -33,6 +33,8 @@ TopDownGame.Preload.prototype = {
     this.load.spritesheet('healthbar', '/assets/images/healthbar.png',80,80,10);
     //show loading screen
 
+    //load music
+    this.load.audio('bgm', ['assets/sounds/bgm.wav']);
     
 
   },
