@@ -218,6 +218,13 @@ TopDownGame.GameLevel3.prototype = {
   var libstyle2 = { font: "30px Arial", fill: "#ffffff", align: "center" };
   var invincibletext = this.game.add.text(850, 10, invincible, libstyle2);
   invincibletext.bringToTop();
+  invincibletext.inputEnabled=true;
+  invincibletext.events.onInputDown.add(function(){ 
+    console.log("clicked");
+    for(var i = 0; i < this.global.viruses.length; i++){ 
+      this.global.viruses[i].invincible=!this.global.viruses[i].invincible;
+    }
+  },{global:this});
 
   var libclosetext = "[Lib close]";
   var libclosestyle = { font: "30px Arial", fill: "#ffffff", align: "center" };
@@ -378,7 +385,7 @@ TopDownGame.GameLevel3.prototype = {
 
     for(var i = 0; i< this.defenders.length; i++){
       var current = this.defenders[i];
-      for(var j = i; j< this.defenders.length; j++){
+      for(var j = i; j< this.defenders.length -1; j++){
         var next = this.defenders[j+1];
         this.game.physics.arcade.collide(current, next);
       }
@@ -495,7 +502,7 @@ TopDownGame.GameLevel3.prototype = {
       //Destroys the collided virus and reduces health of defender
       for(var i=0; i<this.viruses.length; i++){
         if(this.game.physics.arcade.overlap(defender, this.viruses[i])){
-          defender.damage(10);
+          defender.health -= 10;
           this.updateHealthBar(defender,defender.healthbar);
           this.viruses[i].destroy();
           this.viruses[i] = null;
@@ -512,7 +519,7 @@ TopDownGame.GameLevel3.prototype = {
         this.defenders[ind]=null;
         this.defenders.splice(ind,1);
         //Destroying Bullets
-        ind2 = this.bullets.indexOf(bullets);
+        ind2 = this.bullets.indexOf(bullet);
         bullets.destroy();
         this.bullets[ind2] = null;
         this.bullets.splice(ind2,1);
@@ -537,7 +544,7 @@ TopDownGame.GameLevel3.prototype = {
       //Destroys the collided virus and reduces health of defender
       for(var i=0; i<this.viruses.length; i++){
         if(this.game.physics.arcade.overlap(defender, this.viruses[i])){
-          defender.damage(10);
+          defender.health -= 10;
           this.updateHealthBar(defender,defender.healthbar);
           this.viruses[i].destroy();
           this.viruses[i] = null;
@@ -554,7 +561,7 @@ TopDownGame.GameLevel3.prototype = {
         this.defenders[ind]=null;
         this.defenders.splice(ind,1);
         //Destroying Bullets
-        ind2 = this.bullets.indexOf(bullets);
+        ind2 = this.bullets.indexOf(bullet);
         bullets.destroy();
         this.bullets[ind2] = null;
         this.bullets.splice(ind2,1);
@@ -579,7 +586,7 @@ TopDownGame.GameLevel3.prototype = {
       //Destroys the collided virus and reduces health of defender
       for(var i=0; i<this.viruses.length; i++){
         if(this.game.physics.arcade.overlap(defender, this.viruses[i])){
-          defender.damage(10);
+          defender.health -= 10;
           this.updateHealthBar(defender,defender.healthbar);
           this.viruses[i].destroy();
           this.viruses[i] = null;
@@ -595,11 +602,8 @@ TopDownGame.GameLevel3.prototype = {
         defender.destroy();
         this.defenders[ind]=null;
         this.defenders.splice(ind,1);
-
-        //Destroying HealthBar
-        
         //Destroying Bullets
-        ind2 = this.bullets.indexOf(bullets);
+        ind2 = this.bullets.indexOf(bullet);
         bullets.destroy();
         this.bullets[ind2] = null;
         this.bullets.splice(ind2,1);
@@ -686,9 +690,6 @@ TopDownGame.GameLevel3.prototype = {
     
         //Setting the Health of the defender
         defender.health = 100;
-
-        //Setting a take damage function
-        defender.damage = function(val){this.health -= val}
 
         //Setting the difficulty of the defender
         defender.difficulty = "none";
