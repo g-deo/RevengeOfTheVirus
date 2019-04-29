@@ -8,8 +8,14 @@ TopDownGame.GameLevel4.prototype = {
   
   create: function() {
 
-    music = new Phaser.Sound(this.game,'bgm',1,true);
-    music.play();
+    this.game.currentBGM.pause();
+    this.game.currentBGM = this.game.BGMs[3];
+    this.game.currentBGM.play();
+
+    this.bounceSound = this.game.add.audio('bounce');
+    this.explosionSound = this.game.add.audio('explosion');
+    this.freezeSound = this.game.add.audio('freeze');
+    this.hitSound = this.game.add.audio('hit');
 
     //STATIC VARIABLES
 
@@ -530,11 +536,12 @@ TopDownGame.GameLevel4.prototype = {
             var b =(Math.abs(this.viruses[i].y-this.defenders[j].y)< 500);
             if (a&&b){
             
-            this.defenders[j].health-=100;
+            this.defenders[j].damage(100);
             this.updateHealthBar(this.defenders[j],this.defenders[j].healthbar);
 
         }
       }
+      this.explosionSound.play();
       this.viruses[i].destroy()
           this.viruses[i] = null;
           this.viruses.splice(i,1);

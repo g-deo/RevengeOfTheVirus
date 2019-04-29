@@ -8,9 +8,15 @@ TopDownGame.GameLevel5.prototype = {
   
   create: function() {
 
-    music = new Phaser.Sound(this.game,'bgm',1,true);
-    music.play();
+    this.game.currentBGM.pause();
+    this.game.currentBGM = this.game.BGMs[4];
+    this.game.currentBGM.play();
 
+    this.bounceSound = this.game.add.audio('bounce');
+    this.explosionSound = this.game.add.audio('explosion');
+    this.freezeSound = this.game.add.audio('freeze');
+    this.hitSound = this.game.add.audio('hit');
+    
     //STATIC VARIABLES
     this.startingLibSize = 50;
     this.baseVirusSpeed = 200;

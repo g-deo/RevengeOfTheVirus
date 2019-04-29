@@ -2,6 +2,22 @@ var TopDownGame = TopDownGame || {};
 
 TopDownGame.Menu = function(){// 开始场景
     this.create = function() {    //loading screen will have a white background
+
+      bgm1 = new Phaser.Sound(this.game,'bgm',1,true);
+      bgm2 = new Phaser.Sound(this.game,'BGM2',1,true);
+      bgm3 = new Phaser.Sound(this.game,'BGM3',1,true);
+      bgm4 = new Phaser.Sound(this.game,'BGM4',1,true);
+      bgm5 = new Phaser.Sound(this.game,'BGM5',1,true);
+      bgm6 = new Phaser.Sound(this.game,'BGM6',1,true);
+      this.game.BGMs = new Array();
+      this.game.BGMs.push(bgm1,bgm2,bgm3,bgm4,bgm5,bgm6);
+
+      if(this.game.hasOwnProperty(currentBGM)){
+        this.game.currentBGM.pause();
+      }
+      this.game.currentBGM = this.game.BGMs[0];
+      this.game.currentBGM.play();
+
       this.game.stage.backgroundColor = '#000000';
       this.background = this.game.add.sprite(0,0,'gameTiles');
       this.background.x = this.game.world.centerX;
