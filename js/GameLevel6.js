@@ -8,6 +8,8 @@ TopDownGame.GameLevel6.prototype = {
   
   create: function() {
 
+    this.spaceKey = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+    this.game.input.keyboard.addKeyCapture([Phaser.Keyboard.SPACEBAR ]);
     this.game.currentBGM.pause();
     this.game.currentBGM = this.game.BGMs[5];
     this.game.currentBGM.play();
@@ -184,9 +186,9 @@ TopDownGame.GameLevel6.prototype = {
   var virusD = { 
     spritesheet:'virusD_sprite',
     image: this.game.add.image(800,780,'virusD'),
-    name: "icy",
+    name: "booster",
     cost: 10,
-    skill:"Freeze!",
+    skill:"Speed up!(Use spacebar)",
     speed: this.baseVirusSpeed*1,
     health: 1,
     size: 1,
@@ -341,7 +343,7 @@ TopDownGame.GameLevel6.prototype = {
     imageC =  this.game.add.image(220,610,'virusC');
 
     
-   var vDtext = virusC.name+"    Hot Key: 4"+ "\nCost: "+virusD.cost +"\nSkill: " + virusD.skill;
+   var vDtext = virusD.name+"    Hot Key: 4"+ "\nCost: "+virusD.cost +"\nSkill: " + virusD.skill;
    var vDstyle = { font: "30px Arial", fill: "#ffffff", align: "left" };
     vD = this.game.add.text(330, 800, vDtext, vDstyle);
  
@@ -412,7 +414,17 @@ TopDownGame.GameLevel6.prototype = {
   update: function() {
 
     //DO COLLISIONS
-
+    for(var i=0; i<this.viruses.length; i++){
+      for(var j=0; j<this.defenders.length; j++){
+      if(this.game.physics.arcade.overlap(this.defenders[j], this.viruses[i])){
+        if(this.viruses[i].type == "icy"){
+          this.freezeSound.play();
+          this.ai(this.viruses,this.defenders[j], this.bullets[i]);
+        }else{
+          this.ai(this.viruses,this.defenders[j], this.bullets[i]);
+        }
+      }}
+    }
     //this.game.physics.arcade.collide(this.viruses, this.blockedLayer);
     //this.game.physics.arcade.collide(this.viruses, this.wall);
 
@@ -525,6 +537,20 @@ TopDownGame.GameLevel6.prototype = {
         //this.hide(this.virusA);
       }
     }
+    if (this.spaceKey.isDown==true){
+
+      for(var i = 0; i < this.viruses.length; i++){
+     
+        if(this.viruses[i].type =="booster"){
+          
+          this.viruses[i].body.velocity.x *=1.1; 
+          this.viruses[i].body.velocity.y *=1.1; 
+
+        }
+      
+      this.freezeSound.play();
+    }
+  }
   },  bouncewall: function(virus){
     if (virus.x>=750 && virus.body != null){
       virus.body.velocity.x = 0;
@@ -559,7 +585,7 @@ TopDownGame.GameLevel6.prototype = {
         if(this.game.physics.arcade.overlap(defender, this.viruses[i])){
           if(this.viruses[i].type == "icy"){
             defender.iced = true;
-            defender.icedCounter = 5;
+            defender.icedCounter = 5000;
             this.freezeSound.play();
             defender.body.velocity.x=0;
           }

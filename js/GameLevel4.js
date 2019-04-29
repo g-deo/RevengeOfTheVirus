@@ -188,7 +188,7 @@ TopDownGame.GameLevel4.prototype = {
     image: this.game.add.image(800,780,'virusD'),
     name: "Mr.boom",
     cost: 10,
-    skill:"explode!",
+    skill:"Explode!(Use spacebar)",
     speed: this.baseVirusSpeed*1,
     health: 1,
     size: 1,
