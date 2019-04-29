@@ -14,7 +14,9 @@ TopDownGame.GameLevel2.prototype = {
     this.libX = 900;
     this.libY = 140;
     this.libOffset = 200;
-    
+    this.baseDefenderSpeed = 1;
+    this.baseBulletSpeed = 450;
+    this.baseDefenderAiming = 2;
     //
     this.game.bounds = 100;
     this.game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -45,7 +47,7 @@ TopDownGame.GameLevel2.prototype = {
 
     // Loaded in the bullet for the defender
     this.bullets = {speed: 300};
-    this.fireRate = 450;
+    this.fireRate = this.baseBulletSpeed;
     this.nextFire = 0; 
     this.bullets = this.game.add.group();
     this.bullets.enableBody = true;
@@ -72,7 +74,7 @@ TopDownGame.GameLevel2.prototype = {
     this.defender.frame = 8;
 
     //Setting speed for the defender (can be changed for changing difficulty)
-    this.defender.speed = 1;
+    this.defender.speed = this.baseDefenderSpeed*1.5;
 
     //Setting the Health of the defender
     this.defender.health = 100;
@@ -486,7 +488,7 @@ TopDownGame.GameLevel2.prototype = {
       this.defender.healthbar.x -= this.defender.speed;
     }
 
-    if (this.defender.x === Math.round(virus.x + this.defender.width/3)){
+    if (this.defender.x < Math.round(virus.x + this.defender.width/3) + this.baseDefenderAiming*1.2 && this.defender.x > Math.round(virus.x + this.defender.width/3) - this.baseDefenderAiming*1.2){
       //The defender shoots bullets when he reaches the virus's position
       this.fire(virus);
     }
