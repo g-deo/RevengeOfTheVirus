@@ -491,12 +491,12 @@ TopDownGame.GameLevel3.prototype = {
       //Equating defender.x to virus.x + defender.width/3 because they aren't
       //lining up optherwise 
       if(defender.x < (virus.x + defender.width/3)){
-        defender.x += defender.speed;
-        defender.healthbar.x += defender.speed;
+        defender.body.velocity.x += defender.speed;
+        defender.healthbar.x = defender.x - defender.width*.28
       }
       else if(defender.x > (virus.x + defender.width/3)){
-        defender.x -= defender.speed;
-        defender.healthbar.x -= defender.speed;
+        defender.body.velocity.x -= defender.speed;
+        defender.healthbar.x = defender.x - defender.width*.28
       }
       
       if (defender.x < Math.round(virus.x + defender.width/3) + this.baseDefenderAiming*1 && defender.x > Math.round(virus.x + defender.width/3) - this.baseDefenderAiming*1){
@@ -534,12 +534,12 @@ TopDownGame.GameLevel3.prototype = {
       //Equating defender.x to virus.x + defender.width/3 because they aren't
       //lining up optherwise 
       if(defender.x < (virus.x + defender.width/3)){
-        defender.x += defender.speed;
-        defender.healthbar.x += defender.speed;
+        defender.body.velocity.x += defender.speed;
+        defender.healthbar.x = defender.x - defender.width*.28
       }
       else if(defender.x > (virus.x + defender.width/3)){
-        defender.x -= defender.speed;
-        defender.healthbar.x -= defender.speed;
+        defender.body.velocity.x -= defender.speed;
+        defender.healthbar.x = defender.x - defender.width*.28
       }
 
       if (defender.x < Math.round(virus.x + defender.width/3) + this.baseDefenderAiming*1.2 && defender.x > Math.round(virus.x + defender.width/3) - this.baseDefenderAiming*1.2){
@@ -579,12 +579,12 @@ TopDownGame.GameLevel3.prototype = {
       //Equating defender.x to virus.x + defender.width/3 because they aren't
       //lining up optherwise 
       if(defender.x < (virus.x + defender.width/3)){
-        defender.x += defender.speed;
-        defender.healthbar.x += defender.speed;
+        defender.body.velocity.x += defender.speed;
+        defender.healthbar.x = defender.x - defender.width*.28
       }
       else if(defender.x > (virus.x + defender.width/3)){
-        defender.x -= defender.speed;
-        defender.healthbar.x -= defender.speed;
+        defender.body.velocity.x -= defender.speed;
+        defender.healthbar.x = defender.x - defender.width*.28
       }
 
       if (defender.x < Math.round(virus.x + defender.width/3) + this.baseDefenderAiming*1.7 && defender.x > Math.round(virus.x + defender.width/3) - this.baseDefenderAiming*1.7){
@@ -706,6 +706,10 @@ TopDownGame.GameLevel3.prototype = {
 
         //Setting the difficulty of the defender
         defender.difficulty = "none";
+        
+        //Sets defender bounce to 0
+        defender.body.bounce.set(0,0)
+        
         defArr.push(defender);
     }
     return defArr;
