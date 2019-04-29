@@ -507,7 +507,8 @@ TopDownGame.GameLevel3.prototype = {
       //Destroys the collided virus and reduces health of defender
       for(var i=0; i<this.viruses.length; i++){
         if(this.game.physics.arcade.overlap(defender, this.viruses[i])){
-          defender.health -= 10;
+          defender.damage(10);
+          this.hitSound.play();
           this.updateHealthBar(defender,defender.healthbar);
           this.viruses[i].destroy();
           this.viruses[i] = null;
@@ -525,7 +526,7 @@ TopDownGame.GameLevel3.prototype = {
         this.defenders[ind]=null;
         this.defenders.splice(ind,1);
         //Destroying Bullets
-        ind2 = this.bullets.indexOf(bullet);
+        ind2 = this.bullets.indexOf(bullets);
         bullets.destroy();
         this.bullets[ind2] = null;
         this.bullets.splice(ind2,1);
@@ -550,8 +551,7 @@ TopDownGame.GameLevel3.prototype = {
       //Destroys the collided virus and reduces health of defender
       for(var i=0; i<this.viruses.length; i++){
         if(this.game.physics.arcade.overlap(defender, this.viruses[i])){
-          defender.health -= 10;
-          this.hitSound.play();
+          defender.damage(10);
           this.updateHealthBar(defender,defender.healthbar);
           this.viruses[i].destroy();
           this.viruses[i] = null;
@@ -571,7 +571,7 @@ TopDownGame.GameLevel3.prototype = {
         this.defenders[ind]=null;
         this.defenders.splice(ind,1);
         //Destroying Bullets
-        ind2 = this.bullets.indexOf(bullet);
+        ind2 = this.bullets.indexOf(bullets);
         bullets.destroy();
         this.bullets[ind2] = null;
         this.bullets.splice(ind2,1);
@@ -596,7 +596,7 @@ TopDownGame.GameLevel3.prototype = {
       //Destroys the collided virus and reduces health of defender
       for(var i=0; i<this.viruses.length; i++){
         if(this.game.physics.arcade.overlap(defender, this.viruses[i])){
-          defender.health -= 10;
+          defender.damage(10);
           this.updateHealthBar(defender,defender.healthbar);
           this.viruses[i].destroy();
           this.viruses[i] = null;
@@ -615,7 +615,7 @@ TopDownGame.GameLevel3.prototype = {
         this.defenders[ind]=null;
         this.defenders.splice(ind,1);
         //Destroying Bullets
-        ind2 = this.bullets.indexOf(bullet);
+        ind2 = this.bullets.indexOf(bullets);
         bullets.destroy();
         this.bullets[ind2] = null;
         this.bullets.splice(ind2,1);
@@ -703,6 +703,9 @@ TopDownGame.GameLevel3.prototype = {
     
         //Setting the Health of the defender
         defender.health = 100;
+
+        //Damage dealt to defender
+        defender.damage = function(val){this.health-=val;}
 
         //Setting the difficulty of the defender
         defender.difficulty = "none";

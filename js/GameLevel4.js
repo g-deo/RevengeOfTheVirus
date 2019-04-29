@@ -13,7 +13,8 @@ TopDownGame.GameLevel4.prototype = {
 
     //STATIC VARIABLES
 
-	this.spaceKey = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+  this.spaceKey = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+  this.game.input.keyboard.addKeyCapture([Phaser.Keyboard.SPACEBAR ]);
     this.startingLibSize = 50;
     this.baseVirusSpeed = 200;
     this.libX = 900;
@@ -409,7 +410,7 @@ TopDownGame.GameLevel4.prototype = {
   update: function() {
 
     //DO COLLISIONS
-
+    
     //this.game.physics.arcade.collide(this.viruses, this.blockedLayer);
     //this.game.physics.arcade.collide(this.viruses, this.wall);
 
@@ -463,6 +464,7 @@ TopDownGame.GameLevel4.prototype = {
         virus.scale.setTo(this.currentvirus.size);
         virus.health = this.currentvirus.health;
         virus.invincible = true;
+        virus.type = this.currentvirus.name;
         //this.game.physics.enable(virus,Phaser.Physics.ARCADE);
         this.limit.setText("Viruses Left: " + this.left);
         this.left = this.left-this.currentvirus.cost;
@@ -503,6 +505,30 @@ TopDownGame.GameLevel4.prototype = {
 
       }
     }
+
+    if (this.spaceKey.isDown==true){
+
+      for(var i = 0; i < this.viruses.length; i++){
+     
+        if(this.viruses[i].type =="Mr.boom"){
+          
+          
+
+          for(var j = 0; j < this.defenders.length; j++){
+            var a =(Math.abs(this.viruses[i].x-this.defenders[j].x)< 500);
+            var b =(Math.abs(this.viruses[i].y-this.defenders[j].y)< 500);
+            if (a&&b){
+            
+            this.defenders[j].health-=100;
+            this.updateHealthBar(this.defenders[j],this.defenders[j].healthbar);
+
+        }
+      }
+      this.viruses[i].destroy()
+          this.viruses[i] = null;
+          this.viruses.splice(i,1);
+    }}
+  }
   }, bouncewall: function(virus){
   if (virus.x>=750 && virus.body != null){
     virus.body.velocity.x = 0;
@@ -673,7 +699,11 @@ TopDownGame.GameLevel4.prototype = {
           this.viruses[i] = null;
           this.viruses.splice(i,1);
         }
-      }      
+
+
+      }
+      
+  
   },
   //Updates the health of the virus or defender
   updateHealthBar: function(sprite,healthbar){
