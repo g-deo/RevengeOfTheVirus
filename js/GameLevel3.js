@@ -10,6 +10,11 @@ TopDownGame.GameLevel3.prototype = {
 
     music = new Phaser.Sound(this.game,'bgm',1,true);
     music.play();
+    this.bounceSound = this.game.add.audio('bounce');
+    //this.bounceSound.play();
+    this.explosionSound = this.game.add.audio('explosion');
+    this.freezeSound = this.game.add.audio('freeze');
+    this.hitSound = this.game.add.audio('hit');
 
     //STATIC VARIABLES
     this.startingLibSize = 50;
@@ -378,6 +383,7 @@ TopDownGame.GameLevel3.prototype = {
     //this.game.physics.arcade.collide(this.viruses, this.wall);
 
     //Enabling Virus Physics and adding collision to blockedLayer
+
     for(var i = 0; i < this.viruses.length; i++){
       if(this.viruses[i] != undefined && this.viruses[i] != null){
         var virus = this.viruses[i];
@@ -440,21 +446,16 @@ TopDownGame.GameLevel3.prototype = {
         //alert(this.left);
 
         this.game.physics.arcade.enable(virus);
-        //this.game.physics.arcade.collide(virus, this.blockedLayer);
-        //this.game.physics.arcade.collide(virus, this.wall);
         
         virus.body.immovable = false;
         virus.body.collideWorldBounds = true;
         virus.body.bounce.set(1,1);
-        //virus.body.velocity.y= -50;
         this.mouseDown=true;
         this.renderingLine = true;
         this.viruses.unshift(virus);
       }
       
     }
-    
-
 
 
     if(this.targeting && this.game.input.activePointer.x < 1200 && this.viruses.length > 0){
@@ -507,6 +508,7 @@ TopDownGame.GameLevel3.prototype = {
       for(var i=0; i<this.viruses.length; i++){
         if(this.game.physics.arcade.overlap(defender, this.viruses[i])){
           defender.damage(10);
+          this.hitSound.play();
           this.updateHealthBar(defender,defender.healthbar);
           this.viruses[i].destroy();
           this.viruses[i] = null;
@@ -643,6 +645,7 @@ TopDownGame.GameLevel3.prototype = {
       for(var i = 0; i<this.viruses.length; i++){
         if(this.viruses[i].invincible == false && this.game.physics.arcade.overlap(bullets, this.viruses[i])){
           this.viruses[i].health -= 1;
+          this.hitSound.play();
           var bullet = bullets.getFirstAlive();
           bullet.kill();
         }
