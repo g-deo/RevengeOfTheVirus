@@ -429,7 +429,10 @@ TopDownGame.GameLevel5.prototype = {
       var current = this.defenders[i];
       for(var j = i+1; j< this.defenders.length; j++){
         var next = this.defenders[j];
-        this.game.physics.arcade.collide(current, next);
+        if(this.game.physics.arcade.overlap(current, next)){
+          current.x = current.x - 1;
+          next.x = next.x + 1;
+        }
       }
     }
 
@@ -530,11 +533,11 @@ TopDownGame.GameLevel5.prototype = {
       //Equating defender.x to virus.x + defender.width/3 because they aren't
       //lining up optherwise 
       if(defender.x < (virus.x + defender.width/3)){
-        defender.body.velocity.x += defender.speed;
+        defender.x += defender.speed;
         defender.healthbar.x = defender.x - defender.width*.28
       }
       else if(defender.x > (virus.x + defender.width/3)){
-        defender.body.velocity.x -= defender.speed;
+        defender.x -= defender.speed;
         defender.healthbar.x = defender.x - defender.width*.28
       }
       
@@ -573,11 +576,11 @@ TopDownGame.GameLevel5.prototype = {
       //Equating defender.x to virus.x + defender.width/3 because they aren't
       //lining up optherwise 
       if(defender.x < (virus.x + defender.width/3)){
-        defender.body.velocity.x += defender.speed;
+        defender.x += defender.speed;
         defender.healthbar.x = defender.x - defender.width*.28
       }
       else if(defender.x > (virus.x + defender.width/3)){
-        defender.body.velocity.x -= defender.speed;
+        defender.x -= defender.speed;
         defender.healthbar.x = defender.x - defender.width*.28
       }
 
@@ -618,11 +621,11 @@ TopDownGame.GameLevel5.prototype = {
       //Equating defender.x to virus.x + defender.width/3 because they aren't
       //lining up optherwise 
       if(defender.x < (virus.x + defender.width/3)){
-        defender.body.velocity.x += defender.speed;
+        defender.body.x += defender.speed;
         defender.healthbar.x = defender.x - defender.width*.28
       }
       else if(defender.x > (virus.x + defender.width/3)){
-        defender.body.velocity.x -= defender.speed;
+        defender.body.x -= defender.speed;
         defender.healthbar.x = defender.x - defender.width*.28
       }
 
@@ -658,9 +661,11 @@ TopDownGame.GameLevel5.prototype = {
         this.bullets.splice(ind2,1);
         }
       }
+      
       if(this.defenders.length <=0){
         this.game.state.start('Win');
       }
+
   },
   fire: function(virus, defender, bullets){
     defender.animations.play('shoot', 18, true);
@@ -680,9 +685,9 @@ TopDownGame.GameLevel5.prototype = {
       }
       //Destroys viruses.
       for(var i = 0; i<this.viruses.length; i++){
+        var bullet = bullets.getFirstAlive();
         if(this.viruses[i].invincible == false && this.game.physics.arcade.overlap(bullets, this.viruses[i])){
           this.viruses[i].health -= 1;
-          var bullet = bullets.getFirstAlive();
           bullet.kill();
         }
         if(this.viruses[i].health<=0){
@@ -752,6 +757,37 @@ TopDownGame.GameLevel5.prototype = {
         defArr.push(defender);
     }
     return defArr;
+  },
+  //Sets the defenders stats to easy
+  defenderEasy: function(defender,bullet){
+    defender.difficulty = "easy";
+    defender.speed = this.baseDefenderSpeed*1
+    
+  },
+  //Sets the defenders stats to medium.
+  defenderMedium: function(defender,bullet){
+    defender.difficulty = "medium";
+    defender.speed = this.baseDefenderSpeed*1.5
+    this.baseBulletSpeed
+  },
+  //Sets the defender's stats to hard.
+  defenderHard: function(defender,bullet){
+    defender.difficulty = "hard";
+    defender.speed = this.baseDefenderSpeed*1.7
+  },
+  createBullets: function(num){
+    var arr = new Array();
+    for(var i=0; i<num; i++){    
+      // Loaded in the bullet for the defender
+      var bullets = {speed: 300};
+      this.fireRate = this.baseBulletSpeed;
+      this.nextFire = 0; 
+      bullets = this.game.add.group();
+      bullets.enableBody = true;
+      bullets.physicsBodyType = Phaser.Physics.ARCADE;
+      arr.push(bullets);
+    }
+    return arr;
   },
   //Sets the defenders stats to easy
   defenderEasy: function(defender,bullet){
