@@ -19,7 +19,7 @@ TopDownGame.GameLevel2.prototype = {
 
 
     //STATIC VARIABLES
-    this.startingLibSize = 50;
+    this.startingLibSize = 40;
     this.baseVirusSpeed = 200;
     this.libX = 900;
     this.libY = 140;
@@ -141,12 +141,12 @@ TopDownGame.GameLevel2.prototype = {
     spritesheet: 'virusA_sprite',
     image: this.game.add.image(800,150,'virusA'),
     name: "basic",
-    cost: 1,
+    cost: 5,
     skill: "very very normal",
     speed: this.baseVirusSpeed,
     health: 1,
     size: 0.7,
-    damage: 5
+    damage: 20
   };
   virusA.text = this.createDisplay(virusA);
   virusA.image.inputEnabled = true;
@@ -168,7 +168,7 @@ TopDownGame.GameLevel2.prototype = {
     speed: this.baseVirusSpeed*0.5,
     health: 2,
     size: 1.0,
-    damage: 5
+    damage: 20
   }
   virusB.text = this.createDisplay(virusB);
   virusB.image.inputEnabled = true;
@@ -185,12 +185,12 @@ TopDownGame.GameLevel2.prototype = {
     spritesheet:'virusC_sprite',
     image: this.game.add.image(800,360,'virusC'),
     name: "fast",
-    cost: 2,
+    cost: 10,
     skill:"Fast",
     speed: this.baseVirusSpeed*1.5,
     health: 1,
     size: 0.5,
-    damage: 5
+    damage: 20
   }
   virusC.text = this.createDisplay(virusC);
   virusC.image.inputEnabled = true;
@@ -511,7 +511,7 @@ TopDownGame.GameLevel2.prototype = {
     //Destroys the collided virus and reduces health of defender
     for(var i=0; i<this.viruses.length; i++){
     if(this.game.physics.arcade.overlap(this.defender, this.viruses[i])){
-      this.defender.health -= 10;
+      this.defender.health -= 20;
       this.updateHealthBar(this.defender,this.defender.healthbar);
       this.viruses[i].destroy();
       this.viruses[i] = null;
