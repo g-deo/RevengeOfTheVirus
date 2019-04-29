@@ -8,8 +8,6 @@ TopDownGame.GameLevel3.prototype = {
   
   create: function() {
 
-    music = new Phaser.Sound(this.game,'bgm',1,true);
-    music.play();
     this.bounceSound = this.game.add.audio('bounce');
     //this.bounceSound.play();
     this.explosionSound = this.game.add.audio('explosion');

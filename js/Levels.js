@@ -8,7 +8,7 @@ TopDownGame.Levels = function(){// 开始场景
       this.background.x = this.game.world.centerX;
       this.background.y = this.game.world.centerY;
       this.background.anchor.set(0.5,0.5);
-      
+    
       //scaling options
       this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
       

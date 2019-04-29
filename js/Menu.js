@@ -2,6 +2,10 @@ var TopDownGame = TopDownGame || {};
 
 TopDownGame.Menu = function(){// 开始场景
     this.create = function() {    //loading screen will have a white background
+
+      music = new Phaser.Sound(this.game,'bgm',1,true);
+      music.play();
+
       this.game.stage.backgroundColor = '#000000';
       this.background = this.game.add.sprite(0,0,'gameTiles');
       this.background.x = this.game.world.centerX;
