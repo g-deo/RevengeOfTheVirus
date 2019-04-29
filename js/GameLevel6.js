@@ -238,6 +238,14 @@ TopDownGame.GameLevel6.prototype = {
   var libstyle2 = { font: "30px Arial", fill: "#ffffff", align: "center" };
   var invincibletext = this.game.add.text(850, 10, invincible, libstyle2);
   invincibletext.bringToTop();
+  
+  invincibletext.inputEnabled=true;
+  invincibletext.events.onInputDown.add(function(){ 
+    console.log("clicked");
+    for(var i = 0; i < this.global.viruses.length; i++){ 
+      this.global.viruses[i].invincible=!this.global.viruses[i].invincible;
+    }
+  },{global:this});
 
   var libclosetext = "[Lib close]";
   var libclosestyle = { font: "30px Arial", fill: "#ffffff", align: "center" };

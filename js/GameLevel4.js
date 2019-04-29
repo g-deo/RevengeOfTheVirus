@@ -12,6 +12,8 @@ TopDownGame.GameLevel4.prototype = {
     music.play();
 
     //STATIC VARIABLES
+
+	this.spaceKey = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
     this.startingLibSize = 50;
     this.baseVirusSpeed = 200;
     this.libX = 900;
@@ -237,6 +239,13 @@ TopDownGame.GameLevel4.prototype = {
   var libstyle2 = { font: "30px Arial", fill: "#ffffff", align: "center" };
   var invincibletext = this.game.add.text(850, 10, invincible, libstyle2);
   invincibletext.bringToTop();
+  invincibletext.inputEnabled=true;
+  invincibletext.events.onInputDown.add(function(){ 
+    console.log("clicked");
+    for(var i = 0; i < this.global.viruses.length; i++){ 
+      this.global.viruses[i].invincible=!this.global.viruses[i].invincible;
+    }
+  },{global:this});
 
   var libclosetext = "[Lib close]";
   var libclosestyle = { font: "30px Arial", fill: "#ffffff", align: "center" };
@@ -375,11 +384,14 @@ TopDownGame.GameLevel4.prototype = {
   }, {global:this});
   key4 = this.game.input.keyboard.addKey(Phaser.Keyboard.FOUR);
   key4.onDown.add(function(){
+    
+    console.log("clicked");
     this.global.currentvirus = virusD;
     current.text = "Selected Virus: " + this.global.currentvirus.name;
 
 
   }, {global:this});
+
 
 
   
