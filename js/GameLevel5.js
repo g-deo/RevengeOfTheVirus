@@ -178,7 +178,7 @@ TopDownGame.GameLevel5.prototype = {
   var virusE = { 
     spritesheet:'virusE_sprite',
     image: this.game.add.image(800,780,'virusE'),
-    name: "Mr.unstopable",
+    name: "Mr. unstoppable",
     cost: 10,
     skill:"pass through everything",
     speed: this.baseVirusSpeed*1,
@@ -405,7 +405,7 @@ TopDownGame.GameLevel5.prototype = {
 
     //Enabling Virus Physics and adding collision to blockedLayer
     for(var i = 0; i < this.viruses.length; i++){
-      if(this.viruses[i] != undefined && this.viruses[i] != null){
+      if(this.viruses[i] != undefined && this.viruses[i] != null && this.viruses[i].type != "Mr. unstoppable"){
         var virus = this.viruses[i];
         this.game.physics.arcade.enable(virus);
         this.game.physics.arcade.collide(virus, this.blockedLayer);
@@ -453,6 +453,7 @@ TopDownGame.GameLevel5.prototype = {
         virus.scale.setTo(this.currentvirus.size);
         virus.health = this.currentvirus.health;
         virus.invincible = true;
+        virus.type = this.currentvirus.name;
         //this.game.physics.enable(virus,Phaser.Physics.ARCADE);
         this.limit.setText("Viruses Left: " + this.left);
         this.left = this.left-this.currentvirus.cost;
