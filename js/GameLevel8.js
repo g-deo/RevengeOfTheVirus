@@ -19,39 +19,40 @@ TopDownGame.GameLevel8.prototype = {
     this.game.bounds = 100;
     this.game.physics.startSystem(Phaser.Physics.ARCADE);
     this.game.stage.backgroundColor = '#000000';
+    /* 
     this.background = this.game.add.sprite(0,0,'gameTiles');
     this.background.x = this.game.world.centerX;
     this.background.y = this.game.world.centerY;
-    this.background.anchor.set(0.5,0.5);
+    this.background.anchor.set(0.5,0.5);*/
 
     //this.libLine = new Phaser.Line(750, 0, 750, 1200);
     this.spawnLine = new Phaser.Line(0, 1000, 1200, 1000);
     
     this.game.physics.startSystem(Phaser.Physics.ARCADE);
- //   this.map = this.game.add.tilemap('gameMap');
+    this.map = this.game.add.tilemap('gameMap');
     this.viruses = new Array();
 
     this.mouseDown = false;
     this.targeting = false;
     
     //the first parameter is the tileset name as specified in Tiled, the second is the key to the asset
-    //this.map.addTilesetImage('gameTiles', 'gameTiles');
-
+    this.map.addTilesetImage('gameTiles', 'gameTiles');
+    this.map.addTilesetImage('redBloodCell', 'redBloodCell');
     //create layer
-  //  this.backgroundlayer = this.map.createLayer('backgroundLayer');
-  //  this.objectLayer = this.map.createLayer('objectLayer');
+    this.backgroundlayer = this.map.createLayer('backgroundLayer');
+    this.objectLayer = this.map.createLayer('objectLayer');
+    this.blockedLayer = this.map.createLayer('blockedLayer');
 
     // Loaded in the bullet for the defender
     this.bullets = {speed: 300};
     this.fireRate = 450;
-    this.nextFire = 0;
-   
+    this.nextFire = 0; 
     this.bullets = this.game.add.group();
     this.bullets.enableBody = true;
     this.bullets.physicsBodyType = Phaser.Physics.ARCADE;
 
     //Initialized defender sprite
- //   var result = this.findObjectsByType('defender', this.map, 'objectLayer');
+    this.map.setCollisionBetween(1, 5625, true, 'blockedLayer');
     this.defender = this.game.add.sprite(100, 100, 'defender');
     this.defender.frame = 8;
     this.defender.anchor.set(0.5, 0.5);
@@ -242,13 +243,13 @@ TopDownGame.GameLevel8.prototype = {
       
   lib2.inputEnabled = true;
   lib2.events.onInputDown.add(function(){ 
-    console.log(this.showing);
+    //console.log(this.showing);
     this.showing = false;
     if(!this.showing) {
       toggleText();
       lib2.visible=false;
       this.showing = true;
-      console.log("after:"+this.showing);
+      //console.log("after:"+this.showing);
     }
   });
 
@@ -340,6 +341,21 @@ TopDownGame.GameLevel8.prototype = {
  
   update: function() {
 
+    //DO COLLISIONS
+
+    //this.game.physics.arcade.collide(this.viruses, this.blockedLayer);
+    //this.game.physics.arcade.collide(this.viruses, this.wall);
+
+    //Enabling Virus Physics and adding collision to blockedLayer
+    for(var i = 0; i < this.viruses.length; i++){
+      if(this.viruses[i] != undefined && this.viruses[i] != null){
+        var virus = this.viruses[i];
+        this.game.physics.arcade.enable(virus);
+        this.game.physics.arcade.collide(virus, this.blockedLayer);
+        this.game.physics.arcade.collide(virus, this.wall);
+      }
+    }
+
     if(this.viruses.length == 0 && this.left == 0){
       this.game.state.start('Lost');
       
@@ -367,6 +383,7 @@ TopDownGame.GameLevel8.prototype = {
           this.viruses[0].body.velocity.x = difX/pythag*speed;
         }
         this.targeting = false;
+        this.viruses[0].invincible = false;
       }
       
       this.limit.setText("Viruses Left: "+this.left);
@@ -378,12 +395,17 @@ TopDownGame.GameLevel8.prototype = {
         virus.animations.play('move', 18, true);
         virus.scale.setTo(this.currentvirus.size);
         virus.health = this.currentvirus.health;
-        this.game.physics.enable(virus,Phaser.Physics.ARCADE);
+        virus.invincible = true;
+        //this.game.physics.enable(virus,Phaser.Physics.ARCADE);
         this.limit.setText("Viruses Left: " + this.left);
         this.bouncewall(virus);
         this.left = this.left-this.currentvirus.cost;
         //alert(this.left);
-        this.game.physics.arcade.collide(virus, this.wall);
+
+        this.game.physics.arcade.enable(virus);
+        //this.game.physics.arcade.collide(virus, this.blockedLayer);
+        //this.game.physics.arcade.collide(virus, this.wall);
+        
         virus.body.immovable = false;
         virus.body.collideWorldBounds = true;
         virus.body.bounce.set(1,1);
@@ -410,12 +432,6 @@ TopDownGame.GameLevel8.prototype = {
       this.targeting = true;
     }
 
-    for(var i = 0; i < this.viruses.length; i++){
-      if(this.viruses[i].y < -this.viruses[i].height){
-        this.viruses[i].destroy();
-        this.viruses.splice(i,1);
-      }
-    }
     if(this.viruses.length >= 1){
       this.ai(this.viruses);
     
@@ -478,14 +494,16 @@ TopDownGame.GameLevel8.prototype = {
 
         var bullet = this.bullets.getFirstDead();
 
-        bullet.reset(this.defender.x - 8, this.defender.y - 8);
+        bullet.reset(this.defender.x, this.defender.y);
 
         this.game.physics.arcade.moveToObject(bullet, virus, 500);
       }
       //Destroys viruses.
       for(var i = 0; i<this.viruses.length; i++){
-        if(this.game.physics.arcade.overlap(this.bullets, this.viruses[i])){
+        if(this.viruses[i].invincible == false && this.game.physics.arcade.overlap(this.bullets, this.viruses[i])){
           this.viruses[i].health -= 1;
+          var bullet = this.bullets.getFirstAlive();
+          bullet.kill();
         }
         if(this.viruses[i].health<=0){
           this.viruses[i].destroy()
@@ -532,4 +550,3 @@ TopDownGame.GameLevel8.prototype = {
   }
 
   //find objects in a Tiled layer that containt a property called "type" equal to a certain value
-

@@ -314,8 +314,7 @@ TopDownGame.GameLevel1.prototype = {
     //this.game.physics.arcade.collide(this.viruses, this.blockedLayer);
     //this.game.physics.arcade.collide(this.viruses, this.wall);
     
-    /*
-    for(var i = 0; i < this.viruses.length; i++){
+    /*for(var i = 0; i < this.viruses.length; i++){
       if(this.viruses[i] != undefined && this.viruses[i] != null){
         var virus = this.viruses[i];
         this.game.physics.arcade.enable(virus);
@@ -406,7 +405,7 @@ TopDownGame.GameLevel1.prototype = {
       this.hide(this.virusA);
     }
   },  bouncewall: function(virus){
-    if (virus.x>=750){
+    if (virus.x>=750 && virus.body != null){
       virus.body.velocity.x = 0;
       virus.body.velocity.y = 0;
     }
