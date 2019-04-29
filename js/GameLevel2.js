@@ -54,7 +54,7 @@ TopDownGame.GameLevel2.prototype = {
     this.bullets.physicsBodyType = Phaser.Physics.ARCADE;
 
     //Initialized defender sprite
-    this.map.setCollisionBetween(1, 5625, true, 'blockedLayer');
+    this.map.setCollisionBetween(5626,6000, true, 'blockedLayer');
     this.defender = this.game.add.sprite(100, 100, 'defender');
     this.defender.frame = 8;
     this.defender.anchor.set(0.5, 0.5);

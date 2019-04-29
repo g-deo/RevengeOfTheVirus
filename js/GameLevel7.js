@@ -46,7 +46,7 @@ TopDownGame.GameLevel7.prototype = {
     this.blockedLayer = this.map.createLayer('blockedLayer');
 
     //Created the collision between the blockedLayer
-    this.map.setCollisionBetween(1, 5625, true, 'blockedLayer');
+    this.map.setCollisionBetween(5626,6000, true, 'blockedLayer');
     
     //Create defender sprites using function
     this.defenders = this.createDefenders(3);
