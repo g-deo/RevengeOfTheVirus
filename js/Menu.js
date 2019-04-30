@@ -9,13 +9,17 @@ TopDownGame.Menu = function(){// 开始场景
       bgm4 = new Phaser.Sound(this.game,'BGM4',1,true);
       bgm5 = new Phaser.Sound(this.game,'BGM5',1,true);
       bgm6 = new Phaser.Sound(this.game,'BGM6',1,true);
+      menuMusic = new Phaser.Sound(this.game,'menu',1,true);
+      winMusic = new Phaser.Sound(this.game,'win',1,false);
+      loseMusic = new Phaser.Sound(this.game,'lose',1,false);
+
       this.game.BGMs = new Array();
-      this.game.BGMs.push(bgm1,bgm2,bgm3,bgm4,bgm5,bgm6);
+      this.game.BGMs.push(bgm1,bgm2,bgm3,bgm4,bgm5,bgm6,menuMusic,winMusic,loseMusic);
 
       if(this.game.hasOwnProperty('currentBGM')){
         this.game.currentBGM.pause();
       }
-      this.game.currentBGM = this.game.BGMs[0];
+      this.game.currentBGM = this.game.BGMs[6];
       this.game.currentBGM.play();
 
       this.game.stage.backgroundColor = '#000000';

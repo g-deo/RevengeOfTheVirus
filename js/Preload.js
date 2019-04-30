@@ -46,6 +46,9 @@ TopDownGame.Preload.prototype = {
     this.load.audio('explosion', 'assets/sounds/explosion.wav');
     this.load.audio('freeze', 'assets/sounds/freeze.wav');
     this.load.audio('hit', 'assets/sounds/hit.wav');
+    this.load.audio('menu', 'assets/sounds/mainMenu.wav');
+    this.load.audio('win', 'assets/sounds/win.wav');
+    this.load.audio('lose', 'assets/sounds/lose.wav');
 
   },
   create: function() {

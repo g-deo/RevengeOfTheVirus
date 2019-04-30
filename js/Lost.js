@@ -2,6 +2,11 @@ var TopDownGame = TopDownGame || {};
 
 TopDownGame.Lost = function(){// 开始场景
     this.create = function() {    //loading screen will have a white background
+
+      this.game.currentBGM.pause();
+      this.game.currentBGM = this.game.BGMs[8];
+      this.game.currentBGM.play();  
+
       this.game.stage.backgroundColor = '#000000';
       this.background = this.game.add.sprite(0,0,'gameTiles');
       this.background.x = this.game.world.centerX;
