@@ -432,6 +432,7 @@ TopDownGame.GameLevel4.prototype = {
 
     for(var i = 0; i< this.defenders.length-1; i++){
       var current = this.defenders[i];
+      this.updateHealthBar(this.defenders[i],this.defenders[i].healthbar);
       for(var j = i+1; j< this.defenders.length; j++){
         var next = this.defenders[j];
         if(this.game.physics.arcade.overlap(current, next)){
@@ -745,7 +746,7 @@ TopDownGame.GameLevel4.prototype = {
   createDefenders: function(num){
     var defArr = new Array();
     var defaultX = 90;
-    var defaultY = 100
+    var defaultY = 120
     for(var i =0; i< num; i++){
         //Initialized defender sprite
         var defender = this.game.add.sprite(defaultX+=130, defaultY, 'defender');
