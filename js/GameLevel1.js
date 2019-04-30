@@ -480,6 +480,7 @@ TopDownGame.GameLevel1.prototype = {
       for(var i = 0; i<this.viruses.length; i++){
         if(this.viruses[i].invincible == false && this.game.physics.arcade.overlap(this.bullets, this.viruses[i])){
           this.viruses[i].health -= 1;
+          this.hitSound.play();
           var bullet = this.bullets.getFirstAlive();
           bullet.kill();
         }

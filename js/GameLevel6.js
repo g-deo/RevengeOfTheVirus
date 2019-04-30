@@ -730,6 +730,7 @@ TopDownGame.GameLevel6.prototype = {
         var bullet = bullets.getFirstAlive();
         if(this.viruses[i].invincible == false && this.game.physics.arcade.overlap(bullets, this.viruses[i])){
           this.viruses[i].health -= 1;
+          this.hitSound.play();
           bullet.kill();
         }
         if(this.viruses[i].health<=0){
