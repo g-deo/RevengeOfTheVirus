@@ -7,6 +7,8 @@ TopDownGame.Preload.prototype = {
   preload: function() {
     //load game assets
     this.load.tilemap('gameMap', 'assets/tilemaps/gameMap.json', null, Phaser.Tilemap.TILED_JSON);
+    this.load.tilemap('gameMapEasy', 'assets/tilemaps/gameMapEasy.json', null, Phaser.Tilemap.TILED_JSON);
+    this.load.tilemap('gameMapHard', 'assets/tilemaps/gameMapHard.json', null, Phaser.Tilemap.TILED_JSON);
     this.load.image('gameTiles', 'assets/images/backgroundMap.png');
     this.load.image('redBloodCell', 'assets/images/redBloodCell.png');
     //this.load.image('gameTiles2', 'assets/images/backgroundMap_lib.png');

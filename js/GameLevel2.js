@@ -41,7 +41,7 @@ TopDownGame.GameLevel2.prototype = {
     this.spawnLine = new Phaser.Line(0, 1000, 1200, 1000);
     
     this.game.physics.startSystem(Phaser.Physics.ARCADE);
-    this.map = this.game.add.tilemap('gameMap');
+    this.map = this.game.add.tilemap('gameMapEasy');
     this.viruses = new Array();
 
     this.mouseDown = false;
