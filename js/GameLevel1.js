@@ -126,7 +126,7 @@ TopDownGame.GameLevel1.prototype = {
       speed: this.baseVirusSpeed*1.5,
       health: 1,
       size: 0.7,
-      damage: 5
+      damage: 20
     };
     virusA.text = this.createDisplay(virusA);
     virusA.image.inputEnabled = true;
@@ -446,7 +446,7 @@ TopDownGame.GameLevel1.prototype = {
     //Destroys the collided virus and reduces health of defender
     for(var i=0; i<this.viruses.length; i++){
     if(this.game.physics.arcade.overlap(this.defender, this.viruses[i])){
-      this.defender.health -= 10;
+      this.defender.health -= 20;
       this.updateHealthBar(this.defender,this.defender.healthbar);
       this.viruses[i].destroy();
       this.viruses[i] = null;
