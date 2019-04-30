@@ -171,7 +171,7 @@ TopDownGame.GameLevel1.prototype = {
     
     var currenttext = "Selected Virus: " + this.currentvirus.name;
     var currentstyle = { font: "30px Arial", fill: "#ffffff", align: "left" };
-    var current = this.game.add.text(250, 10, currenttext, currentstyle); 
+    var current = this.game.add.text(150, 10, currenttext, currentstyle); 
     current.bringToTop();
 
 
