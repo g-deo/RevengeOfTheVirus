@@ -4,7 +4,7 @@ TopDownGame.Win = function(){// 开始场景
     this.create = function() {    //loading screen will have a white background
 
       this.game.currentBGM.pause();
-      this.game.currentBGM = this.game.BGMs[8];
+      this.game.currentBGM = this.game.BGMs[7];
       this.game.currentBGM.play();  
 
       this.game.stage.backgroundColor = '#000000';

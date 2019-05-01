@@ -608,10 +608,10 @@ TopDownGame.GameLevel6.prototype = {
         this.defenders[ind]=null;
         this.defenders.splice(ind,1);
         //Destroying Bullets
-        ind2 = this.bullets.indexOf(bullets);
-        bullets.destroy();
-        this.bullets[ind2] = null;
-        this.bullets.splice(ind2,1);
+        //ind2 = this.bullets.indexOf(bullets);
+        //bullets.destroy();
+        //this.bullets[ind2] = null;
+        //this.bullets.splice(ind2,1);
         }
       }
     else if(defender.difficulty === "medium"){
@@ -653,10 +653,10 @@ TopDownGame.GameLevel6.prototype = {
         this.defenders[ind]=null;
         this.defenders.splice(ind,1);
         //Destroying Bullets
-        ind2 = this.bullets.indexOf(bullets);
-        bullets.destroy();
-        this.bullets[ind2] = null;
-        this.bullets.splice(ind2,1);
+        //ind2 = this.bullets.indexOf(bullets);
+        //bullets.destroy();
+        //this.bullets[ind2] = null;
+        //this.bullets.splice(ind2,1);
         }
       }
       else if(defender.difficulty === "hard"){
@@ -697,10 +697,10 @@ TopDownGame.GameLevel6.prototype = {
         this.defenders[ind]=null;
         this.defenders.splice(ind,1);
         //Destroying Bullets
-        ind2 = this.bullets.indexOf(bullets);
-        bullets.destroy();
-        this.bullets[ind2] = null;
-        this.bullets.splice(ind2,1);
+        //ind2 = this.bullets.indexOf(bullets);
+        //this.bullets[ind2].destroy();
+        //this.bullets[ind2] = null;
+        //this.bullets.splice(ind2,1);
         }
       }
       
@@ -713,6 +713,7 @@ TopDownGame.GameLevel6.prototype = {
     defender.animations.play('shoot', 18, true);
     //Loading the bullets
     //alert(Object.getOwnPropertyNames(bullets));
+    if(bullets != undefined || bullets != null){
     bullets.createMultiple(1, 'defenderBullet');
     bullets.setAll('checkWorldBounds', true);
     if (this.game.time.now > this.nextFire && bullets.countDead() > 0)
@@ -738,7 +739,8 @@ TopDownGame.GameLevel6.prototype = {
           this.viruses[i] = null;
           this.viruses.splice(i,1);
         }
-      }      
+      }
+    }      
   },
   //Updates the health of the virus or defender
   updateHealthBar: function(sprite,healthbar){
