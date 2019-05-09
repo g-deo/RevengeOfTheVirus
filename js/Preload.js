@@ -12,7 +12,7 @@ TopDownGame.Preload.prototype = {
     this.load.image('gameTiles', 'assets/images/backgroundMap.png');
     this.load.image('redBloodCell', 'assets/images/redBloodCell.png');
     //this.load.image('gameTiles2', 'assets/images/backgroundMap_lib.png');
-    this.load.spritesheet('defender', 'assets/images/defender.png',128,128,24);
+    this.load.spritesheet('defender', 'assets/images/defender.png',128,128,32);
     this.load.image('defenderBullet', 'assets/images/defenderBullet.png');
     this.load.image('preloadbar', '/assets/images/preloader-bar.png');
     
@@ -24,11 +24,11 @@ TopDownGame.Preload.prototype = {
     this.load.image('virusD', '/assets/images/virusD.png');
     this.load.image('virusE', '/assets/images/virusE.png');
     
-    this.load.spritesheet('virusA_sprite', '/assets/images/virusA_sprite.png',80,80,4);
-    this.load.spritesheet('virusB_sprite', '/assets/images/virusB_sprite.png',80,80,4);
-    this.load.spritesheet('virusC_sprite', '/assets/images/virusC_sprite.png',80,80,4);
-    this.load.spritesheet('virusD_sprite', '/assets/images/virusD_sprite.png',80,80,4);
-    this.load.spritesheet('virusE_sprite', '/assets/images/virusE_sprite.png',80,80,4);
+    this.load.spritesheet('virusA_sprite', '/assets/images/virusA_sprite.png',80,80,8);
+    this.load.spritesheet('virusB_sprite', '/assets/images/virusB_sprite.png',80,80,8);
+    this.load.spritesheet('virusC_sprite', '/assets/images/virusC_sprite.png',80,80,8);
+    this.load.spritesheet('virusD_sprite', '/assets/images/virusD_sprite.png',80,80,8);
+    this.load.spritesheet('virusE_sprite', '/assets/images/virusE_sprite.png',80,80,8);
     this.load.image('wall', '/assets/images/wall.png');
 
     //health bar percentages starting at 100%

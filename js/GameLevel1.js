@@ -24,6 +24,7 @@ TopDownGame.GameLevel1.prototype = {
     this.libY = 140;
     this.libOffset = 200;
     this.game.bounds = 100;
+    this.defenderShootCounter = 0;
     //this.game.stage.backgroundColor = '#000000';
 
     /* OLD IMPLEMENTATION OF BACKGROUND
@@ -69,7 +70,7 @@ TopDownGame.GameLevel1.prototype = {
     this.game.physics.enable(this.defender, Phaser.Physics.ARCADE);
     this.defender.healthbar = this.game.add.sprite(this.defender.x - this.defender.width*.28,this.defender.y-this.defender.height*.90,'healthbar');
     this.defender.healthbar.frame = 0;
-
+    this.defender.shootCounter = this.defenderShootCounter;
     //Created the shooting animation for defender
     var shoot = this.defender.animations.add('shoot', [0,1,2,3,4,5,6,7], 10, true);
     
@@ -441,7 +442,16 @@ TopDownGame.GameLevel1.prototype = {
 
     if (this.defender.x === Math.round(virus.x + this.defender.width/3)){
       //The defender shoots bullets when he reaches the virus's position
+      //Also initiates defender shoot animation
       this.fire(virus);
+    }
+    //Idle State for defender sprite when not shooting
+    else if(this.defender.shootCounter > 20){
+      this.defender.animations.play('idle', 18, true);
+      this.defender.shootCounter = 0;
+    }
+    else{
+      this.defender.shootCounter++;
     }
     //Destroys the collided virus and reduces health of defender
     for(var i=0; i<this.viruses.length; i++){
@@ -451,7 +461,11 @@ TopDownGame.GameLevel1.prototype = {
       this.viruses[i].destroy();
       this.viruses[i] = null;
       this.viruses.splice(i,1);
+      this.defender.animations.play('idle', 18, true);
       }
+    }
+    if(this.viruses.length===0){
+      this.defender.animations.play('idle', 18, true);
     }
     //Win condition
     if(this.defender.health <= 0){
@@ -489,7 +503,7 @@ TopDownGame.GameLevel1.prototype = {
           this.viruses[i] = null;
           this.viruses.splice(i,1);
         }
-      }      
+      }    
   },
   //Updates the health of the virus or defender
   updateHealthBar: function(sprite,healthbar){

@@ -27,6 +27,9 @@ TopDownGame.GameLevel3.prototype = {
     this.baseDefenderSpeed = 1;
     this.baseBulletSpeed = 450;
     this.baseDefenderAiming = 2;
+    this.defenderShootCounter = 0;
+    this.defenderDamageCounter = 0;
+    this.animationTimer = this.game.time.create(false);
     //
     this.game.bounds = 100;
     this.game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -395,18 +398,6 @@ TopDownGame.GameLevel3.prototype = {
       }
     }
 
-    for(var i = 0; i< this.defenders.length-1; i++){
-      var current = this.defenders[i];
-      this.updateHealthBar(this.defenders[i],this.defenders[i].healthbar);
-      for(var j = i+1; j< this.defenders.length; j++){
-        var next = this.defenders[j];
-        if(this.game.physics.arcade.overlap(current, next)){
-          current.x = current.x - 1;
-          next.x = next.x + 1;
-        }
-      }
-    }
-
     if(this.viruses.length == 0 && this.left == 0){
       this.game.state.start('Lost');
     }
@@ -442,6 +433,7 @@ TopDownGame.GameLevel3.prototype = {
 
         var virus = this.game.add.sprite(gameX,gameY,this.currentvirus.spritesheet);
         var virusmove = virus.animations.add('move', [0,1,2,3], 10, true);
+        var virusdie = virus.animations.add('die', [4,5,6,7], 10, true);
         virus.animations.play('move', 18, true);
         virus.scale.setTo(this.currentvirus.size);
         virus.health = this.currentvirus.health;
@@ -475,10 +467,24 @@ TopDownGame.GameLevel3.prototype = {
       this.mouseDown = false;
       this.targeting = true;
     }
+
     for(var i=0; i< this.defenders.length; i++){
       if(this.viruses.length >= 1){
         this.ai(this.viruses,this.defenders[i], this.bullets[i]);
-        this.hide(this.virusA);
+      }
+    }
+
+    for(var i = 0; i< this.defenders.length-1; i++){
+      var current = this.defenders[i];
+      this.updateHealthBar(this.defenders[i],this.defenders[i].healthbar);
+      for(var j = i+1; j< this.defenders.length; j++){
+        var next = this.defenders[j];
+        if(this.game.physics.arcade.overlap(current, next)){
+          current.x = current.x - 1.5;
+          next.x = next.x + 1.5;
+          this.updateHealthBar(current,current.healthbar);
+          this.updateHealthBar(next,next.healthbar);
+        }
       }
     }
   },  bouncewall: function(virus){
@@ -510,15 +516,31 @@ TopDownGame.GameLevel3.prototype = {
         //The defender shoots bullets when he reaches the virus's position
         this.fire(virus,defender,bullets);
       }
+      else if(defender.shootCounter > 50){
+        defender.animations.play('idle',18,true);
+        defender.shootCounter = 0;
+      }
+      else{
+        defender.shootCounter++;
+      }
       //Destroys the collided virus and reduces health of defender
       for(var i=0; i<this.viruses.length; i++){
         if(this.game.physics.arcade.overlap(defender, this.viruses[i])){
-          defender.damage(20);
-          this.updateHealthBar(defender,defender.healthbar);
+          defender.damage(10);
+          this.updateHealthBar(defender, defender.healthbar);
           this.viruses[i].destroy();
           this.viruses[i] = null;
           this.viruses.splice(i,1);
+          defender.animations.play('damage', 10, true);
+          while(defender.damageCounter < 5000){
+            defender.damageCounter++;
+          }
+          defender.damageCounter = 0;
         }
+      }
+      if(this.viruses.length === 0){
+        defender.animations.stop();
+        defender.animations.play('idle',18,true);
       }
       //Defender death condition
       if(defender.health <= 0){
@@ -553,6 +575,13 @@ TopDownGame.GameLevel3.prototype = {
         //The defender shoots bullets when he reaches the virus's position
         this.fire(virus,defender,bullets);
       }
+      else if(defender.shootCounter > 50){
+        defender.animations.play('idle',18,true);
+        defender.shootCounter = 0;
+      }
+      else{
+        defender.shootCounter++;
+      }
       //Destroys the collided virus and reduces health of defender
       for(var i=0; i<this.viruses.length; i++){
         if(this.game.physics.arcade.overlap(defender, this.viruses[i])){
@@ -561,7 +590,16 @@ TopDownGame.GameLevel3.prototype = {
           this.viruses[i].destroy();
           this.viruses[i] = null;
           this.viruses.splice(i,1);
+          defender.animations.play('damage',10,true);
+          while(defender.damageCounter < 5000){
+            defender.damageCounter++;
+          }
+          defender.damageCounter = 0;
         }
+      }
+      if(this.viruses.length===0){
+        defender.animations.stop();
+        defender.animations.play('idle',18,true);
       }
       //Defender death condition
       if(defender.health <= 0){
@@ -598,6 +636,13 @@ TopDownGame.GameLevel3.prototype = {
         //The defender shoots bullets when he reaches the virus's position
         this.fire(virus,defender,bullets);
       }
+      else if(defender.shootCounter > 50){
+        defender.animations.play('idle',18,true);
+        defender.shootCounter = 0;
+      }
+      else{
+        defender.shootCounter++;
+      }
       //Destroys the collided virus and reduces health of defender
       for(var i=0; i<this.viruses.length; i++){
         if(this.game.physics.arcade.overlap(defender, this.viruses[i])){
@@ -606,7 +651,16 @@ TopDownGame.GameLevel3.prototype = {
           this.viruses[i].destroy();
           this.viruses[i] = null;
           this.viruses.splice(i,1);
+          defender.animations.play('damage',10,true);
+          while(defender.damageCounter < 5000){
+            defender.damageCounter++;
+          }
+          defender.damageCounter = 0;
         }
+      }
+      if(this.viruses.length===0){
+        defender.animations.stop();
+        defender.animations.play('idle',18,true);
       }
       //Defender death condition
       if(defender.health <= 0){
@@ -657,7 +711,9 @@ TopDownGame.GameLevel3.prototype = {
           bullet.kill();
         }
         if(this.viruses[i].health<=0){
-          this.viruses[i].destroy()
+          this.viruses[i].animations.play('die', 10, true);
+          this.gameTimer(5);
+          this.viruses[i].destroy();
           this.viruses[i] = null;
           this.viruses.splice(i,1);
         }
@@ -692,7 +748,9 @@ TopDownGame.GameLevel3.prototype = {
         defender.healthbar.frame = 0;
         //Enables world bound collision
         defender.body.collideWorldBounds = true;
-        defender.body.bounce.set(1,1);
+        defender.body.bounce.set(0,0);
+        defender.shootCounter = this.defenderShootCounter;
+        defender.damageCounter = this.defenderDamageCounter;
         //Created the shooting animation for defender
         var shoot = defender.animations.add('shoot', [0,1,2,3,4,5,6,7], 10, true);
         
@@ -701,7 +759,10 @@ TopDownGame.GameLevel3.prototype = {
     
         //Created the dead animation for defender
         var dead = defender.animations.add('dead', [16,17,18,19,20,21,22,23], 10, true);
-    
+        
+        //Created the dead animation for defender
+        var damage = defender.animations.add('damage', [24,25,26,27,28,29,30,31], 10, true);
+
         //Setting the default animation to idle
         defender.frame = 8;
     
@@ -785,6 +846,9 @@ TopDownGame.GameLevel3.prototype = {
       arr.push(bullets);
     }
     return arr;
+  },
+  gameTimer(seconds){
+    while(this.game.time.totalElapsedSeconds() < seconds){}
   },
   render: function(){
   //  this.game.debug.geom(this.libLine);
