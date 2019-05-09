@@ -438,6 +438,7 @@ TopDownGame.GameLevel2.prototype = {
         }
         this.targeting = false;
         this.viruses[0].invincible = false;
+        this.viruses[0].alpha = 1;
       }
       
       this.limit.setText("Viruses Left: "+this.left);
@@ -460,6 +461,7 @@ TopDownGame.GameLevel2.prototype = {
         //this.game.physics.arcade.collide(virus, this.wall);
         
         virus.body.immovable = false;
+        virus.alpha = 0.5;
         virus.body.collideWorldBounds = true;
         virus.body.bounce.set(1,1);
         //virus.body.velocity.y= -50;

@@ -425,6 +425,7 @@ TopDownGame.GameLevel3.prototype = {
         }
         this.targeting = false;
         this.viruses[0].invincible = false;
+        this.viruses[0].alpha = 1;
       }
       
       this.limit.setText("Viruses Left: "+this.left);
@@ -448,6 +449,7 @@ TopDownGame.GameLevel3.prototype = {
         virus.body.immovable = false;
         virus.body.collideWorldBounds = true;
         virus.body.bounce.set(1,1);
+        virus.alpha = 0.5;
         this.mouseDown=true;
         this.renderingLine = true;
         this.viruses.unshift(virus);
