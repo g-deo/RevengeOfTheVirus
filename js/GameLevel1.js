@@ -188,6 +188,31 @@ TopDownGame.GameLevel1.prototype = {
   //  this.wall=this.game.add.image(600,0,'wall');
     
     //this.game.physics.arcade.enable(this.wall, Phaser.Physics.ARCADE);
+    var sound = "[Sound On]";
+    var soundstyle = { font: "30px Arial", fill: "#ffffff", align: "center" };
+    var soundbtn = this.game.add.text(1040, 50, sound, soundstyle);
+    soundbtn.bringToTop();
+
+    soundbtn.inputEnabled=true;
+    soundbtn.events.onInputDown.add(function(){ 
+      soundbtnf.visible = true;
+      soundbtn.visible =false;
+      this.global.game.currentBGM.pause();
+
+    },{global:this});
+    var soundf = "[Sound Off]";
+    var soundstylef = { font: "30px Arial", fill: "#ffffff", align: "center" };
+    var soundbtnf = this.game.add.text(1040, 50, soundf, soundstylef);
+    soundbtnf.bringToTop();
+    soundbtnf.visible=false;
+
+    soundbtnf.inputEnabled=true;
+    soundbtnf.events.onInputDown.add(function(){ 
+      soundbtnf.visible = false;
+      soundbtn.visible =true;
+      this.global.game.currentBGM.play();
+
+    },{global:this});
 
 
     var libtext2 = "[Lib open]";
@@ -243,6 +268,8 @@ TopDownGame.GameLevel1.prototype = {
       lib2.visible = false;
       invincibletext.visible = true;
       invincibleON.visible = false;
+      soundbtn.visible = true;
+      soundbtnf.visible  =false;
     }
 
     for(var i = 0; i < allInfo.length; i++){
