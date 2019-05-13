@@ -29,7 +29,24 @@ TopDownGame.Levels = function(){// 开始场景
           x: 0.5,
           y: 0.5
       }
-        var Level1 = this.game.add.text(this.game.world.centerX, this.game.world.centerY-400, 'Level1', {
+
+      var Level0 = this.game.add.text(this.game.world.centerX, this.game.world.centerY-400, 'Tutorial', {
+        font: '58px FC',
+        align: 'center',
+        fill: '#ffffff'
+      })
+      Level0.anchor = {
+          x: 0.5,
+          y: 0.5
+      }
+
+      Level0.inputEnabled = true // 开启输入事件
+
+      Level0.events.onInputDown.add(function() {
+        this.game.state.start('GameLevel0');
+      }, this)
+
+        var Level1 = this.game.add.text(this.game.world.centerX, this.game.world.centerY-300, 'Level 1', {
             font: '58px FC',
             align: 'center',
             fill: '#ffffff'
@@ -45,7 +62,7 @@ TopDownGame.Levels = function(){// 开始场景
           this.game.state.start('ControlsHelp');
         }, this)
 
-        var Level2 = this.game.add.text(this.game.world.centerX, this.game.world.centerY-300, 'Level2', {
+        var Level2 = this.game.add.text(this.game.world.centerX, this.game.world.centerY-200, 'Level 2', {
             font: '58px FC',
             align: 'center',
             fill: '#ffffff'
@@ -60,7 +77,7 @@ TopDownGame.Levels = function(){// 开始场景
         Level2.events.onInputDown.add(function() {
           this.game.state.start('GameLevel2')
         }, this)
-        var Level3 = this.game.add.text(this.game.world.centerX, this.game.world.centerY-200, 'Level3', {
+        var Level3 = this.game.add.text(this.game.world.centerX, this.game.world.centerY-100, 'Level 3', {
             font: '58px FC',
             align: 'center',
             fill: '#ffffff'
@@ -75,7 +92,7 @@ TopDownGame.Levels = function(){// 开始场景
         Level3.events.onInputDown.add(function() {
           this.game.state.start('GameLevel3')
         }, this)
-        var Level4 = this.game.add.text(this.game.world.centerX, this.game.world.centerY-100, 'Level4', {
+        var Level4 = this.game.add.text(this.game.world.centerX, this.game.world.centerY, 'Level 4', {
             font: '58px FC',
             align: 'center',
             fill: '#ffffff'
@@ -90,7 +107,7 @@ TopDownGame.Levels = function(){// 开始场景
         Level4.events.onInputDown.add(function() {
           this.game.state.start('GameLevel4')
         }, this)
-        var Level5 = this.game.add.text(this.game.world.centerX, this.game.world.centerY, 'Level5', {
+        var Level5 = this.game.add.text(this.game.world.centerX, this.game.world.centerY+100, 'Level 5', {
             font: '58px FC',
             align: 'center',
             fill: '#ffffff'
@@ -105,7 +122,7 @@ TopDownGame.Levels = function(){// 开始场景
         Level5.events.onInputDown.add(function() {
           this.game.state.start('GameLevel5')
         }, this)
-        var Level6 = this.game.add.text(this.game.world.centerX, this.game.world.centerY+100, 'Level6', {
+        var Level6 = this.game.add.text(this.game.world.centerX, this.game.world.centerY+200, 'Level 6', {
             font: '58px FC',
             align: 'center',
             fill: '#ffffff'
@@ -120,37 +137,6 @@ TopDownGame.Levels = function(){// 开始场景
         Level6.events.onInputDown.add(function() {
           this.game.state.start('GameLevel6')
         }, this)
-
-        var Level7 = this.game.add.text(this.game.world.centerX, this.game.world.centerY+200, 'Level7', {
-          font: '58px FC',
-          align: 'center',
-          fill: '#ffffff'
-      })
-      Level7.anchor = {
-          x: 0.5,
-          y: 0.5
-      }
-
-      Level7.inputEnabled = true // 开启输入事件
-
-      Level7.events.onInputDown.add(function() {
-        this.game.state.start('GameLevel7')
-      }, this)
-      var Level8 = this.game.add.text(this.game.world.centerX, this.game.world.centerY+300, 'Level8', {
-        font: '58px FC',
-        align: 'center',
-        fill: '#ffffff'
-    })
-    Level8.anchor = {
-        x: 0.5,
-        y: 0.5
-    }
-
-    Level8.inputEnabled = true // 开启输入事件
-
-    Level8.events.onInputDown.add(function() {
-      this.game.state.start('GameLevel8')
-    }, this)
 
         var GoBack = this.game.add.text(this.game.world.centerX, this.game.world.centerY+450, 'Main Menu', {
           font: '58px FC',

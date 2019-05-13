@@ -8,6 +8,8 @@ TopDownGame.GameLevel2.prototype = {
   
   create: function() {
     
+    this.game.level = 2;
+
     //Music
     this.game.currentBGM.pause();
     this.game.currentBGM = this.game.BGMs[1];
