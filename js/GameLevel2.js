@@ -27,6 +27,7 @@ TopDownGame.GameLevel2.prototype = {
     this.baseDefenderSpeed = 1;
     this.baseBulletSpeed = 450;
     this.baseDefenderAiming = 2;
+    this.defenderShootCounter = 0;
     //
     this.game.bounds = 100;
     this.game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -76,6 +77,7 @@ TopDownGame.GameLevel2.prototype = {
     this.game.physics.enable(this.defender, Phaser.Physics.ARCADE);
     this.defender.healthbar = this.game.add.sprite(this.defender.x - this.defender.width*.28,this.defender.y-this.defender.height*.90,'healthbar');
     this.defender.healthbar.frame = 0;
+    this.defender.shootCounter = this.defenderShootCounter;
     //Created the shooting animation for defender
     var shoot = this.defender.animations.add('shoot', [0,1,2,3,4,5,6,7], 10, true);
     
@@ -523,6 +525,13 @@ TopDownGame.GameLevel2.prototype = {
       //The defender shoots bullets when he reaches the virus's position
       this.fire(virus);
     }
+    else if (this.defender.shootCounter > 20){
+      this.defender.animations.play('idle', 18, true);
+      this.defender.shootCounter = 0;
+    }
+    else{
+      this.defender.shootCounter++;
+    }
     //Destroys the collided virus and reduces health of defender
     for(var i=0; i<this.viruses.length; i++){
     if(this.game.physics.arcade.overlap(this.defender, this.viruses[i])){
@@ -532,6 +541,9 @@ TopDownGame.GameLevel2.prototype = {
       this.viruses[i] = null;
       this.viruses.splice(i,1);
       }
+    }
+    if(this.viruses.length===0){
+      this.defender.animations.play('idle',18,true);
     }
     //Win condition
     if(this.defender.health <= 0){
