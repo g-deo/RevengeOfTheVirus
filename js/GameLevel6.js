@@ -769,7 +769,7 @@ TopDownGame.GameLevel6.prototype = {
   },
   fire: function(virus, defender, bullets){
     defender.animations.play('shoot', 18, true);
-    this.game.time.events.add(Phaser.Timer.SECOND, function(){
+    this.game.time.events.add(Phaser.Timer.SECOND * 2, function(){
       defender.animations.play('idle',10, true);
     }, this);
     this.game.time.events.start();
