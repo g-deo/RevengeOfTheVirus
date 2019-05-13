@@ -421,21 +421,6 @@ TopDownGame.GameLevel6.prototype = {
 
     this.targetArrow.rotation = this.game.physics.arcade.angleToPointer(this.targetArrow);
 
-    //DO COLLISIONS
-    for(var i=0; i<this.viruses.length; i++){
-      for(var j=0; j<this.defenders.length; j++){
-      if(this.game.physics.arcade.overlap(this.defenders[j], this.viruses[i])){
-        if(this.viruses[i].type == "icy"){
-          this.freezeSound.play();
-          this.ai(this.viruses,this.defenders[j], this.bullets[i]);
-        }else{
-          this.ai(this.viruses,this.defenders[j], this.bullets[i]);
-        }
-      }}
-    }
-    //this.game.physics.arcade.collide(this.viruses, this.blockedLayer);
-    //this.game.physics.arcade.collide(this.viruses, this.wall);
-
     //Enabling Virus Physics and adding collision to blockedLayer
     for(var i = 0; i < this.viruses.length; i++){
       if(this.viruses[i] != undefined && this.viruses[i] != null){
@@ -457,8 +442,8 @@ TopDownGame.GameLevel6.prototype = {
         this.hitSound.play();
         bullet.kill();
       }
-      if(this.viruses[i].invincible == false && this.game.physics.arcade.overlap(this.bullets[3], this.viruses[i])){
-        var bullet = this.bullets[1].getFirstAlive();
+      if(this.viruses[i].invincible == false && this.game.physics.arcade.overlap(this.bullets[2], this.viruses[i])){
+        var bullet = this.bullets[2].getFirstAlive();
         this.viruses[i].health -= 1;
         this.hitSound.play();
         bullet.kill();
@@ -474,6 +459,21 @@ TopDownGame.GameLevel6.prototype = {
         this.viruses.splice(i,1);
       }
     }
+
+    //DO COLLISIONS
+    for(var i=0; i<this.viruses.length; i++){
+      for(var j=0; j<this.defenders.length; j++){
+      if(this.game.physics.arcade.overlap(this.defenders[j], this.viruses[i])){
+        if(this.viruses[i].type == "icy"){
+          this.freezeSound.play();
+          this.ai(this.viruses,this.defenders[j], this.bullets[i]);
+        }else{
+          this.ai(this.viruses,this.defenders[j], this.bullets[i]);
+        }
+      }}
+    }
+    //this.game.physics.arcade.collide(this.viruses, this.blockedLayer);
+    //this.game.physics.arcade.collide(this.viruses, this.wall);
 
     for(var i = 0; i< this.defenders.length-1; i++){
       var current = this.defenders[i];
