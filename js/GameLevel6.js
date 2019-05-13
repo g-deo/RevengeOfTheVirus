@@ -8,6 +8,7 @@ TopDownGame.GameLevel6.prototype = {
   
   create: function() {
 
+    this.cheatMode = false;
     this.spaceKey = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
     this.game.input.keyboard.addKeyCapture([Phaser.Keyboard.SPACEBAR ]);
     this.game.currentBGM.pause();
@@ -59,6 +60,11 @@ TopDownGame.GameLevel6.prototype = {
     //Created the collision between the blockedLayer
     this.map.setCollisionBetween(5626,6000, true, 'blockedLayer');
     
+    //Add targeting arrow
+    this.targetArrow = this.game.add.sprite(100,420,'arrow');
+    this.targetArrow.visible = false;
+    this.targetArrow.anchor.setTo(0.0,0.5)
+
     //Create defender sprites using function
     this.defenders = this.createDefenders(3);
 
@@ -435,20 +441,7 @@ TopDownGame.GameLevel6.prototype = {
  
   update: function() {
 
-    //DO COLLISIONS
-    for(var i=0; i<this.viruses.length; i++){
-      for(var j=0; j<this.defenders.length; j++){
-      if(this.game.physics.arcade.overlap(this.defenders[j], this.viruses[i])){
-        if(this.viruses[i].type == "icy"){
-          this.freezeSound.play();
-          this.ai(this.viruses,this.defenders[j], this.bullets[i]);
-        }else{
-          this.ai(this.viruses,this.defenders[j], this.bullets[i]);
-        }
-      }}
-    }
-    //this.game.physics.arcade.collide(this.viruses, this.blockedLayer);
-    //this.game.physics.arcade.collide(this.viruses, this.wall);
+    this.targetArrow.rotation = this.game.physics.arcade.angleToPointer(this.targetArrow);
 
     //Enabling Virus Physics and adding collision to blockedLayer
     for(var i = 0; i < this.viruses.length; i++){
@@ -471,8 +464,8 @@ TopDownGame.GameLevel6.prototype = {
         this.hitSound.play();
         bullet.kill();
       }
-      if(this.viruses[i].invincible == false && this.game.physics.arcade.overlap(this.bullets[3], this.viruses[i])){
-        var bullet = this.bullets[1].getFirstAlive();
+      if(this.viruses[i].invincible == false && this.game.physics.arcade.overlap(this.bullets[2], this.viruses[i])){
+        var bullet = this.bullets[2].getFirstAlive();
         this.viruses[i].health -= 1;
         this.hitSound.play();
         bullet.kill();
@@ -488,6 +481,21 @@ TopDownGame.GameLevel6.prototype = {
         this.viruses.splice(i,1);
       }
     }
+
+    //DO COLLISIONS
+    for(var i=0; i<this.viruses.length; i++){
+      for(var j=0; j<this.defenders.length; j++){
+      if(this.game.physics.arcade.overlap(this.defenders[j], this.viruses[i])){
+        if(this.viruses[i].type == "icy"){
+          this.freezeSound.play();
+          this.ai(this.viruses,this.defenders[j], this.bullets[i]);
+        }else{
+          this.ai(this.viruses,this.defenders[j], this.bullets[i]);
+        }
+      }}
+    }
+    //this.game.physics.arcade.collide(this.viruses, this.blockedLayer);
+    //this.game.physics.arcade.collide(this.viruses, this.wall);
 
     for(var i = 0; i< this.defenders.length-1; i++){
       var current = this.defenders[i];
@@ -510,7 +518,8 @@ TopDownGame.GameLevel6.prototype = {
     if(this.game.input.activePointer.isDown && this.mouseDown == false){
       var gameX = this.game.input.activePointer.positionDown.x + this.game.camera.x;
       var gameY = this.game.input.activePointer.positionDown.y + this.game.camera.y;
-      if(this.targeting){
+      if(this.targeting && gameY < 1000){
+        this.targetArrow.visible = false;
         var speed = this.currentvirus.speed;
         var difX = this.targetingLine.end.x - this.targetingLine.start.x;
         var difY = this.targetingLine.end.y - this.targetingLine.start.y;
@@ -536,8 +545,7 @@ TopDownGame.GameLevel6.prototype = {
                 this.viruses[0].alpha = 1;}
               }
       
-      this.limit.setText("Viruses Left: "+this.left);
-      if(gameX < 1200-80 && gameY > 1000 && this.left > 0 &&  this.left-this.currentvirus.cost>=0){
+      else if(!this.targeting && gameY > 1000 && this.left > 0 &&  this.left-this.currentvirus.cost>=0){
         //console.log(this.currentvirus);
 
         var virus = this.game.add.sprite(gameX,gameY,this.currentvirus.spritesheet);
@@ -546,25 +554,27 @@ TopDownGame.GameLevel6.prototype = {
         virus.scale.setTo(this.currentvirus.size);
         virus.health = this.currentvirus.health;
         virus.invincible = true;
-        virus.type = this.currentvirus.name;
+        virus.alpha = 0.5;
         //this.game.physics.enable(virus,Phaser.Physics.ARCADE);
         this.limit.setText("Viruses Left: " + this.left);
         this.left = this.left-this.currentvirus.cost;
         //alert(this.left);
 
         this.game.physics.arcade.enable(virus);
-        //this.game.physics.arcade.collide(virus, this.blockedLayer);
-        //this.game.physics.arcade.collide(virus, this.wall);
+        this.game.physics.arcade.collide(virus, this.blockedLayer);
+        this.game.physics.arcade.collide(virus, this.wall);
         
         virus.body.immovable = false;
         virus.body.collideWorldBounds = true;
         virus.body.bounce.set(1,1);
-        virus.alpha = 0.5;
         //virus.body.velocity.y= -50;
         this.mouseDown=true;
         this.renderingLine = true;
         this.viruses.unshift(virus);
+        this.targeting = true;
       }
+
+      this.limit.setText("Viruses Left: "+this.left);
       
     }
     
@@ -574,6 +584,9 @@ TopDownGame.GameLevel6.prototype = {
     if(this.targeting && this.game.input.activePointer.x < 1200 && this.viruses.length > 0){
       var current = this.viruses[0];
       this.targetingLine = new Phaser.Line(current.x + current.width/2,current.y+current.height/2,this.game.input.activePointer.x,this.game.input.activePointer.y);      
+      this.targetArrow.x = current.x + 0.5*current.width;
+      this.targetArrow.y = current.y + 0.5*current.height;
+      this.targetArrow.visible=true;
     }
 
     //  This boolean controls if the player should collide with the world bounds or not
@@ -795,7 +808,7 @@ TopDownGame.GameLevel6.prototype = {
   },
   fire: function(virus, defender, bullets){
     defender.animations.play('shoot', 18, true);
-    this.game.time.events.add(Phaser.Timer.SECOND, function(){
+    this.game.time.events.add(Phaser.Timer.SECOND * 2, function(){
       defender.animations.play('idle',10, true);
     }, this);
     this.game.time.events.start();
@@ -970,7 +983,7 @@ TopDownGame.GameLevel6.prototype = {
   render: function(){
   //  this.game.debug.geom(this.libLine);
   this.game.debug.geom(this.spawnLine);
-    if(this.targeting) this.game.debug.geom(this.targetingLine);
+    //if(this.targeting) this.game.debug.geom(this.targetingLine);
   }
 
   // findObjectsByType: function(type, map, layer) {

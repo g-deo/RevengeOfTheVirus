@@ -15,6 +15,7 @@ TopDownGame.Preload.prototype = {
     this.load.spritesheet('defender', 'assets/images/defender.png',128,128,32);
     this.load.image('defenderBullet', 'assets/images/defenderBullet.png');
     this.load.image('preloadbar', '/assets/images/preloader-bar.png');
+    this.load.image('arrow','/assets/images/arrow.png');
     
     this.load.image('library', '/assets/images/library.png');
     
