@@ -396,6 +396,29 @@ TopDownGame.GameLevel3.prototype = {
         this.game.physics.arcade.collide(virus, this.blockedLayer);
         this.game.physics.arcade.collide(virus, this.wall);
       }
+      //Checks to see if bullet hit virus
+      if(this.viruses[i].invincible == false && this.game.physics.arcade.overlap(this.bullets[0], this.viruses[i])){
+        var bullet =this.bullets[0].getFirstAlive();
+        this.viruses[i].health -= 1;
+        this.hitSound.play();
+        bullet.kill();
+      }
+      if(this.viruses[i].invincible == false && this.game.physics.arcade.overlap(this.bullets[1], this.viruses[i])){
+        var bullet = this.bullets[1].getFirstAlive();
+        this.viruses[i].health -= 1;
+        this.hitSound.play();
+        bullet.kill();
+      }
+      //Kills virus on bullet impact
+      if(this.viruses[i].health<=0){
+        this.viruses[i].animations.play('die', 10, true);
+        this.game.time.events.add(Phaser.Timer.SECOND*10,function(){
+        }, this);
+        this.game.time.events.start();
+        this.viruses[i].destroy();
+        this.viruses[i] = null;
+        this.viruses.splice(i,1);
+      }
     }
 
     if(this.viruses.length == 0 && this.left == 0){
@@ -672,7 +695,6 @@ TopDownGame.GameLevel3.prototype = {
       if(this.defenders.length <=0){
         this.game.state.start('Win');
       }
-
   },
   fire: function(virus, defender, bullets){
     defender.animations.play('shoot', 18, true);
@@ -696,8 +718,14 @@ TopDownGame.GameLevel3.prototype = {
       }
       //Destroys viruses.
       for(var i = 0; i<this.viruses.length; i++){
-        var bullet = bullets.getFirstAlive();
-        if(this.viruses[i].invincible == false && this.game.physics.arcade.overlap(bullets, this.viruses[i])){
+        if(this.viruses[i].invincible == false && this.game.physics.arcade.overlap(this.bullets[0], this.viruses[i])){
+          var bullet =this.bullets[0].getFirstAlive();
+          this.viruses[i].health -= 1;
+          this.hitSound.play();
+          bullet.kill();
+        }
+        if(this.viruses[i].invincible == false && this.game.physics.arcade.overlap(this.bullets[1], this.viruses[i])){
+          var bullet = this.bullets[1].getFirstAlive();
           this.viruses[i].health -= 1;
           this.hitSound.play();
           bullet.kill();
@@ -805,8 +833,7 @@ TopDownGame.GameLevel3.prototype = {
       this.fireRate = this.baseBulletSpeed;
       this.nextFire = 0; 
       bullets = this.game.add.group();
-      bullets.enableBody = true;
-      bullets.physicsBodyType = Phaser.Physics.ARCADE;
+      this.game.physics.enable(bullets, Phaser.Physics.ARCADE);
       arr.push(bullets);
     }
     return arr;
