@@ -9,6 +9,7 @@ TopDownGame.GameLevel1.prototype = {
   create: function() {
 
     this.cheatMode = false;
+    this.game.level = 1;
     //Music
     this.game.currentBGM.pause();
     this.game.currentBGM = this.game.BGMs[0];

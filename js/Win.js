@@ -34,7 +34,10 @@ TopDownGame.Win = function(){// 开始场景
         y: 0.5
     }
 
-    var text = this.game.add.text(this.game.world.centerX, this.game.world.centerY, 'You Win!',{
+    var winText = "You Win!"
+    if (this.game.level < 6) winText = "Level Complete!"
+
+    var text = this.game.add.text(this.game.world.centerX, this.game.world.centerY, winText,{
         font: '100px FC',
         
         fill: '#ffffff'
@@ -43,21 +46,38 @@ TopDownGame.Win = function(){// 开始场景
         x: 0.5,
         y: 0.5
     }
-        var GoBack = this.game.add.text(this.game.world.centerX, this.game.world.centerY+500, 'Main Menu', {
+      var GoBack = this.game.add.text(this.game.world.centerX, this.game.world.centerY+525, 'Main Menu', {
+        font: '58px FC',
+        align: 'center',
+        fill: '#ffffff'
+    })
+    GoBack.anchor = {
+        x: 0.5,
+        y: 0.5
+    }
+      if(this.game.level < 6){
+        var cont = this.game.add.text(this.game.world.centerX, this.game.world.centerY+450, 'Continue', {
           font: '58px FC',
           align: 'center',
           fill: '#ffffff'
-      })
-      GoBack.anchor = {
-          x: 0.5,
-          y: 0.5
+        })
+        cont.anchor = {
+            x: 0.5,
+            y: 0.5
+        }
+        cont.inputEnabled = true // 开启输入事件
+        cont.events.onInputDown.add(function() {
+          var next = 'GameLevel' + (this.game.level+1);
+   
+          this.game.state.start(next)
+        }, this)
       }
+      
     
       GoBack.inputEnabled = true // 开启输入事件
       GoBack.events.onInputDown.add(function() {
         this.game.state.start('Menu')
       }, this)
-    
     }
 
 };

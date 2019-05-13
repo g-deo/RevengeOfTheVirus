@@ -8,6 +8,8 @@ TopDownGame.GameLevel6.prototype = {
   
   create: function() {
 
+    this.game.level = 6;
+
     this.cheatMode = false;
     this.spaceKey = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
     this.game.input.keyboard.addKeyCapture([Phaser.Keyboard.SPACEBAR ]);

@@ -8,6 +8,9 @@ TopDownGame.GameLevel5.prototype = {
   
   create: function() {
 
+
+    this.game.level = 5;
+
     this.cheatMode = false;
     this.game.currentBGM.pause();
     this.game.currentBGM = this.game.BGMs[4];
