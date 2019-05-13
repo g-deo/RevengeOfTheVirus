@@ -943,7 +943,7 @@ TopDownGame.GameLevel3.prototype = {
   },
   render: function(){
   //  this.game.debug.geom(this.libLine);
-  this.game.debug.geom(this.spawnLine);
+  //this.game.debug.geom(this.spawnLine);
     //if(this.targeting) this.game.debug.geom(this.targetingLine);
   }
 
