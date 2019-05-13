@@ -188,7 +188,25 @@ TopDownGame.GameLevel6.prototype = {
   }, {global: this});
   allInfo.push(virusC);
   ////////////////////////////////////////////////////////////////////////
-
+  var virusE = { 
+    spritesheet:'virusE_sprite',
+    image: this.game.add.image(800,150,'virusE'),
+    name: "Mr. unstoppable",
+    cost: 20,
+    skill:"pass through everything",
+    speed: this.baseVirusSpeed*1,
+    health: 1,
+    size: 1,
+    damage: 20
+  }
+  virusE.text = this.createDisplay(virusE);
+  virusE.image.inputEnabled = true;
+  virusE.image.bringToTop();
+  virusE.image.events.onInputDown.add(function(){
+    this.global.currentvirus = virusE;
+    current.text = "Selected Virus: " + this.global.currentvirus.name;
+  }, {global: this});
+  allInfo.push(virusE);
   var virusD = { 
     spritesheet:'virusD_sprite',
     image: this.game.add.image(800,780,'virusD'),
@@ -395,17 +413,23 @@ TopDownGame.GameLevel6.prototype = {
     imageC =  this.game.add.image(220,610,'virusC');
 
     
-   var vDtext = virusD.name+"    Hot Key: 4"+ "\nCost: "+virusD.cost +"\nSkill: " + virusD.skill;
-   var vDstyle = { font: "30px Arial", fill: "#ffffff", align: "left" };
-    vD = this.game.add.text(330, 800, vDtext, vDstyle);
- 
-    imageD =  this.game.add.image(220,810,'virusD');
+    var vDtext = virusD.name+"    Hot Key: 4"+ "\nCost: "+virusD.cost +"\nSkill: " + virusD.skill;
+    var vDstyle = { font: "30px Arial", fill: "#ffffff", align: "left" };
+     vD = this.game.add.text(330, 800, vDtext, vDstyle);
+  
+     imageD =  this.game.add.image(220,810,'virusD');
 
+   
+
+    var style = {fill : '#FFF'}; 
+    next = this.game.add.text(this.game.width * 0.5, this.game.height -200, "Press ↑/↓ to check more", style); 
+    next.anchor.set(0.5, 0.5); 
 
   }, this); 
-  var keyenter =this.game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
-  keyenter.onDown.add(function(){
-    this.game.paused = false; 
+  
+  var keyenter =this.game.input.keyboard.addKey(Phaser.Keyboard.DOWN);
+  keyenter.onDown.add(function(){ 
+    next.destroy();
     libtext.destroy();
     imageA.destroy();
     vA.destroy();
@@ -415,6 +439,117 @@ TopDownGame.GameLevel6.prototype = {
     vB.destroy();
     imageD.destroy();
     vD.destroy();
+    tx.destroy();
+    librarybackground.destroy();
+    
+ librarybackground = this.game.add.sprite(200, 100, 'library');
+ 
+ var style = {fill : '#FFF'}; 
+ tx = this.game.add.text(this.game.width * 0.5, this.game.height -200, "          Press Enter to continue\n\n*Use hot keys to change current virus.", style); 
+ tx.anchor.set(0.5, 0.5); 
+
+ libtext = this.game.add.text(this.game.width * 0.5, 150, "Library Of The Virus", style); 
+ libtext.anchor.set(0.5, 0.5); 
+
+
+ var vEtext = virusE.name+"    Hot Key: 5" + "\nCost: "+virusE.cost + "\nSkill: " + virusE.skill;
+ var vEstyle = { font: "30px Arial", fill: "#ffffff", align: "left" };
+  vE = this.game.add.text(330, 200, vEtext, vEstyle);
+
+  imageE =  this.game.add.image(220,210,'virusE');
+
+  
+
+   var style = {fill : '#FFF'}; 
+   next = this.game.add.text(this.game.width * 0.5, this.game.height -200, "Press ↑/↓ to check more", style); 
+   next.anchor.set(0.5, 0.5); 
+  }, this);
+  t.fixedToCamera = true; 
+
+
+
+  var keyup =this.game.input.keyboard.addKey(Phaser.Keyboard.UP);
+  keyup.onDown.add(function(){
+    imageD.destroy();
+    vD.destroy();
+    next.destroy();
+    libtext.destroy();
+    imageA.destroy();
+    vA.destroy();
+    imageC.destroy();
+    vC.destroy();
+    imageB.destroy();
+    vB.destroy();
+    imageE.destroy();
+    vE.destroy();
+    tx.destroy();
+    librarybackground.destroy();
+    
+ librarybackground = this.game.add.sprite(200, 100, 'library');
+  var style = {fill : '#FFF'}; 
+  tx = this.game.add.text(this.game.width * 0.5, this.game.height -200, "          Press Enter to continue\n\n*Use hot keys to change current virus.", style); 
+  tx.anchor.set(0.5, 0.5); 
+
+  libtext = this.game.add.text(this.game.width * 0.5, 150, "Library Of The Virus", style); 
+  libtext.anchor.set(0.5, 0.5); 
+
+
+  var vAtext = virusA.name+"    Hot Key: 1" + "\nCost: "+virusA.cost + "\nSkill: " + virusA.skill;
+  var vAstyle = { font: "30px Arial", fill: "#ffffff", align: "left" };
+   vA = this.game.add.text(330, 200, vAtext, vAstyle);
+
+   imageA =  this.game.add.image(220,210,'virusA');
+
+   
+  var vBtext = virusB.name+"    Hot Key: 2"+ "\nCost: "+virusB.cost +"\nSkill: " + virusB.skill;
+  var vBstyle = { font: "30px Arial", fill: "#ffffff", align: "left" };
+   vB = this.game.add.text(330, 400, vBtext, vBstyle);
+
+   imageB =  this.game.add.image(220,410,'virusB');
+
+   var vCtext = virusC.name+"    Hot Key: 3"+ "\nCost: "+virusC.cost +"\nSkill: " + virusC.skill;
+   var vCstyle = { font: "30px Arial", fill: "#ffffff", align: "left" };
+    vC = this.game.add.text(330, 600, vCtext, vCstyle);
+ 
+    imageC =  this.game.add.image(220,610,'virusC');
+
+
+    
+    var vDtext = virusD.name+"    Hot Key: 4"+ "\nCost: "+virusD.cost +"\nSkill: " + virusD.skill;
+    var vDstyle = { font: "30px Arial", fill: "#ffffff", align: "left" };
+     vD = this.game.add.text(330, 800, vDtext, vDstyle);
+  
+     imageD =  this.game.add.image(220,810,'virusD');
+
+     
+    var style = {fill : '#FFF'}; 
+    next = this.game.add.text(this.game.width * 0.5, this.game.height -200, "Press ↑/↓ to check more", style); 
+    next.anchor.set(0.5, 0.5);  
+  }, this);
+  t.fixedToCamera = true; 
+  key1 = this.game.input.keyboard.addKey(Phaser.Keyboard.ONE);
+  key1.onDown.add(function(){
+    this.global.currentvirus = virusA;
+    current.text = "Selected Virus: " + this.global.currentvirus.name;
+
+
+  }, {global:this});
+  var keyenter =this.game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
+  keyenter.onDown.add(function(){
+ 
+    this.game.paused = false; 
+    imageD.destroy();
+    vD.destroy();
+    next.destroy();
+    libtext.destroy();
+    imageA.destroy();
+    vA.destroy();
+    imageC.destroy();
+    vC.destroy();
+    imageB.destroy();
+    vB.destroy();
+    imageE.destroy();
+    vE.destroy();
     tx.destroy();
     librarybackground.destroy();
   }, this);
@@ -445,6 +580,13 @@ TopDownGame.GameLevel6.prototype = {
   key4 = this.game.input.keyboard.addKey(Phaser.Keyboard.FOUR);
   key4.onDown.add(function(){
     this.global.currentvirus = virusD;
+    current.text = "Selected Virus: " + this.global.currentvirus.name;
+
+
+  }, {global:this});
+  key5 = this.game.input.keyboard.addKey(Phaser.Keyboard.FIVE);
+  key5.onDown.add(function(){
+    this.global.currentvirus = virusE;
     current.text = "Selected Virus: " + this.global.currentvirus.name;
 
 
@@ -635,15 +777,17 @@ TopDownGame.GameLevel6.prototype = {
     if (this.spaceKey.isDown==true){
 
       for(var i = 0; i < this.viruses.length; i++){
-     
-        if(this.viruses[i].type =="booster"){
+      console.log(this.viruses[i]);
+        if(this.viruses[i].key =="virusD_sprite"){
+          console.log(this.viruses[i]);
           
           this.viruses[i].body.velocity.x *=1.1; 
           this.viruses[i].body.velocity.y *=1.1; 
 
+          
+      this.freezeSound.play();
         }
       
-      this.freezeSound.play();
     }
   }
   },  bouncewall: function(virus){

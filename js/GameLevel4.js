@@ -619,8 +619,9 @@ TopDownGame.GameLevel4.prototype = {
     if (this.spaceKey.isDown==true){
 
       for(var i = 0; i < this.viruses.length; i++){
-     
-        if(this.viruses[i].type =="Mr.boom"){
+        console.log(this.viruses[i]);
+        if(this.viruses[i].key == 'virusD_sprite'){
+          console.log("mr.boom exsisted")
           
           
 

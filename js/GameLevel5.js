@@ -18,6 +18,9 @@ TopDownGame.GameLevel5.prototype = {
     this.freezeSound = this.game.add.audio('freeze');
     this.hitSound = this.game.add.audio('hit');
     
+  this.spaceKey = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+
+  this.game.input.keyboard.addKeyCapture([Phaser.Keyboard.SPACEBAR ]);
     //STATIC VARIABLES
     this.startingLibSize = 150;
     this.baseVirusSpeed = 200;
@@ -186,7 +189,25 @@ TopDownGame.GameLevel5.prototype = {
   }, {global: this});
   allInfo.push(virusC);
   ////////////////////////////////////////////////////////////////////////
-
+  var virusD = { 
+    spritesheet:'virusD_sprite',
+    image: this.game.add.image(800,780,'virusD'),
+    name: "Mr.boom",
+    cost: 80,
+    skill:"Explode!(Use spacebar)",
+    speed: this.baseVirusSpeed*1,
+    health: 1,
+    size: 1,
+    damage: 50
+  }
+  virusD.text = this.createDisplay(virusD);
+  virusD.image.inputEnabled = true;
+  virusD.image.bringToTop();
+  virusD.image.events.onInputDown.add(function(){
+    this.global.currentvirus = virusD;
+    current.text = "Selected Virus: " + this.global.currentvirus.name;
+  }, {global: this});
+  allInfo.push(virusD);
   var virusE = { 
     spritesheet:'virusE_sprite',
     image: this.game.add.image(800,780,'virusE'),
@@ -401,11 +422,124 @@ TopDownGame.GameLevel5.prototype = {
  
     imageE =  this.game.add.image(220,810,'virusE');
 
+    var style = {fill : '#FFF'}; 
+    next = this.game.add.text(this.game.width * 0.5, this.game.height -200, "Press ↑/↓ to check more", style); 
+    next.anchor.set(0.5, 0.5); 
 
   }, this); 
+  
+  var keyenter =this.game.input.keyboard.addKey(Phaser.Keyboard.DOWN);
+  keyenter.onDown.add(function(){
+    
+    next.destroy();
+    libtext.destroy();
+    imageA.destroy();
+    vA.destroy();
+    imageC.destroy();
+    vC.destroy();
+    imageB.destroy();
+    vB.destroy();
+    imageE.destroy();
+    vE.destroy();
+    tx.destroy();
+    librarybackground.destroy();
+    
+ librarybackground = this.game.add.sprite(200, 100, 'library');
+ 
+ var style = {fill : '#FFF'}; 
+ tx = this.game.add.text(this.game.width * 0.5, this.game.height -200, "          Press Enter to continue\n\n*Use hot keys to change current virus.", style); 
+ tx.anchor.set(0.5, 0.5); 
+
+ libtext = this.game.add.text(this.game.width * 0.5, 150, "Library Of The Virus", style); 
+ libtext.anchor.set(0.5, 0.5); 
+
+
+ var vDtext = virusD.name+"    Hot Key: 5" + "\nCost: "+virusD.cost + "\nSkill: " + virusD.skill;
+ var vDstyle = { font: "30px Arial", fill: "#ffffff", align: "left" };
+  vD = this.game.add.text(330, 200, vDtext, vDstyle);
+
+  imageD =  this.game.add.image(220,210,'virusD');
+
+  
+
+   var style = {fill : '#FFF'}; 
+   next = this.game.add.text(this.game.width * 0.5, this.game.height -200, "Press ↑/↓ to check more", style); 
+   next.anchor.set(0.5, 0.5); 
+  }, this);
+  t.fixedToCamera = true; 
+
+
+
+  var keyup =this.game.input.keyboard.addKey(Phaser.Keyboard.UP);
+  keyup.onDown.add(function(){
+    imageD.destroy();
+    vD.destroy();
+    next.destroy();
+    libtext.destroy();
+    imageA.destroy();
+    vA.destroy();
+    imageC.destroy();
+    vC.destroy();
+    imageB.destroy();
+    vB.destroy();
+    imageE.destroy();
+    vE.destroy();
+    tx.destroy();
+    librarybackground.destroy();
+    
+ librarybackground = this.game.add.sprite(200, 100, 'library');
+  var style = {fill : '#FFF'}; 
+  tx = this.game.add.text(this.game.width * 0.5, this.game.height -200, "          Press Enter to continue\n\n*Use hot keys to change current virus.", style); 
+  tx.anchor.set(0.5, 0.5); 
+
+  libtext = this.game.add.text(this.game.width * 0.5, 150, "Library Of The Virus", style); 
+  libtext.anchor.set(0.5, 0.5); 
+
+
+  var vAtext = virusA.name+"    Hot Key: 1" + "\nCost: "+virusA.cost + "\nSkill: " + virusA.skill;
+  var vAstyle = { font: "30px Arial", fill: "#ffffff", align: "left" };
+   vA = this.game.add.text(330, 200, vAtext, vAstyle);
+
+   imageA =  this.game.add.image(220,210,'virusA');
+
+   
+  var vBtext = virusB.name+"    Hot Key: 2"+ "\nCost: "+virusB.cost +"\nSkill: " + virusB.skill;
+  var vBstyle = { font: "30px Arial", fill: "#ffffff", align: "left" };
+   vB = this.game.add.text(330, 400, vBtext, vBstyle);
+
+   imageB =  this.game.add.image(220,410,'virusB');
+
+   var vCtext = virusC.name+"    Hot Key: 3"+ "\nCost: "+virusC.cost +"\nSkill: " + virusC.skill;
+   var vCstyle = { font: "30px Arial", fill: "#ffffff", align: "left" };
+    vC = this.game.add.text(330, 600, vCtext, vCstyle);
+ 
+    imageC =  this.game.add.image(220,610,'virusC');
+
+    
+   var vEtext = virusE.name+"    Hot Key: 4"+ "\nCost: "+virusE.cost +"\nSkill: " + virusE.skill;
+   var vEstyle = { font: "30px Arial", fill: "#ffffff", align: "left" };
+    vE = this.game.add.text(330, 800, vEtext, vEstyle);
+ 
+    imageE =  this.game.add.image(220,810,'virusE');
+
+    var style = {fill : '#FFF'}; 
+    next = this.game.add.text(this.game.width * 0.5, this.game.height -200, "Press ↑/↓ to check more", style); 
+    next.anchor.set(0.5, 0.5);  
+  }, this);
+  t.fixedToCamera = true; 
+  key1 = this.game.input.keyboard.addKey(Phaser.Keyboard.ONE);
+  key1.onDown.add(function(){
+    this.global.currentvirus = virusA;
+    current.text = "Selected Virus: " + this.global.currentvirus.name;
+
+
+  }, {global:this});
   var keyenter =this.game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
   keyenter.onDown.add(function(){
     this.game.paused = false; 
+    imageD.destroy();
+    vD.destroy();
+    next.destroy();
     libtext.destroy();
     imageA.destroy();
     vA.destroy();
@@ -419,14 +553,6 @@ TopDownGame.GameLevel5.prototype = {
     librarybackground.destroy();
   }, this);
   t.fixedToCamera = true; 
-
-  key1 = this.game.input.keyboard.addKey(Phaser.Keyboard.ONE);
-  key1.onDown.add(function(){
-    this.global.currentvirus = virusA;
-    current.text = "Selected Virus: " + this.global.currentvirus.name;
-
-
-  }, {global:this});
 
   key2 = this.game.input.keyboard.addKey(Phaser.Keyboard.TWO);
   key2.onDown.add(function(){
@@ -446,6 +572,13 @@ TopDownGame.GameLevel5.prototype = {
   key4 = this.game.input.keyboard.addKey(Phaser.Keyboard.FOUR);
   key4.onDown.add(function(){
     this.global.currentvirus = virusE;
+    current.text = "Selected Virus: " + this.global.currentvirus.name;
+
+
+  }, {global:this});
+  key5 = this.game.input.keyboard.addKey(Phaser.Keyboard.FIVE);
+  key5.onDown.add(function(){
+    this.global.currentvirus = virusD;
     current.text = "Selected Virus: " + this.global.currentvirus.name;
 
 
@@ -494,6 +627,7 @@ TopDownGame.GameLevel5.prototype = {
         this.hitSound.play();
         bullet.kill();
       }
+      
       //Kills virus on bullet impact
       if(this.viruses[i].health<=0){
         this.viruses[i].animations.play('die', 10, true);
@@ -600,6 +734,7 @@ TopDownGame.GameLevel5.prototype = {
     }
     //  This boolean controls if the player should collide with the world bounds or not
     
+
     if(this.game.input.activePointer.isUp && this.mouseDown == true){
       this.mouseDown = false;
       this.targeting = true;
@@ -610,6 +745,30 @@ TopDownGame.GameLevel5.prototype = {
         this.hide(this.virusA);
       }
     }
+    if (this.spaceKey.isDown==true){
+
+      for(var i = 0; i < this.viruses.length; i++){
+     
+        if(this.viruses[i].key == 'virusD_sprite'){
+          
+          
+
+          for(var j = 0; j < this.defenders.length; j++){
+            var a =(Math.abs(this.viruses[i].x-this.defenders[j].x)< 500);
+            var b =(Math.abs(this.viruses[i].y-this.defenders[j].y)< 500);
+            if (a&&b){
+            
+            this.defenders[j].damage(80);
+            this.updateHealthBar(this.defenders[j],this.defenders[j].healthbar);
+
+        }
+      }
+      this.explosionSound.play();
+      this.viruses[i].destroy()
+          this.viruses[i] = null;
+          this.viruses.splice(i,1);
+    }}
+  }
   },  bouncewall: function(virus){
     if (virus.x>=750 && virus.body != null){
       virus.body.velocity.x = 0;
