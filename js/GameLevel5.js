@@ -8,6 +8,7 @@ TopDownGame.GameLevel5.prototype = {
   
   create: function() {
 
+    this.cheatMode = false;
     this.game.currentBGM.pause();
     this.game.currentBGM = this.game.BGMs[4];
     this.game.currentBGM.play();
@@ -53,6 +54,11 @@ TopDownGame.GameLevel5.prototype = {
     this.backgroundlayer = this.map.createLayer('backgroundLayer');
     this.objectLayer = this.map.createLayer('objectLayer');
     this.blockedLayer = this.map.createLayer('blockedLayer');
+
+    //Add targeting arrow
+    this.targetArrow = this.game.add.sprite(100,420,'arrow');
+    this.targetArrow.visible = false;
+    this.targetArrow.anchor.setTo(0.0,0.5)
 
     //Created the collision between the blockedLayer
     this.map.setCollisionBetween(5626,6000, true, 'blockedLayer');
@@ -410,6 +416,8 @@ TopDownGame.GameLevel5.prototype = {
  
   update: function() {
 
+    this.targetArrow.rotation = this.game.physics.arcade.angleToPointer(this.targetArrow);
+
     //DO COLLISIONS
 
     //this.game.physics.arcade.collide(this.viruses, this.blockedLayer);
@@ -443,10 +451,12 @@ TopDownGame.GameLevel5.prototype = {
     }
     
     //Creates an array of virus instances with virus[0] being the latest addition to the map
+    //Creates an array of virus instances with virus[0] being the latest addition to the map
     if(this.game.input.activePointer.isDown && this.mouseDown == false){
       var gameX = this.game.input.activePointer.positionDown.x + this.game.camera.x;
       var gameY = this.game.input.activePointer.positionDown.y + this.game.camera.y;
-      if(this.targeting){
+      if(this.targeting && gameY < 1000){
+        this.targetArrow.visible = false;
         var speed = this.currentvirus.speed;
         var difX = this.targetingLine.end.x - this.targetingLine.start.x;
         var difY = this.targetingLine.end.y - this.targetingLine.start.y;
@@ -464,12 +474,11 @@ TopDownGame.GameLevel5.prototype = {
           this.viruses[0].body.velocity.x = difX/pythag*speed;
         }
         this.targeting = false;
-        this.viruses[0].invincible = false;
+        if (!this.cheatMode)this.viruses[0].invincible = false;
         this.viruses[0].alpha = 1;
       }
       
-      this.limit.setText("Viruses Left: "+this.left);
-      if(gameX < 1200-80 && gameY > 1000 && this.left > 0 &&  this.left-this.currentvirus.cost>=0){
+      else if(!this.targeting && gameY > 1000 && this.left > 0 &&  this.left-this.currentvirus.cost>=0){
         //console.log(this.currentvirus);
 
         var virus = this.game.add.sprite(gameX,gameY,this.currentvirus.spritesheet);
@@ -478,25 +487,27 @@ TopDownGame.GameLevel5.prototype = {
         virus.scale.setTo(this.currentvirus.size);
         virus.health = this.currentvirus.health;
         virus.invincible = true;
-        virus.type = this.currentvirus.name;
+        virus.alpha = 0.5;
         //this.game.physics.enable(virus,Phaser.Physics.ARCADE);
         this.limit.setText("Viruses Left: " + this.left);
         this.left = this.left-this.currentvirus.cost;
         //alert(this.left);
 
         this.game.physics.arcade.enable(virus);
-        //this.game.physics.arcade.collide(virus, this.blockedLayer);
-        //this.game.physics.arcade.collide(virus, this.wall);
+        this.game.physics.arcade.collide(virus, this.blockedLayer);
+        this.game.physics.arcade.collide(virus, this.wall);
         
         virus.body.immovable = false;
         virus.body.collideWorldBounds = true;
         virus.body.bounce.set(1,1);
-        virus.alpha = 0.5;
         //virus.body.velocity.y= -50;
         this.mouseDown=true;
         this.renderingLine = true;
         this.viruses.unshift(virus);
+        this.targeting = true;
       }
+
+      this.limit.setText("Viruses Left: "+this.left);
       
     }
     
@@ -506,8 +517,10 @@ TopDownGame.GameLevel5.prototype = {
     if(this.targeting && this.game.input.activePointer.x < 1200 && this.viruses.length > 0){
       var current = this.viruses[0];
       this.targetingLine = new Phaser.Line(current.x + current.width/2,current.y+current.height/2,this.game.input.activePointer.x,this.game.input.activePointer.y);      
+      this.targetArrow.x = current.x + 0.5*current.width;
+      this.targetArrow.y = current.y + 0.5*current.height;
+      this.targetArrow.visible=true;
     }
-
     //  This boolean controls if the player should collide with the world bounds or not
     
     if(this.game.input.activePointer.isUp && this.mouseDown == true){
@@ -827,7 +840,7 @@ TopDownGame.GameLevel5.prototype = {
   render: function(){
   //  this.game.debug.geom(this.libLine);
   this.game.debug.geom(this.spawnLine);
-    if(this.targeting) this.game.debug.geom(this.targetingLine);
+    //if(this.targeting) this.game.debug.geom(this.targetingLine);
   }
 
   // findObjectsByType: function(type, map, layer) {
