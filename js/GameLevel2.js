@@ -17,7 +17,7 @@ TopDownGame.GameLevel2.prototype = {
     this.freezeSound = this.game.add.audio('freeze');
     this.hitSound = this.game.add.audio('hit');
 
-
+    this.cheatMode;
     //STATIC VARIABLES
     this.startingLibSize = 40;
     this.baseVirusSpeed = 200;
@@ -96,7 +96,7 @@ TopDownGame.GameLevel2.prototype = {
     //Setting the Health of the defender
     this.defender.health = 100;
 
-    var text = "[Pause]";
+    var text = "[Library]";
     var style = { font: "30px Arial", fill: "#ffffff", align: "center" };
     var t = this.game.add.text(10, 10, text, style);
     
@@ -104,7 +104,7 @@ TopDownGame.GameLevel2.prototype = {
 
     var back = "[Levels]";
     var backstyle = { font: "30px Arial", fill: "#ffffff", align: "center" };
-    var backtext = this.game.add.text(10, 50, back, backstyle);
+    var backtext = this.game.add.text(1090, 10, back, backstyle);
   
     backtext.inputEnabled = true // 开启输入事件
     backtext.events.onInputUp.add(function() { 
@@ -247,33 +247,59 @@ TopDownGame.GameLevel2.prototype = {
   lib2.bringToTop();
 
   
-  var invincible = "[invincible]";
-  var libstyle2 = { font: "30px Arial", fill: "#ffffff", align: "center" };
-  var invincibletext = this.game.add.text(850, 10, invincible, libstyle2);
-  invincibletext.bringToTop();
-  invincibletext.inputEnabled=true;
-  invincibletext.events.onInputDown.add(function(){ 
-    console.log("clicked");
-    for(var i = 0; i < this.global.viruses.length; i++){ 
-      this.global.viruses[i].invincible=!this.global.viruses[i].invincible;
-    }
-  },{global:this});
-  var libclosetext = "[Lib close]";
-  var libclosestyle = { font: "30px Arial", fill: "#ffffff", align: "center" };
-  var libclose = this.game.add.text(1050, 10, libclosetext, libclosestyle);
-  libclose.bringToTop();
-  
-  for(var i = 0; i < allInfo.length; i++){
-    allInfo[i].text.visible = false;
-    allInfo[i].image.visible = false;
-    lib.visible = false;
-  }
+  var invincible = "[invincible OFF]";
+    var libstyle2 = { font: "30px Arial", fill: "#ffffff", align: "center" };
+    var invincibletext = this.game.add.text(850, 10, invincible, libstyle2);
+    invincibletext.bringToTop();
 
-  for(var i = 0; i < allInfo.length; i++){
-    allInfo[i].image.visible = false;
-    allInfo[i].text.visible = false;
-    libclose.visible = false;
-  }
+    var invincible = "[invincible ON]";
+    var libstyle2 = { font: "30px Arial", fill: "#ffffff", align: "center" };
+    var invincibleON = this.game.add.text(850, 10, invincible, libstyle2);
+    invincibleON.bringToTop();
+
+    invincibletext.inputEnabled=true;
+    invincibletext.events.onInputDown.add(function(){ 
+      this.global.cheatMode = true;
+      console.log(this.cheatMode);
+      invincibletext.visible = false;
+      invincibleON.visible = true;
+      console.log("clicked");
+      for(var i = 0; i < this.global.viruses.length; i++){ 
+        this.global.viruses[i].invincible=true;
+       
+      }
+    },{global:this});
+    invincibleON.inputEnabled=true;
+    invincibleON.events.onInputDown.add(function(){ 
+      this.global.cheatMode = false;
+      console.log(this.cheatMode);
+      invincibletext.visible = true;
+      invincibleON.visible = false;
+      console.log("clicked");
+      for(var i = 0; i < this.global.viruses.length; i++){ 
+        this.global.viruses[i].invincible=false;
+
+      }
+    },{global:this});
+    var libclosetext = "[Lib close]";
+    var libclosestyle = { font: "30px Arial", fill: "#ffffff", align: "center" };
+    var libclose = this.game.add.text(1050, 10, libclosetext, libclosestyle);
+    libclose.bringToTop();
+    
+    for(var i = 0; i < allInfo.length; i++){
+      allInfo[i].text.visible = false;
+      allInfo[i].image.visible = false;
+      lib.visible = false;
+      lib2.visible = false;
+      invincibletext.visible = true;
+      invincibleON.visible = false;
+    }
+
+    for(var i = 0; i < allInfo.length; i++){
+      allInfo[i].image.visible = false;
+      allInfo[i].text.visible = false;
+      libclose.visible = false;
+    }
 
   function toggleText(){
 
@@ -445,8 +471,12 @@ TopDownGame.GameLevel2.prototype = {
           this.viruses[0].body.velocity.x = difX/pythag*speed;
         }
         this.targeting = false;
-        if (!this.cheatMode)this.viruses[0].invincible = false;
-        this.viruses[0].alpha = 1;
+        console.log(this.cheatMode);
+        if(this.cheatMode != true)
+        {this.viruses[0].invincible = false;
+        this.viruses[0].alpha = 1;}
+        else{this.viruses[0].invincible = true;
+        this.viruses[0].alpha = 1;}
       }
       
       else if(!this.targeting && gameY > 1000 && this.left > 0 &&  this.left-this.currentvirus.cost>=0){
