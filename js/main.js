@@ -8,6 +8,7 @@ TopDownGame.game.state.add('ControlsHelp', TopDownGame.ControlsHelp);
 TopDownGame.game.state.add('Menu', TopDownGame.Menu);
 TopDownGame.game.state.add('Levels', TopDownGame.Levels);
 TopDownGame.game.state.add('Preload', TopDownGame.Preload);
+TopDownGame.game.state.add('GameLevel0', TopDownGame.GameLevel0);
 TopDownGame.game.state.add('GameLevel1', TopDownGame.GameLevel1);
 TopDownGame.game.state.add('GameLevel2', TopDownGame.GameLevel2);
 TopDownGame.game.state.add('GameLevel3', TopDownGame.GameLevel3);
