@@ -497,8 +497,10 @@ TopDownGame.GameLevel5.prototype = {
           this.viruses[0].body.velocity.x = difX/pythag*speed;
         }
         this.targeting = false;
-        if (!this.cheatMode)this.viruses[0].invincible = false;
-        this.viruses[0].alpha = 1;
+        if (!this.cheatMode){
+          this.viruses[0].invincible = false;
+          this.viruses[0].alpha = 1;
+        }
       }
       
       else if(!this.targeting && gameY > 1000 && this.left > 0 &&  this.left-this.currentvirus.cost>=0){
@@ -915,7 +917,7 @@ TopDownGame.GameLevel5.prototype = {
   },
   render: function(){
   //  this.game.debug.geom(this.libLine);
-  this.game.debug.geom(this.spawnLine);
+  //this.game.debug.geom(this.spawnLine);
     //if(this.targeting) this.game.debug.geom(this.targetingLine);
   }
 
