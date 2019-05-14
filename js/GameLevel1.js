@@ -429,7 +429,7 @@ TopDownGame.GameLevel1.prototype = {
         this.viruses[i].animations.play('die', 10, true);
         this.game.time.events.add(Phaser.Timer.SECOND*2,function(){
           tempVirus.animations.frame = 7;
-        }, this);
+        }, this); 
         this.game.time.events.start();
         this.viruses[i].destroy();
         this.viruses[i] = null;
