@@ -157,8 +157,8 @@ TopDownGame.GameLevel5.prototype = {
     cost: 10,
     skill:"Tanky, but slow",
     speed: this.baseVirusSpeed*0.5,
-    health: 2,
-    size: 1.0,
+    health: 8,
+    size: 2.0,
     damage: 20
   }
   virusB.text = this.createDisplay(virusB);
@@ -178,7 +178,7 @@ TopDownGame.GameLevel5.prototype = {
     name: "fast",
     cost: 10,
     skill:"Fast",
-    speed: this.baseVirusSpeed*1.5,
+    speed: this.baseVirusSpeed*2,
     health: 1,
     size: 0.5,
     damage: 20
@@ -215,7 +215,7 @@ TopDownGame.GameLevel5.prototype = {
     spritesheet:'virusE_sprite',
     image: this.game.add.image(800,780,'virusE'),
     name: "Mr. unstoppable",
-    cost: 20,
+    cost: 10,
     skill:"pass through everything",
     speed: this.baseVirusSpeed*1,
     health: 1,
@@ -761,7 +761,7 @@ TopDownGame.GameLevel5.prototype = {
             var b =(Math.abs(this.viruses[i].y-this.defenders[j].y)< 500);
             if (a&&b){
             
-            this.defenders[j].damage(80);
+            this.defenders[j].damage(50);
             this.updateHealthBar(this.defenders[j],this.defenders[j].healthbar);
 
         }

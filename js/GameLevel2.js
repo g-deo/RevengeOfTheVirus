@@ -179,7 +179,7 @@ TopDownGame.GameLevel2.prototype = {
     skill:"Tanky, but slow",
     speed: this.baseVirusSpeed*0.5,
     health: 8,
-    size: 1.4,
+    size: 2.0,
     damage: 20
   }
   virusB.text = this.createDisplay(virusB);
