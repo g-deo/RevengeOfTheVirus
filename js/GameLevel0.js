@@ -185,7 +185,7 @@ TopDownGame.GameLevel0.prototype = {
     this.tutorialAim.firstTime = true;
     this.tutorialShoot.firstTime = true;
     this.tutorialLib = this.game.add.text(this.game.world.centerX,this.game.world.centerY-200,
-        'Click the top left library tab to see virus types.',tutorialStyle);
+        'On the top right, see remaining virus resources.\nClick the top left library tab to see viruses and costs.',tutorialStyle);
     this.tutorialLib.anchor.setTo(0.5);
     this.tutorialLib.visible = false;
     this.tutorialLib.firstTime = true;
