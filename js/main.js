@@ -15,9 +15,10 @@ TopDownGame.game.state.add('GameLevel3', TopDownGame.GameLevel3);
 TopDownGame.game.state.add('GameLevel4', TopDownGame.GameLevel4);
 TopDownGame.game.state.add('GameLevel5', TopDownGame.GameLevel5);
 TopDownGame.game.state.add('GameLevel6', TopDownGame.GameLevel6);
-TopDownGame.game.state.add('GameLevel7', TopDownGame.GameLevel7);
-TopDownGame.game.state.add('GameLevel8', TopDownGame.GameLevel8);
+//TopDownGame.game.state.add('GameLevel7', TopDownGame.GameLevel7);
+//TopDownGame.game.state.add('GameLevel8', TopDownGame.GameLevel8);
 TopDownGame.game.state.add('Win', TopDownGame.Win);
 TopDownGame.game.state.add('Lost', TopDownGame.Lost);
+TopDownGame.game.state.add('Cutscene', TopDownGame.Cutscene);
 
 TopDownGame.game.state.start('Preload');
