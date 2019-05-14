@@ -433,6 +433,15 @@ TopDownGame.GameLevel1.prototype = {
     }
     this.targetArrow.rotation = this.game.physics.arcade.angleToPointer(this.targetArrow);
 
+    if(this.defender.health <= 0){
+      this.defender.animations.play('dead',12, true);
+      //Waits for 10 seconds;
+      this.game.time.events.add(Phaser.Timer.SECOND*2,function(){
+        this.game.state.start('Win');
+      }, this);
+      this.game.time.events.start();
+    }
+
     //DO COLLISIONS
 
     //this.game.physics.arcade.collide(this.viruses, this.blockedLayer);

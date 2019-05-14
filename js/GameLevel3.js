@@ -496,20 +496,25 @@ TopDownGame.GameLevel3.prototype = {
         bullet.kill();
       }
       //Kills virus on bullet impact
-      if(this.viruses[i].health<=0){
-        this.viruses[i].animations.play('die', 12, true);
-        this.game.time.events.add(Phaser.Timer.SECOND*1,function(){
-          this.viruses[i].animations.frame = 7;
-        }, this);
-        this.game.time.events.start();
-        this.viruses[i].destroy();
+      if(this.viruses[i] != undefined && this.viruses[i].invincible === false && this.viruses[i].health<=0){
+        var tempVirus = this.viruses[i];
+        this.viruses[i].animations.play('die', 5, true);
         this.viruses[i] = null;
         this.viruses.splice(i,1);
-      }
+        tempVirus.body.velocity.y = 0;
+        tempVirus.body.velocity.x = 0;
+        this.game.time.events.add(Phaser.Timer.SECOND*0.7,function(){
+          tempVirus.destroy();
+        }, this);
+        this.game.time.events.start();
+      } 
     }
 
-    if(this.viruses.length == 0 && this.left == 0){
-      this.game.state.start('Lost');
+    if(this.defenders.length <= 0){
+      this.game.state.start('Win'); 
+    }
+    else if(this.viruses.length == 0 && this.left == 0){
+      this.game.state.start('Lost');  
     }
     
     //Creates an array of virus instances with virus[0] being the latest addition to the map
@@ -660,23 +665,24 @@ TopDownGame.GameLevel3.prototype = {
       }
 
       if(defender.health <= 0){
-        defender.animations.play('dead',12, true);
-        this.game.time.events.add(Phaser.Timer.SECOND, function(){
-          defender.animations.frame = 16;
+        defender.animations.frame = 16;
+        var def = defender;
+        var dex = this.defenders.indexOf(defender);
+        this.defenders[dex] = null;
+        this.defenders.splice(dex,1);
+        this.game.time.events.add(Phaser.Timer.SECOND * 2, function(){
+          ind = this.defenders.indexOf(defender);
+          //Destroying HealthBar
+          defender.healthbar.destroy();
+          defender.destroy();
+          //Destroying Bullets
+          ind2 = this.bullets.indexOf(bullets);
+          bullets.destroy();
+          this.bullets[ind2] = null;
+          this.bullets.splice(ind2,1);
         }, this);
         this.game.time.events.start();
         //Waits for 10 seconds;
-        ind = this.defenders.indexOf(defender);
-        //Destroying HealthBar
-        defender.healthbar.destroy();
-        defender.destroy();
-        this.defenders[ind]=null;
-        this.defenders.splice(ind,1);
-        //Destroying Bullets
-        ind2 = this.bullets.indexOf(bullets);
-        bullets.destroy();
-        this.bullets[ind2] = null;
-        this.bullets.splice(ind2,1);
         }
       }
     else if(defender.difficulty === "medium"){
@@ -714,22 +720,23 @@ TopDownGame.GameLevel3.prototype = {
 
       if(defender.health <= 0){
         defender.animations.play('dead',12, true);
-        this.game.time.events.add(Phaser.Timer.SECOND, function(){
-          defender.animations.frame = 16;
+        var def = defender;
+        var dex = this.defender.indexOf(defender);
+        this.defenders[dex] = null;
+        this.defenders.splice(dex,1);
+        this.game.time.events.add(Phaser.Timer.SECOND * 2, function(){
+          ind = this.defenders.indexOf(defender);
+          //Destroying HealthBar
+          defender.healthbar.destroy();
+          defender.destroy();
+          //Destroying Bullets
+          ind2 = this.bullets.indexOf(bullets);
+          bullets.destroy();
+          this.bullets[ind2] = null;
+          this.bullets.splice(ind2,1);
         }, this);
         this.game.time.events.start();
         //Waits for 10 seconds;
-        ind = this.defenders.indexOf(defender);
-        //Destroying HealthBar
-        defender.healthbar.destroy();
-        defender.destroy();
-        this.defenders[ind]=null;
-        this.defenders.splice(ind,1);
-        //Destroying Bullets
-        ind2 = this.bullets.indexOf(bullets);
-        bullets.destroy();
-        this.bullets[ind2] = null;
-        this.bullets.splice(ind2,1);
         }
       }
       else if(defender.difficulty === "hard"){
@@ -774,22 +781,23 @@ TopDownGame.GameLevel3.prototype = {
 
       if(defender.health <= 0){
         defender.animations.play('dead',12, true);
-        this.game.time.events.add(Phaser.Timer.SECOND, function(){
-          defender.animations.frame = 16;
+        var def = defender;
+        var dex = this.defender.indexOf(defender);
+        this.defenders[dex] = null;
+        this.defenders.splice(dex,1);
+        this.game.time.events.add(Phaser.Timer.SECOND * 2, function(){
+          ind = this.defenders.indexOf(defender);
+          //Destroying HealthBar
+          defender.healthbar.destroy();
+          defender.destroy();
+          //Destroying Bullets
+          ind2 = this.bullets.indexOf(bullets);
+          bullets.destroy();
+          this.bullets[ind2] = null;
+          this.bullets.splice(ind2,1);
         }, this);
         this.game.time.events.start();
         //Waits for 10 seconds;
-        ind = this.defenders.indexOf(defender);
-        //Destroying HealthBar
-        defender.healthbar.destroy();
-        defender.destroy();
-        this.defenders[ind]=null;
-        this.defenders.splice(ind,1);
-        //Destroying Bullets
-        ind2 = this.bullets.indexOf(bullets);
-        bullets.destroy();
-        this.bullets[ind2] = null;
-        this.bullets.splice(ind2,1);
         }
       }
       

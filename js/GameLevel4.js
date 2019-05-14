@@ -524,15 +524,18 @@ TopDownGame.GameLevel4.prototype = {
         bullet.kill();
       }
       //Kills virus on bullet impact
-      if(this.viruses[i].health<=0){
-        this.viruses[i].animations.play('die', 10, true);
-        this.game.time.events.add(Phaser.Timer.SECOND*10,function(){
-        }, this);
-        this.game.time.events.start();
-        this.viruses[i].destroy();
+      if(this.viruses[i] != undefined && this.viruses[i].invincible === false && this.viruses[i].health<=0){
+        var tempVirus = this.viruses[i];
+        this.viruses[i].animations.play('die', 5, true);
         this.viruses[i] = null;
         this.viruses.splice(i,1);
-      }
+        tempVirus.body.velocity.y = 0;
+        tempVirus.body.velocity.x = 0;
+        this.game.time.events.add(Phaser.Timer.SECOND*0.7,function(){
+          tempVirus.destroy();
+        }, this);
+        this.game.time.events.start();
+      } 
     }
 
     for(var i = 0; i< this.defenders.length-1; i++){
@@ -547,9 +550,11 @@ TopDownGame.GameLevel4.prototype = {
       }
     }
 
-    if(this.viruses.length == 0 && this.left == 0){
-      this.game.state.start('Lost');
-      
+    if(this.defenders.length <= 0){
+      this.game.state.start('Win'); 
+    }
+    else if(this.viruses.length == 0 && this.left == 0){
+      this.game.state.start('Lost');  
     }
     
     //Creates an array of virus instances with virus[0] being the latest addition to the map
