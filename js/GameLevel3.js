@@ -639,12 +639,12 @@ TopDownGame.GameLevel3.prototype = {
       }
 
       if(defender.health <= 0){
-        defender.animations.frame = 16;
+        defender.animations.play('dead',1, true);
         var def = defender;
         var dex = this.defenders.indexOf(defender);
         this.defenders[dex] = null;
         this.defenders.splice(dex,1);
-        this.game.time.events.add(Phaser.Timer.SECOND * 2, function(){
+        this.game.time.events.add(Phaser.Timer.SECOND * 1, function(){
           ind = this.defenders.indexOf(defender);
           //Destroying HealthBar
           defender.healthbar.destroy();
@@ -693,12 +693,12 @@ TopDownGame.GameLevel3.prototype = {
       }
 
       if(defender.health <= 0){
-        defender.animations.play('dead',12, true);
+        defender.animations.play('dead',1, true);
         var def = defender;
-        var dex = this.defender.indexOf(defender);
+        var dex = this.defenders.indexOf(defender);
         this.defenders[dex] = null;
         this.defenders.splice(dex,1);
-        this.game.time.events.add(Phaser.Timer.SECOND * 2, function(){
+        this.game.time.events.add(Phaser.Timer.SECOND * 1, function(){
           ind = this.defenders.indexOf(defender);
           //Destroying HealthBar
           defender.healthbar.destroy();
@@ -754,12 +754,12 @@ TopDownGame.GameLevel3.prototype = {
       }
 
       if(defender.health <= 0){
-        defender.animations.play('dead',12, true);
+        defender.animations.play('dead',1, true);
         var def = defender;
-        var dex = this.defender.indexOf(defender);
+        var dex = this.defenders.indexOf(defender);
         this.defenders[dex] = null;
         this.defenders.splice(dex,1);
-        this.game.time.events.add(Phaser.Timer.SECOND * 2, function(){
+        this.game.time.events.add(Phaser.Timer.SECOND * 1, function(){
           ind = this.defenders.indexOf(defender);
           //Destroying HealthBar
           defender.healthbar.destroy();

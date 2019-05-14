@@ -823,23 +823,24 @@ TopDownGame.GameLevel5.prototype = {
       }
 
       if(defender.health <= 0){
-        defender.animations.play('dead',12, true);
-        this.game.time.events.add(Phaser.Timer.SECOND, function(){
-          defender.animations.frame = 16;
+        defender.animations.play('dead',1, true);
+        var def = defender;
+        var dex = this.defenders.indexOf(defender);
+        this.defenders[dex] = null;
+        this.defenders.splice(dex,1);
+        this.game.time.events.add(Phaser.Timer.SECOND * 1, function(){
+          ind = this.defenders.indexOf(defender);
+          //Destroying HealthBar
+          defender.healthbar.destroy();
+          defender.destroy();
+          //Destroying Bullets
+          ind2 = this.bullets.indexOf(bullets);
+          bullets.destroy();
+          this.bullets[ind2] = null;
+          this.bullets.splice(ind2,1);
         }, this);
         this.game.time.events.start();
         //Waits for 10 seconds;
-        ind = this.defenders.indexOf(defender);
-        //Destroying HealthBar
-        defender.healthbar.destroy();
-        defender.destroy();
-        this.defenders[ind]=null;
-        this.defenders.splice(ind,1);
-        //Destroying Bullets
-        ind2 = this.bullets.indexOf(bullets);
-        bullets.destroy();
-        this.bullets[ind2] = null;
-        this.bullets.splice(ind2,1);
         }
       }
     else if(defender.difficulty === "medium"){
@@ -876,23 +877,24 @@ TopDownGame.GameLevel5.prototype = {
       }
 
       if(defender.health <= 0){
-        defender.animations.play('dead',12, true);
-        this.game.time.events.add(Phaser.Timer.SECOND, function(){
-          defender.animations.frame = 16;
+        defender.animations.play('dead',1, true);
+        var def = defender;
+        var dex = this.defenders.indexOf(defender);
+        this.defenders[dex] = null;
+        this.defenders.splice(dex,1);
+        this.game.time.events.add(Phaser.Timer.SECOND * 1, function(){
+          ind = this.defenders.indexOf(defender);
+          //Destroying HealthBar
+          defender.healthbar.destroy();
+          defender.destroy();
+          //Destroying Bullets
+          ind2 = this.bullets.indexOf(bullets);
+          bullets.destroy();
+          this.bullets[ind2] = null;
+          this.bullets.splice(ind2,1);
         }, this);
         this.game.time.events.start();
         //Waits for 10 seconds;
-        ind = this.defenders.indexOf(defender);
-        //Destroying HealthBar
-        defender.healthbar.destroy();
-        defender.destroy();
-        this.defenders[ind]=null;
-        this.defenders.splice(ind,1);
-        //Destroying Bullets
-        ind2 = this.bullets.indexOf(bullets);
-        bullets.destroy();
-        this.bullets[ind2] = null;
-        this.bullets.splice(ind2,1);
         }
       }
       else if(defender.difficulty === "hard"){
@@ -936,23 +938,24 @@ TopDownGame.GameLevel5.prototype = {
       }
 
       if(defender.health <= 0){
-        defender.animations.play('dead',12, true);
-        this.game.time.events.add(Phaser.Timer.SECOND, function(){
-          defender.animations.frame = 16;
+        defender.animations.play('dead',1, true);
+        var def = defender;
+        var dex = this.defenders.indexOf(defender);
+        this.defenders[dex] = null;
+        this.defenders.splice(dex,1);
+        this.game.time.events.add(Phaser.Timer.SECOND * 1, function(){
+          ind = this.defenders.indexOf(defender);
+          //Destroying HealthBar
+          defender.healthbar.destroy();
+          defender.destroy();
+          //Destroying Bullets
+          ind2 = this.bullets.indexOf(bullets);
+          bullets.destroy();
+          this.bullets[ind2] = null;
+          this.bullets.splice(ind2,1);
         }, this);
         this.game.time.events.start();
         //Waits for 10 seconds;
-        ind = this.defenders.indexOf(defender);
-        //Destroying HealthBar
-        defender.healthbar.destroy();
-        defender.destroy();
-        this.defenders[ind]=null;
-        this.defenders.splice(ind,1);
-        //Destroying Bullets
-        ind2 = this.bullets.indexOf(bullets);
-        bullets.destroy();
-        this.bullets[ind2] = null;
-        this.bullets.splice(ind2,1);
         }
       }
       
