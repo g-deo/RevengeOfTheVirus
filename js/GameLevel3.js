@@ -471,8 +471,9 @@ TopDownGame.GameLevel3.prototype = {
       }
       //Kills virus on bullet impact
       if(this.viruses[i].health<=0){
-        this.viruses[i].animations.play('die', 10, true);
-        this.game.time.events.add(Phaser.Timer.SECOND*10,function(){
+        this.viruses[i].animations.play('die', 12, true);
+        this.game.time.events.add(Phaser.Timer.SECOND*1,function(){
+          this.viruses[i].animations.frame = 7;
         }, this);
         this.game.time.events.start();
         this.viruses[i].destroy();

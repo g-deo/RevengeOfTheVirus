@@ -89,6 +89,9 @@ TopDownGame.GameLevel0.prototype = {
     //Created the dead animation for defender
     var dead = this.defender.animations.add('dead', [16,17,18,19,20,21,22,23], 10, true);
 
+    //Created the dead animation for defender
+    var damage = this.defender.animations.add('damage', [24,25,26,27,28,29,30,31], 10, true);
+
     //Setting the default animation to idle
     this.defender.frame = 8;
 
@@ -170,9 +173,9 @@ TopDownGame.GameLevel0.prototype = {
     allInfo.push(virusB);
 
     //TUTORIAL TEXT
-    var tutorialStyle = { font: "50px Arial", fill: "#ffffff", align: "left" };
-    this.tutorialShoot = this.game.add.text(this.game.world.centerX,this.game.world.centerY,
-        'Hover outside the spawn to aim, and click to fire!',tutorialStyle);
+    var tutorialStyle = { font: "50px Arial", fill: "#ffffff", align: "center" };
+    this.tutorialShoot = this.game.add.text(this.game.world.centerX,this.game.world.centerY-200,
+        'Hover outside the spawn to aim, and click to fire!\nBounce off red blood cells for sick shots!',tutorialStyle);
     this.tutorialShoot.anchor.setTo(0.5);
     this.tutorialShoot.visible = false;
     this.tutorialAim = this.game.add.text(this.game.world.centerX,1100,
@@ -181,13 +184,13 @@ TopDownGame.GameLevel0.prototype = {
     this.tutorialAim.visible = true;
     this.tutorialAim.firstTime = true;
     this.tutorialShoot.firstTime = true;
-    this.tutorialLib = this.game.add.text(this.game.world.centerX,this.game.world.centerY,
-        'Click the top left library tab to see virus types.',tutorialStyle);
+    this.tutorialLib = this.game.add.text(this.game.world.centerX,this.game.world.centerY-200,
+        'On the top right, see remaining virus resources.\nClick the top left library tab to see viruses and costs.',tutorialStyle);
     this.tutorialLib.anchor.setTo(0.5);
     this.tutorialLib.visible = false;
     this.tutorialLib.firstTime = true;
-    this.tutorialLast = this.game.add.text(this.game.world.centerX,this.game.world.centerY-100,
-        'Kill the White Blood Cell to continue!\nBounce off the close Red Blood Cells for better shots.\nWBCs will return fire in future levels...',tutorialStyle);
+    this.tutorialLast = this.game.add.text(this.game.world.centerX,this.game.world.centerY-200,
+        'Kill the White Blood Cell to continue!\nBe warned: WBCs will fight back in future levels...',tutorialStyle);
     this.tutorialLast.anchor.setTo(0.5);
     this.tutorialLast.visible = false;
     this.tutorialLast.firstTime = true;
@@ -430,6 +433,18 @@ TopDownGame.GameLevel0.prototype = {
         this.game.physics.arcade.collide(virus, this.blockedLayer);
         this.game.physics.arcade.collide(virus, this.wall);
       }
+      //If Virus Collides with Defender
+      if(this.game.physics.arcade.overlap(this.defender, this.viruses[i])){
+        this.defender.health -= 10;
+        this.updateHealthBar(this.defender,this.defender.healthbar);
+        this.viruses[i].destroy();
+        this.viruses[i] = null;
+        this.viruses.splice(i,1);
+        this.defender.animations.play('damage', 8, true);
+        this.game.time.events.add(Phaser.Timer.SECOND * 1, function(){
+          this.defender.animations.play('idle',10, true);
+        }, this);
+      }      
     }
 
     if(this.viruses.length == 0 && this.left == 0){
@@ -511,9 +526,6 @@ TopDownGame.GameLevel0.prototype = {
       
     }
     
-
-
-
     if(this.targeting && this.game.input.activePointer.x < 1200 && this.viruses.length > 0){
       var current = this.viruses[0];
       this.targetingLine = new Phaser.Line(current.x + current.width/2,current.y+current.height/2,this.game.input.activePointer.x,this.game.input.activePointer.y);      
