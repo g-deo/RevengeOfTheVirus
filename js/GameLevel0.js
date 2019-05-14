@@ -435,7 +435,7 @@ TopDownGame.GameLevel0.prototype = {
       }
       //If Virus Collides with Defender
       if(this.game.physics.arcade.overlap(this.defender, this.viruses[i])){
-        this.defender.health -= 10;
+        this.defender.health -= 20;
         this.updateHealthBar(this.defender,this.defender.healthbar);
         this.viruses[i].destroy();
         this.viruses[i] = null;
