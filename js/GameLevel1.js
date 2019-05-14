@@ -426,20 +426,23 @@ TopDownGame.GameLevel1.prototype = {
       //Kills virus on bullet impact
       if(this.viruses[i] != undefined && this.viruses[i].invincible === false && this.viruses[i].health<=0){
         var tempVirus = this.viruses[i];
-        this.viruses[i].animations.play('die', 10, true);
-        this.game.time.events.add(Phaser.Timer.SECOND*2,function(){
-          tempVirus.animations.frame = 7;
-        }, this);
-        this.game.time.events.start();
-        this.viruses[i].destroy();
+        this.viruses[i].animations.play('die', 5, true);
         this.viruses[i] = null;
         this.viruses.splice(i,1);
+        tempVirus.body.velocity.y = 0;
+        tempVirus.body.velocity.x = 0;
+        this.game.time.events.add(Phaser.Timer.SECOND*0.7,function(){
+          tempVirus.destroy();
+        }, this);
+        this.game.time.events.start();
       }      
     }
 
-    if(this.viruses.length == 0 && this.left == 0){
-      this.game.state.start('Lost');
-      
+    if(this.defender === undefined || this.defender === null){
+      this.game.state.start('Win'); 
+    }
+    else if(this.viruses.length == 0 && this.left == 0){
+      this.game.state.start('Lost');  
     }
     
     //Creates an array of virus instances with virus[0] being the latest addition to the map
@@ -577,8 +580,9 @@ TopDownGame.GameLevel1.prototype = {
     if(this.defender.health <= 0){
       this.defender.animations.play('dead',12, true);
       //Waits for 10 seconds;
-      this.game.time.events.loop(Phaser.Timer.SECOND, 2000, this);
-      this.game.state.start('Win');
+      this.game.time.events.add(Phaser.Timer.SECOND*2,function(){
+        this.game.state.start('Win');
+      }, this);
     }
   },
   fire: function(virus){

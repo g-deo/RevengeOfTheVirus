@@ -53,7 +53,7 @@ TopDownGame.Preload.prototype = {
     this.load.audio('menu', 'assets/sounds/mainMenu.wav');
     this.load.audio('win', 'assets/sounds/win.wav');
     this.load.audio('lose', 'assets/sounds/lose.wav');
-
+    this.load.audio('damage', 'assets/sounds/damage.wav');
   },
   create: function() {
     this.state.start('Cutscene');
