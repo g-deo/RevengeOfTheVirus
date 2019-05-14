@@ -242,7 +242,28 @@ TopDownGame.GameLevel4.prototype = {
 //  this.wall=this.game.add.image(600,0,'wall');
   
   //this.game.physics.arcade.enable(this.wall, Phaser.Physics.ARCADE);
+  this.fastfoward = "[Fast Forward]";
+  this.fastfowardstyle = { font: "30px Arial", fill: "#ffffff", align: "center" };
+  this.fastfowardbtn = this.game.add.text(1040, 100, this.fastfoward, this.fastfowardstyle);
+  this.fastfowardbtn.bringToTop();
+  this.fastfowardbtn.visible=false;
 
+  this.fastfowardbtn.inputEnabled=true;
+  this.fastfowardbtn.events.onInputDown.add(function(){ 
+    if (this.global.left==0){
+    for(var i = 0; i < this.global.viruses.length; i++){ 
+      this.global.viruses[i].body.velocity.x*=10;
+      this.global.viruses[i].body.velocity.y*=10;
+     
+    }
+    for(var j = 0; j < this.global.defenders.length; j++){ 
+      this.global.defenders[j].speed*=10;
+      
+     
+    }this.baseBulletSpeed*10;
+   }
+  },{global:this});
+  
   var sound = "[Sound On]";
   var soundstyle = { font: "30px Arial", fill: "#ffffff", align: "center" };
   var soundbtn = this.game.add.text(1040, 50, sound, soundstyle);
@@ -471,7 +492,9 @@ TopDownGame.GameLevel4.prototype = {
 
  
   update: function() {
-
+    if(this.left==0){
+      this.fastfowardbtn.visible=true;
+    }
     this.targetArrow.rotation = this.game.physics.arcade.angleToPointer(this.targetArrow);
 
     //DO COLLISIONS
