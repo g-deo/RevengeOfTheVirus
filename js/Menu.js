@@ -48,6 +48,22 @@ TopDownGame.Menu = function(){// 开始场景
           x: 0.5,
           y: 0.5
       }
+      var newgame = this.game.add.text(this.game.world.centerX, this.game.world.centerY-100, 'New Game', {
+        font: '58px FC',
+        align: 'center',
+        fill: '#ffffff'
+    })
+    newgame.anchor = {
+        x: 0.5,
+        y: 0.5
+    }
+
+    newgame.inputEnabled = true // 开启输入事件
+
+    newgame.events.onInputDown.add(function() {
+      this.game.state.start('GameLevel0')
+    }, this)
+
         var Levels = this.game.add.text(this.game.world.centerX, this.game.world.centerY, 'Levels', {
             font: '58px FC',
             align: 'center',
