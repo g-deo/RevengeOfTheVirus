@@ -21,7 +21,7 @@ TopDownGame.GameLevel2.prototype = {
 
     this.cheatMode;
     //STATIC VARIABLES
-    this.startingLibSize = 40;
+    this.startingLibSize = 75;
     this.baseVirusSpeed = 200;
     this.libX = 900;
     this.libY = 140;
@@ -172,11 +172,11 @@ TopDownGame.GameLevel2.prototype = {
     spritesheet:'virusB_sprite',
     image: this.game.add.image(800,570,'virusB'),
     name: "tanky",
-    cost: 2,
+    cost: 10,
     skill:"Tanky, but slow",
     speed: this.baseVirusSpeed*0.5,
-    health: 2,
-    size: 1.0,
+    health: 8,
+    size: 1.4,
     damage: 20
   }
   virusB.text = this.createDisplay(virusB);
@@ -195,8 +195,8 @@ TopDownGame.GameLevel2.prototype = {
     image: this.game.add.image(800,360,'virusC'),
     name: "fast",
     cost: 10,
-    skill:"Fast",
-    speed: this.baseVirusSpeed*1.5,
+    skill:"Fast，but frail",
+    speed: this.baseVirusSpeed*2,
     health: 1,
     size: 0.5,
     damage: 20

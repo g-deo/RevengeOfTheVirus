@@ -21,7 +21,7 @@ TopDownGame.GameLevel0.prototype = {
     this.cheatMode;
 
     //STATIC VARIABLES
-    this.startingLibSize = 50;
+    this.startingLibSize = 1000;
     this.baseVirusSpeed = 200;
     this.libX = 900;
     this.libY = 140;
@@ -130,10 +130,10 @@ TopDownGame.GameLevel0.prototype = {
     var virusA = {
       spritesheet: 'virusA_sprite',
       image: this.game.add.image(800,150,'virusA'),
-      name: "Virus A",
+      name: "basic",
       cost: 5,
-      skill: "Fast, but frail",
-      speed: this.baseVirusSpeed*1.5,
+      skill: "very very normal",
+      speed: this.baseVirusSpeed*1,
       health: 1,
       size: 0.7,
       damage: 20
@@ -152,11 +152,11 @@ TopDownGame.GameLevel0.prototype = {
     var virusB = { 
       spritesheet:'virusB_sprite',
       image: this.game.add.image(800,360,'virusB'),
-      name: "Virus B",
+      name: "fast",
       cost: 10,
-      skill:"Tanky, but slow",
-      speed: this.baseVirusSpeed*0.5,
-      health: 10,
+      skill:"fast, but frail",
+      speed: this.baseVirusSpeed*2,
+      health: 1,
       size: 1.0,
       damage: 20
     }
@@ -363,7 +363,7 @@ TopDownGame.GameLevel0.prototype = {
     imageA =  this.game.add.image(220,210,'virusA');
 
     
-    var vBtext = virusA.name+"    Hot Key: 2"+ "\nCost: "+virusB.cost +"\nSkill: " + virusB.skill;
+    var vBtext = virusB.name+"    Hot Key: 2"+ "\nCost: "+virusB.cost +"\nSkill: " + virusB.skill;
     var vBstyle = { font: "30px Arial", fill: "#ffffff", align: "left" };
     vB = this.game.add.text(330, 400, vBtext, vBstyle);
 

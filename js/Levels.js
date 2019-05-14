@@ -59,7 +59,7 @@ TopDownGame.Levels = function(){// 开始场景
         Level1.inputEnabled = true // 开启输入事件
 
         Level1.events.onInputDown.add(function() {
-          this.game.state.start('ControlsHelp');
+          this.game.state.start('GameLevel1');
         }, this)
 
         var Level2 = this.game.add.text(this.game.world.centerX, this.game.world.centerY-200, 'Level 2', {
