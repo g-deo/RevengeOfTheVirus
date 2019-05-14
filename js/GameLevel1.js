@@ -21,7 +21,7 @@ TopDownGame.GameLevel1.prototype = {
     this.cheatMode;
 
     //STATIC VARIABLES
-    this.startingLibSize = 50;
+    this.startingLibSize = 100;
     this.baseVirusSpeed = 200;
     this.libX = 900;
     this.libY = 140;
@@ -130,13 +130,14 @@ TopDownGame.GameLevel1.prototype = {
 
     //ALL CREATED VIRUSES MUST FOLLOW THIS FORMAT
 
+   
     var virusA = {
       spritesheet: 'virusA_sprite',
       image: this.game.add.image(800,150,'virusA'),
-      name: "Virus A",
+      name: "basic",
       cost: 5,
-      skill: "Fast, but frail",
-      speed: this.baseVirusSpeed*1.5,
+      skill: "very very normal",
+      speed: this.baseVirusSpeed*1,
       health: 1,
       size: 0.7,
       damage: 20
@@ -155,11 +156,11 @@ TopDownGame.GameLevel1.prototype = {
     var virusB = { 
       spritesheet:'virusB_sprite',
       image: this.game.add.image(800,360,'virusB'),
-      name: "Virus B",
+      name: "fast",
       cost: 10,
-      skill:"Tanky, but slow",
-      speed: this.baseVirusSpeed*0.5,
-      health: 10,
+      skill:"fast, but frail",
+      speed: this.baseVirusSpeed*2,
+      health: 1,
       size: 1.0,
       damage: 20
     }
@@ -338,7 +339,7 @@ TopDownGame.GameLevel1.prototype = {
     imageA =  this.game.add.image(220,210,'virusA');
 
     
-    var vBtext = virusA.name+"    Hot Key: 2"+ "\nCost: "+virusB.cost +"\nSkill: " + virusB.skill;
+    var vBtext = virusB.name+"    Hot Key: 2"+ "\nCost: "+virusB.cost +"\nSkill: " + virusB.skill;
     var vBstyle = { font: "30px Arial", fill: "#ffffff", align: "left" };
     vB = this.game.add.text(330, 400, vBtext, vBstyle);
 
@@ -407,7 +408,7 @@ TopDownGame.GameLevel1.prototype = {
       }
       //If Virus Collides with Defender
       if(this.game.physics.arcade.overlap(this.defender, this.viruses[i])){
-        this.defender.health -= 10;
+        this.defender.health -= 20;
         this.updateHealthBar(this.defender,this.defender.healthbar);
         this.viruses[i].destroy();
         this.viruses[i] = null;
@@ -426,20 +427,23 @@ TopDownGame.GameLevel1.prototype = {
       //Kills virus on bullet impact
       if(this.viruses[i] != undefined && this.viruses[i].invincible === false && this.viruses[i].health<=0){
         var tempVirus = this.viruses[i];
-        this.viruses[i].animations.play('die', 10, true);
-        this.game.time.events.add(Phaser.Timer.SECOND*2,function(){
-          tempVirus.animations.frame = 7;
-        }, this); 
-        this.game.time.events.start();
-        this.viruses[i].destroy();
+        this.viruses[i].animations.play('die', 5, true);
         this.viruses[i] = null;
         this.viruses.splice(i,1);
+        tempVirus.body.velocity.y = 0;
+        tempVirus.body.velocity.x = 0;
+        this.game.time.events.add(Phaser.Timer.SECOND*0.7,function(){
+          tempVirus.destroy();
+        }, this);
+        this.game.time.events.start();
       }      
     }
 
-    if(this.viruses.length == 0 && this.left == 0){
-      this.game.state.start('Lost');
-      
+    if(this.defender === undefined || this.defender === null){
+      this.game.state.start('Win'); 
+    }
+    else if(this.viruses.length == 0 && this.left == 0){
+      this.game.state.start('Lost');  
     }
     
     //Creates an array of virus instances with virus[0] being the latest addition to the map
@@ -577,8 +581,9 @@ TopDownGame.GameLevel1.prototype = {
     if(this.defender.health <= 0){
       this.defender.animations.play('dead',12, true);
       //Waits for 10 seconds;
-      this.game.time.events.loop(Phaser.Timer.SECOND, 2000, this);
-      this.game.state.start('Win');
+      this.game.time.events.add(Phaser.Timer.SECOND*2,function(){
+        this.game.state.start('Win');
+      }, this);
     }
   },
   fire: function(virus){

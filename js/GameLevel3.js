@@ -163,8 +163,8 @@ TopDownGame.GameLevel3.prototype = {
     cost: 10,
     skill:"Tanky, but slow",
     speed: this.baseVirusSpeed*0.5,
-    health: 2,
-    size: 1.0,
+    health: 8,
+    size: 2.0,
     damage: 20
   }
   virusB.text = this.createDisplay(virusB);
@@ -619,7 +619,7 @@ TopDownGame.GameLevel3.prototype = {
       //Destroys the collided virus and reduces health of defender
       for(var i=0; i<this.viruses.length; i++){
         if(this.game.physics.arcade.overlap(defender, this.viruses[i])){
-          defender.damage(10);
+          defender.damage(20);
           this.updateHealthBar(defender, defender.healthbar);
           this.viruses[i].destroy();
           this.viruses[i] = null;
