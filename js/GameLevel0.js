@@ -89,6 +89,9 @@ TopDownGame.GameLevel0.prototype = {
     //Created the dead animation for defender
     var dead = this.defender.animations.add('dead', [16,17,18,19,20,21,22,23], 10, true);
 
+    //Created the dead animation for defender
+    var damage = this.defender.animations.add('damage', [24,25,26,27,28,29,30,31], 10, true);
+
     //Setting the default animation to idle
     this.defender.frame = 8;
 
@@ -430,6 +433,18 @@ TopDownGame.GameLevel0.prototype = {
         this.game.physics.arcade.collide(virus, this.blockedLayer);
         this.game.physics.arcade.collide(virus, this.wall);
       }
+      //If Virus Collides with Defender
+      if(this.game.physics.arcade.overlap(this.defender, this.viruses[i])){
+        this.defender.health -= 10;
+        this.updateHealthBar(this.defender,this.defender.healthbar);
+        this.viruses[i].destroy();
+        this.viruses[i] = null;
+        this.viruses.splice(i,1);
+        this.defender.animations.play('damage', 8, true);
+        this.game.time.events.add(Phaser.Timer.SECOND * 1, function(){
+          this.defender.animations.play('idle',10, true);
+        }, this);
+      }      
     }
 
     if(this.viruses.length == 0 && this.left == 0){
@@ -511,9 +526,6 @@ TopDownGame.GameLevel0.prototype = {
       
     }
     
-
-
-
     if(this.targeting && this.game.input.activePointer.x < 1200 && this.viruses.length > 0){
       var current = this.viruses[0];
       this.targetingLine = new Phaser.Line(current.x + current.width/2,current.y+current.height/2,this.game.input.activePointer.x,this.game.input.activePointer.y);      
