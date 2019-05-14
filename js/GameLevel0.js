@@ -170,9 +170,9 @@ TopDownGame.GameLevel0.prototype = {
     allInfo.push(virusB);
 
     //TUTORIAL TEXT
-    var tutorialStyle = { font: "50px Arial", fill: "#ffffff", align: "left" };
-    this.tutorialShoot = this.game.add.text(this.game.world.centerX,this.game.world.centerY,
-        'Hover outside the spawn to aim, and click to fire!',tutorialStyle);
+    var tutorialStyle = { font: "50px Arial", fill: "#ffffff", align: "center" };
+    this.tutorialShoot = this.game.add.text(this.game.world.centerX,this.game.world.centerY-200,
+        'Hover outside the spawn to aim, and click to fire!\nBounce off red blood cells for sick shots!',tutorialStyle);
     this.tutorialShoot.anchor.setTo(0.5);
     this.tutorialShoot.visible = false;
     this.tutorialAim = this.game.add.text(this.game.world.centerX,1100,
@@ -181,13 +181,13 @@ TopDownGame.GameLevel0.prototype = {
     this.tutorialAim.visible = true;
     this.tutorialAim.firstTime = true;
     this.tutorialShoot.firstTime = true;
-    this.tutorialLib = this.game.add.text(this.game.world.centerX,this.game.world.centerY,
+    this.tutorialLib = this.game.add.text(this.game.world.centerX,this.game.world.centerY-200,
         'Click the top left library tab to see virus types.',tutorialStyle);
     this.tutorialLib.anchor.setTo(0.5);
     this.tutorialLib.visible = false;
     this.tutorialLib.firstTime = true;
-    this.tutorialLast = this.game.add.text(this.game.world.centerX,this.game.world.centerY-100,
-        'Kill the White Blood Cell to continue!\nBounce off the close Red Blood Cells for better shots.\nWBCs will return fire in future levels...',tutorialStyle);
+    this.tutorialLast = this.game.add.text(this.game.world.centerX,this.game.world.centerY-200,
+        'Kill the White Blood Cell to continue!\nBe warned: WBCs will fight back in future levels...',tutorialStyle);
     this.tutorialLast.anchor.setTo(0.5);
     this.tutorialLast.visible = false;
     this.tutorialLast.firstTime = true;
