@@ -425,6 +425,14 @@ TopDownGame.GameLevel0.prototype = {
 
     //this.game.physics.arcade.collide(this.viruses, this.blockedLayer);
     //this.game.physics.arcade.collide(this.viruses, this.wall);
+    if(this.defender.health <= 0){
+      this.defender.animations.play('dead',12, true);
+      //Waits for 10 seconds;
+      this.game.time.events.add(Phaser.Timer.SECOND*2,function(){
+        this.game.state.start('Win');
+      }, this);
+      this.game.time.events.start();
+    }
     
     for(var i = 0; i < this.viruses.length; i++){
       if(this.viruses[i] != undefined && this.viruses[i] != null){
@@ -447,9 +455,11 @@ TopDownGame.GameLevel0.prototype = {
       }      
     }
 
-    if(this.viruses.length == 0 && this.left == 0){
-      this.game.state.start('Lost');
-      
+    if(this.defender === undefined || this.defender === null){
+      this.game.state.start('Win'); 
+    }
+    else if(this.viruses.length == 0 && this.left == 0){
+      this.game.state.start('Lost');  
     }
     
     //Creates an array of virus instances with virus[0] being the latest addition to the map
@@ -588,13 +598,6 @@ TopDownGame.GameLevel0.prototype = {
     }
     if(this.viruses.length===0){
       this.defender.animations.play('idle', 18, true);
-    }
-    //Win condition
-    if(this.defender.health <= 0){
-      this.defender.animations.play('dead',12, true);
-      //Waits for 10 seconds;
-      this.game.time.events.loop(Phaser.Timer.SECOND, 2000, this);
-      this.game.state.start('Win');
     }
   },
   fire: function(virus){
