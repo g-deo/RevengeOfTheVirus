@@ -363,10 +363,12 @@ TopDownGame.GameLevel0.prototype = {
 
     t.inputEnabled = true // 开启输入事件
     t.events.onInputUp.add(function() { 
-        this.tutorialLib.visible = false;
-        if(this.tutorialLast.firstTime){
-            this.tutorialLast.firstTime = false;
-            this.tutorialLast.visible = true;
+        if(!this.tutorialShoot.firstTime){
+          this.tutorialLib.visible = false;
+          if(this.tutorialLast.firstTime){
+              this.tutorialLast.firstTime = false;
+              this.tutorialLast.visible = true;
+          }
         }
     this.game.paused = true; 
 
