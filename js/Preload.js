@@ -38,6 +38,7 @@ TopDownGame.Preload.prototype = {
     this.load.image('library', '/assets/images/library.png');
     
     this.load.image('virusA', '/assets/images/virusA.png');
+    this.load.image('virusB', '/assets/images/virusB.png');
     this.load.image('virusC', '/assets/images/virusC.png');
     this.load.image('virusD', '/assets/images/virusD.png');
     this.load.image('virusE', '/assets/images/virusE.png');
