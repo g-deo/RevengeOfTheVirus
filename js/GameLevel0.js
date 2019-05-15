@@ -478,6 +478,7 @@ TopDownGame.GameLevel0.prototype = {
         this.viruses[i] = null;
         this.viruses.splice(i,1);
         this.defender.animations.play('damage', 8, true);
+        this.damageSound.play();
         this.game.time.events.add(Phaser.Timer.SECOND * 1, function(){
           this.defender.animations.play('idle',10, true);
         }, this);

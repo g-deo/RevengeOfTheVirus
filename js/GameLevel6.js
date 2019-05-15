@@ -729,9 +729,9 @@ TopDownGame.GameLevel6.prototype = {
       if(this.game.physics.arcade.overlap(this.defenders[j], this.viruses[i])){
         if(this.viruses[i].type == "icy"){
           this.freezeSound.play();
-          this.ai(this.viruses,this.defenders[j], this.bullets[i]);
+          this.ai(this.viruses,this.defenders[j], this.bullets[j]);
         }else{
-          this.ai(this.viruses,this.defenders[j], this.bullets[i]);
+          this.ai(this.viruses,this.defenders[j], this.bullets[j]);
         }
       }}
     }
@@ -1104,6 +1104,7 @@ TopDownGame.GameLevel6.prototype = {
     this.game.time.events.start();
     //Loading the bullets
     //alert(Object.getOwnPropertyNames(bullets));
+
     bullets.createMultiple(1, 'defenderBullet');
     bullets.setAll('checkWorldBounds', true);
     if (this.game.time.now > this.nextFire && bullets.countDead() > 0)
