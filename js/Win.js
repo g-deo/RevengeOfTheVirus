@@ -55,20 +55,23 @@ TopDownGame.Win = function(){// 开始场景
       nextText += " tanky virus (key 3)!";
     }
     else if(this.game.level == 2){
-      nextText += " fast virus (key 4)!";
+      nextText = "";
     }
     else if(this.game.level == 3){
-      nextText += " boom virus (key 5)!";
+      nextText += " boom virus (key 4)! Press 'B' to explode!\nCan only be used once per level.";
     }
     else if(this.game.level == 4){
-      nextText += " unstoppable virus (key 6)!";
+      nextText += " unstoppable virus (key 5)!";
     }
     else if(this.game.level == 5){
-      nextText += " boost virus (key 7)!";
+      nextText += " boost virus (key 6)!";
     }
-    var text = this.game.add.text(this.game.world.centerX, this.game.world.centerY-100, nextText,{
+    else if(this.game.level == 6){
+      nextText = "Bob had a bad day...";
+    }
+    var text = this.game.add.text(this.game.world.centerX, this.game.world.centerY-50, nextText,{
       font: '50px FC',
-      
+      align: 'center',
       fill: '#ffffff'
     })  
     text.anchor = {
