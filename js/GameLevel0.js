@@ -110,9 +110,9 @@ TopDownGame.GameLevel0.prototype = {
     
     
     //levels button
-    var back = "[Levels]";
+    var back = "[BACK]";
     var backstyle = { font: "30px Arial", fill: "#ffffff", align: "center" };
-    var backtext = this.game.add.text(1090, 10, back, backstyle); 
+    var backtext = this.game.add.text(850, 10, back, backstyle); 
     backtext.inputEnabled = true // 开启输入事件
     backtext.events.onInputUp.add(function() {   
       this.game.state.start('Levels')
@@ -271,13 +271,13 @@ TopDownGame.GameLevel0.prototype = {
     
     var invincible = "[invincible OFF]";
     var libstyle2 = { font: "30px Arial", fill: "#ffffff", align: "center" };
-    var invincibletext = this.game.add.text(850, 10, invincible, libstyle2);
+    var invincibletext = this.game.add.text(984, 10, invincible, libstyle2);
     invincibletext.bringToTop();
 
 
     var invincible = "[invincible ON]";
     var libstyle2 = { font: "30px Arial", fill: "#ffffff", align: "center" };
-    var invincibleON = this.game.add.text(850, 10, invincible, libstyle2);
+    var invincibleON = this.game.add.text(984, 10, invincible, libstyle2);
     invincibleON.bringToTop();
 
     invincibletext.inputEnabled=true;
