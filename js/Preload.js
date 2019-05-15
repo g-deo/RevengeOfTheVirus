@@ -12,9 +12,9 @@ TopDownGame.Preload.prototype = {
     this.preloadBG.y = this.game.world.centerY;
     this.preloadBG.anchor.set(0.5,0.5);
 
-    var loadingStyle = { font: "50px Arial", fill: "#ffffff", align: "center" };
+    var loadingStyle = { font: "50px Impact", fill: "#ffffff", align: "center" };
     this.loadingText = this.game.add.text(this.game.world.centerX,this.game.world.centerY-150,
-        'Loading...',loadingStyle);
+        '3 Chefs Presents...',loadingStyle);
     this.loadingText.anchor.setTo(0.5);
 
     this.loadingVirus = this.game.add.sprite(this.game.world.centerX,this.game.world.centerY,'virusB_sprite');
@@ -35,6 +35,8 @@ TopDownGame.Preload.prototype = {
     this.load.image('preloadbar', '/assets/images/preloader-bar.png');
     this.load.image('arrow','/assets/images/arrow.png');
     
+    this.load.image('logo','/assets/images/title.png');
+
     this.load.image('library', '/assets/images/library.png');
     
     this.load.image('virusA', '/assets/images/virusA.png');
