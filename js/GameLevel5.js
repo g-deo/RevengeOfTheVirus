@@ -734,6 +734,9 @@ TopDownGame.GameLevel5.prototype = {
         if(this.currentvirus.name == "Mr. unstoppable"){
           virus.ghost = true;
         }
+        if(this.currentvirus.name == "Mr.boom"){
+          virus.animations.add('boom',[8,9,10], 10, true);
+        }
         //this.game.physics.enable(virus,Phaser.Physics.ARCADE);
         this.limit.setText("Viruses Left: " + this.left);
         this.left = this.left-this.currentvirus.cost;
@@ -799,9 +802,18 @@ TopDownGame.GameLevel5.prototype = {
         }
       }
       this.explosionSound.play();
-      this.viruses[i].destroy()
-          this.viruses[i] = null;
-          this.viruses.splice(i,1);
+      var tempVirus = this.viruses[i];
+      this.viruses[i] = null;
+      this.viruses.splice(i,1);
+      tempVirus.body.velocity.y = 0;
+      tempVirus.body.velocity.x = 0;
+      tempVirus.anchor.set(0.5,0.5);
+      tempVirus.animations.play('boom',4,true);
+      tempVirus.scale.setTo(5.0,5.0);
+      this.game.time.events.add(Phaser.Timer.SECOND*0.7,function(){
+        tempVirus.destroy();
+      }, this);
+      this.game.time.events.start();
     }}
   }
   },  bouncewall: function(virus){
