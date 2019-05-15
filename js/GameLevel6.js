@@ -792,6 +792,9 @@ TopDownGame.GameLevel6.prototype = {
         if(this.currentvirus.name == "Mr. unstoppable"){
           virus.ghost = true;
         }
+        if(this.currentvirus.name == "Mr.boom"){
+          virus.animations.add('boom',[8,9,10], 10, true);
+        }
         //this.game.physics.enable(virus,Phaser.Physics.ARCADE);
         this.limit.setText("Viruses Left: " + this.left);
         this.left = this.left-this.currentvirus.cost;
