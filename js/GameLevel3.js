@@ -570,7 +570,7 @@ TopDownGame.GameLevel3.prototype = {
         virus.invincible = true;
         virus.alpha = 0.5;
         //this.game.physics.enable(virus,Phaser.Physics.ARCADE);
-        this.limit.setText("Viruses Left: " + this.left);
+      this.limit.setText("DNA Pool: "+this.left);
         this.left = this.left-this.currentvirus.cost;
         //alert(this.left);
 
@@ -588,7 +588,7 @@ TopDownGame.GameLevel3.prototype = {
         this.targeting = true;
       }
 
-      this.limit.setText("Viruses Left: "+this.left);
+      this.limit.setText("DNA Pool: "+this.left);
       
     }
     
@@ -875,13 +875,13 @@ TopDownGame.GameLevel3.prototype = {
     else if(sprite.health>=30){healthbar.frame = 7;}
     else if(sprite.health>=20){healthbar.frame = 8;}
     else if(sprite.health>=10){healthbar.frame = 9;}
-    else {healthbar.frame = 9;}
+    else {healthbar.frame = 10;}
   },
   //Creates the specified number of defender sprites and outputs an array of size num
   createDefenders: function(num){
     var defArr = new Array();
     var defaultX = 90;
-    var defaultY = 120
+    var defaultY = 135
     for(var i =0; i< num; i++){
         //Initialized defender sprite
         var defender = this.game.add.sprite(defaultX+=130, defaultY, 'defender');

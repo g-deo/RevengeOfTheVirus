@@ -8,7 +8,7 @@ TopDownGame.GameLevel5.prototype = {
   
   create: function() {
 
-
+    this.libstate = "closed";
     this.game.level = 5;
 
     this.cheatMode = false;
@@ -411,7 +411,7 @@ TopDownGame.GameLevel5.prototype = {
   t.events.onInputUp.add(function() { 
   this.game.paused = true; 
 
-
+  this.libstate ="open1";
  librarybackground = this.game.add.sprite(200, 100, 'library');
 
 
@@ -457,7 +457,8 @@ TopDownGame.GameLevel5.prototype = {
   
   var keyenter =this.game.input.keyboard.addKey(Phaser.Keyboard.DOWN);
   keyenter.onDown.add(function(){
-    
+    if (this.libstate == "open1"){
+    this.libstate = "open2";
     next.destroy();
     libtext.destroy();
     imageA.destroy();
@@ -491,7 +492,7 @@ TopDownGame.GameLevel5.prototype = {
 
    var style = {fill : '#FFF'}; 
    next = this.game.add.text(this.game.width * 0.5, this.game.height -200, "Press ↑/↓ to check more", style); 
-   next.anchor.set(0.5, 0.5); 
+   next.anchor.set(0.5, 0.5); }
   }, this);
   t.fixedToCamera = true; 
 
@@ -499,6 +500,8 @@ TopDownGame.GameLevel5.prototype = {
 
   var keyup =this.game.input.keyboard.addKey(Phaser.Keyboard.UP);
   keyup.onDown.add(function(){
+    if (this.libstate == "open2"){
+      this.libstate = "open1";
     imageE.destroy();
     vE.destroy();
     next.destroy();
@@ -543,15 +546,15 @@ TopDownGame.GameLevel5.prototype = {
     imageC =  this.game.add.image(220,610,'virusC');
 
     
-   var vEtext = virusE.name+"    Hot Key: 4"+ "\nCost: "+virusE.cost +"\nSkill: " + virusE.skill;
-   var vEstyle = { font: "30px Arial", fill: "#ffffff", align: "left" };
-    vE = this.game.add.text(330, 800, vEtext, vEstyle);
+   var vDtext = virusD.name+"    Hot Key: 4"+ "\nCost: "+virusD.cost +"\nSkill: " + virusD.skill;
+   var vDstyle = { font: "30px Arial", fill: "#ffffff", align: "left" };
+    vD = this.game.add.text(330, 800, vDtext, vDstyle);
  
-    imageE =  this.game.add.image(220,810,'virusE');
+    imageD =  this.game.add.image(220,810,'virusD');
 
     var style = {fill : '#FFF'}; 
     next = this.game.add.text(this.game.width * 0.5, this.game.height -200, "Press ↑/↓ to check more", style); 
-    next.anchor.set(0.5, 0.5);  
+    next.anchor.set(0.5, 0.5);  }
   }, this);
   t.fixedToCamera = true; 
   key1 = this.game.input.keyboard.addKey(Phaser.Keyboard.ONE);
@@ -563,6 +566,8 @@ TopDownGame.GameLevel5.prototype = {
   }, {global:this});
   var keyenter =this.game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
   keyenter.onDown.add(function(){
+    if (this.libstate == "open1"){
+      this.libstate = "closed";
     this.game.paused = false; 
     imageD.destroy();
     vD.destroy();
@@ -574,10 +579,27 @@ TopDownGame.GameLevel5.prototype = {
     vC.destroy();
     imageB.destroy();
     vB.destroy();
-    imageE.destroy();
-    vE.destroy();
     tx.destroy();
+    librarybackground.destroy();}else if (this.libstate =="open2"){
+      this.libstate = "closed";
+      this.game.paused = false; 
+      imageD.destroy();
+      vD.destroy();
+      next.destroy();
+      libtext.destroy();
+      imageA.destroy();
+      vA.destroy();
+      imageC.destroy();
+      vC.destroy();
+      imageB.destroy();
+      vB.destroy();
+      imageE.destroy();
+      vE.destroy();
+      tx.destroy();
+      
     librarybackground.destroy();
+    }
+
   }, this);
   t.fixedToCamera = true; 
 
@@ -750,7 +772,7 @@ TopDownGame.GameLevel5.prototype = {
           virus.animations.add('boom',[8,9,10], 10, true);
         }
         //this.game.physics.enable(virus,Phaser.Physics.ARCADE);
-        this.limit.setText("Viruses Left: " + this.left);
+      this.limit.setText("DNA Pool: "+this.left);
         this.left = this.left-this.currentvirus.cost;
         //alert(this.left);
 
@@ -767,9 +789,7 @@ TopDownGame.GameLevel5.prototype = {
         this.viruses.unshift(virus);
         this.targeting = true;
       }
-
-      this.limit.setText("Viruses Left: "+this.left);
-      
+      this.limit.setText("DNA Pool: "+this.left);
     }
     
 
@@ -1074,13 +1094,13 @@ TopDownGame.GameLevel5.prototype = {
     else if(sprite.health>=30){healthbar.frame = 7;}
     else if(sprite.health>=20){healthbar.frame = 8;}
     else if(sprite.health>=10){healthbar.frame = 9;}
-    else {healthbar.frame = 9;}
+    else {healthbar.frame = 10;}
   },
   //Creates the specified number of defender sprites and outputs an array of size num
   createDefenders: function(num){
     var defArr = new Array();
     var defaultX = 90;
-    var defaultY = 120
+    var defaultY = 135
     for(var i =0; i< num; i++){
         //Initialized defender sprite
         var defender = this.game.add.sprite(defaultX+=130, defaultY, 'defender');

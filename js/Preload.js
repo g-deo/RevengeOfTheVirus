@@ -56,7 +56,7 @@ TopDownGame.Preload.prototype = {
     this.load.image('intro2', 'assets/images/Intro 2.png');
 
     //health bar percentages starting at 100%
-    this.load.spritesheet('healthbar', '/assets/images/healthbar.png',80,80,10);
+    this.load.spritesheet('healthbar', '/assets/images/healthbar.png',80,80,11);
     //show loading screen
 
     //load music

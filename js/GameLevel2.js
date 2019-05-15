@@ -73,7 +73,7 @@ TopDownGame.GameLevel2.prototype = {
 
     //Initialized defender sprite
     this.map.setCollisionBetween(5626,6000, true, 'blockedLayer');
-    this.defender = this.game.add.sprite(100, 120, 'defender');
+    this.defender = this.game.add.sprite(100, 135, 'defender');
     this.defender.frame = 8;
     this.defender.anchor.set(0.5, 0.5);
     this.game.physics.enable(this.defender, Phaser.Physics.ARCADE);
@@ -608,7 +608,7 @@ TopDownGame.GameLevel2.prototype = {
         this.targeting = true;
       }
 
-      this.limit.setText("Viruses Left: "+this.left);
+      this.limit.setText("DNA Pool: "+this.left);
       
     }
     
@@ -737,7 +737,7 @@ TopDownGame.GameLevel2.prototype = {
     else if(sprite.health>=30){healthbar.frame = 7;}
     else if(sprite.health>=20){healthbar.frame = 8;}
     else if(sprite.health>=10){healthbar.frame = 9;}
-    else {healthbar.frame = 9;}
+    else {healthbar.frame = 10;}
   },
   render: function(){
   //  this.game.debug.geom(this.libLine);
