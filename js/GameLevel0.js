@@ -562,7 +562,7 @@ TopDownGame.GameLevel0.prototype = {
         this.targeting = true;
       }
 
-      this.limit.setText("Viruses Left: "+this.left);
+      this.limit.setText("DNA Pool: "+this.left);
       
     }
     
