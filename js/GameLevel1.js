@@ -18,6 +18,7 @@ TopDownGame.GameLevel1.prototype = {
     this.explosionSound = this.game.add.audio('explosion');
     this.freezeSound = this.game.add.audio('freeze');
     this.hitSound = this.game.add.audio('hit');
+    this.damageSound = this.game.add.audio('damage');
     this.cheatMode;
 
     //STATIC VARIABLES
@@ -446,6 +447,7 @@ TopDownGame.GameLevel1.prototype = {
         this.viruses[i] = null;
         this.viruses.splice(i,1);
         this.defender.animations.play('damage', 8, true);
+        this.damageSound.play()
         this.game.time.events.add(Phaser.Timer.SECOND * 1, function(){
           this.defender.animations.play('idle',10, true);
         }, this);

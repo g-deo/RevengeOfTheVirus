@@ -18,6 +18,7 @@ TopDownGame.GameLevel0.prototype = {
     this.explosionSound = this.game.add.audio('explosion');
     this.freezeSound = this.game.add.audio('freeze');
     this.hitSound = this.game.add.audio('hit');
+    this.damageSound = this.game.add.audio('damage');
     this.cheatMode;
 
     //STATIC VARIABLES
