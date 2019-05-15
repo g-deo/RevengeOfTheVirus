@@ -617,7 +617,7 @@ TopDownGame.GameLevel4.prototype = {
           virus.animations.add('boom',[8,9,10], 10, true);
         }
         //this.game.physics.enable(virus,Phaser.Physics.ARCADE);
-        this.limit.setText("Viruses Left: " + this.left);
+      this.limit.setText("DNA Pool: "+this.left);
         this.left = this.left-this.currentvirus.cost;
         //alert(this.left);
 
@@ -635,7 +635,7 @@ TopDownGame.GameLevel4.prototype = {
         this.targeting = true;
       }
 
-      this.limit.setText("Viruses Left: "+this.left);
+      this.limit.setText("DNA Pool: "+this.left);
       
     }
     

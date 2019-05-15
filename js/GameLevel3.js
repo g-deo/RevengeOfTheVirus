@@ -570,7 +570,7 @@ TopDownGame.GameLevel3.prototype = {
         virus.invincible = true;
         virus.alpha = 0.5;
         //this.game.physics.enable(virus,Phaser.Physics.ARCADE);
-        this.limit.setText("Viruses Left: " + this.left);
+      this.limit.setText("DNA Pool: "+this.left);
         this.left = this.left-this.currentvirus.cost;
         //alert(this.left);
 
@@ -588,7 +588,7 @@ TopDownGame.GameLevel3.prototype = {
         this.targeting = true;
       }
 
-      this.limit.setText("Viruses Left: "+this.left);
+      this.limit.setText("DNA Pool: "+this.left);
       
     }
     
