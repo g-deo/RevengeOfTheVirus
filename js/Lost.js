@@ -24,7 +24,7 @@ TopDownGame.Lost = function(){// 开始场景
 
         // START 文字
 
-      var text = this.game.add.text(this.game.world.centerX, this.game.world.centerY-100, 'You Lost.', {
+      var text = this.game.add.text(this.game.world.centerX, this.game.world.centerY-100, 'Ran Out of Resources.', {
         font: '100px FC',
         
         fill: '#ffffff'
@@ -34,7 +34,7 @@ TopDownGame.Lost = function(){// 开始场景
         y: 0.5
     }
 
-    var text = this.game.add.text(this.game.world.centerX, this.game.world.centerY, 'Try again!',{
+    var text = this.game.add.text(this.game.world.centerX, this.game.world.centerY, 'You Lose!',{
         font: '100px FC',
         
         fill: '#ffffff'

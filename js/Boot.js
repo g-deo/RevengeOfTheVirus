@@ -1,7 +1,9 @@
 var TopDownGame = TopDownGame || {};
 
 TopDownGame.Boot = function(){// 开始场景
+  
     this.create = function() {    //loading screen will have a white background
+
       //Setting background to black color.
       this.game.stage.backgroundColor = '#000000';
       this.game.physics.startSystem(Phaser.Physics.ARCADE);
