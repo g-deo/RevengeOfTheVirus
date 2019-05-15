@@ -24,7 +24,7 @@ TopDownGame.Win = function(){// 开始场景
 
         // START 文字
 
-      var text = this.game.add.text(this.game.world.centerX, this.game.world.centerY-100, 'Congratulations!', {
+      var text = this.game.add.text(this.game.world.centerX, this.game.world.centerY-300, 'Congratulations!', {
         font: '100px FC',
         
         fill: '#ffffff'
@@ -37,7 +37,7 @@ TopDownGame.Win = function(){// 开始场景
     var winText = "You Win!"
     if (this.game.level < 6) winText = "Level Complete!"
 
-    var text = this.game.add.text(this.game.world.centerX, this.game.world.centerY, winText,{
+    var text = this.game.add.text(this.game.world.centerX, this.game.world.centerY-200, winText,{
         font: '100px FC',
         
         fill: '#ffffff'
@@ -46,6 +46,36 @@ TopDownGame.Win = function(){// 开始场景
         x: 0.5,
         y: 0.5
     }
+
+    var nextText = "You've unlocked ";
+    if(this.game.level == 0){
+      nextText += " base virus (key 1) and fast virus (key 2)!";
+    }
+    else if(this.game.level == 1){
+      nextText += " tanky virus (key 3)!";
+    }
+    else if(this.game.level == 2){
+      nextText += " fast virus (key 4)!";
+    }
+    else if(this.game.level == 3){
+      nextText += " boom virus (key 5)!";
+    }
+    else if(this.game.level == 4){
+      nextText += " unstoppable virus (key 6)!";
+    }
+    else if(this.game.level == 5){
+      nextText += " boost virus (key 7)!";
+    }
+    var text = this.game.add.text(this.game.world.centerX, this.game.world.centerY-100, nextText,{
+      font: '50px FC',
+      
+      fill: '#ffffff'
+    })  
+    text.anchor = {
+        x: 0.5,
+        y: 0.5
+    }
+
       var GoBack = this.game.add.text(this.game.world.centerX, this.game.world.centerY+525, 'Main Menu', {
         font: '58px FC',
         align: 'center',
