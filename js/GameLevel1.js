@@ -622,6 +622,10 @@ TopDownGame.GameLevel1.prototype = {
   },
   fire: function(virus){
     this.defender.animations.play('shoot', 18, true);
+    this.game.time.events.add(Phaser.Timer.SECOND * 2, function(){
+      this.defender.animations.play('idle',10, true);
+    }, this);
+    this.game.time.events.start();
     //Loading the bullets
     this.bullets.createMultiple(1, 'defenderBullet');
     this.bullets.setAll('checkWorldBounds', true);
