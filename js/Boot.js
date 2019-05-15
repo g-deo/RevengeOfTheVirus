@@ -23,15 +23,18 @@ TopDownGame.Boot = function(){// 开始场景
       //  bg.autoScroll(0, 200)
 
         // START 文字
-        var progressText = this.game.add.text(this.game.world.centerX, this.game.world.centerY-500, 'Revenge of The Virus', {
+        /*var progressText = this.game.add.text(this.game.world.centerX, this.game.world.centerY-500, 'Revenge of The Virus', {
           font: '100px FC',
           align: 'center',
           fill: '#ffffff'
-      })
-      progressText.anchor = {
+      })*/
+
+      var logo = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY-500, 'logo');
+      logo.anchor.set(0.5,0.5);
+      /*progressText.anchor = {
           x: 0.5,
           y: 0.5
-      }
+      }*/
         var progressText = this.game.add.text(this.game.world.centerX, this.game.world.centerY, ' TAP TO START', {
             font: '58px FC',
             align: 'center',
