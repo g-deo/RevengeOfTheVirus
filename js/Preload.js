@@ -28,7 +28,7 @@ TopDownGame.Preload.prototype = {
     this.load.spritesheet('virusA_sprite', '/assets/images/virusA_sprite.png',80,80,8);
     this.load.spritesheet('virusB_sprite', '/assets/images/virusB_sprite.png',80,80,8);
     this.load.spritesheet('virusC_sprite', '/assets/images/virusC_sprite.png',80,80,8);
-    this.load.spritesheet('virusD_sprite', '/assets/images/virusD_sprite.png',80,80,8);
+    this.load.spritesheet('virusD_sprite', '/assets/images/virusD_sprite.png',80,80,11);
     this.load.spritesheet('virusE_sprite', '/assets/images/virusE_sprite.png',80,80,8);
     this.load.image('wall', '/assets/images/wall.png');
 
