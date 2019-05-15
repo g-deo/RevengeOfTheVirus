@@ -151,15 +151,16 @@ TopDownGame.GameLevel6.prototype = {
 
   ///////////////////////////////////////////////////////////////////////
 
+
   var virusB = { 
     spritesheet:'virusB_sprite',
-    image: this.game.add.image(800,360,'virusB'),
-    name: "tanky",
+    image: this.game.add.image(800,570,'virusB'),
+    name: "fast",
     cost: 10,
-    skill:"Tanky, but slow",
-    speed: this.baseVirusSpeed*0.5,
-    health: 8,
-    size: 2.0,
+    skill:"Fast，but frail",
+    speed: this.baseVirusSpeed*2,
+    health: 1,
+    size: 0.5,
     damage: 20
   }
   virusB.text = this.createDisplay(virusB);
@@ -175,13 +176,13 @@ TopDownGame.GameLevel6.prototype = {
 
   var virusC = { 
     spritesheet:'virusC_sprite',
-    image: this.game.add.image(800,570,'virusC'),
-    name: "fast",
+    image: this.game.add.image(800,360,'virusC'),
+    name: "tanky",
     cost: 10,
-    skill:"Fast",
-    speed: this.baseVirusSpeed*1.5,
-    health: 1,
-    size: 0.5,
+    skill:"Tanky, but slow",
+    speed: this.baseVirusSpeed*0.5,
+    health: 8,
+    size: 2.0,
     damage: 20
   }
   virusC.text = this.createDisplay(virusC);
@@ -213,15 +214,15 @@ TopDownGame.GameLevel6.prototype = {
   }, {global: this});
   allInfo.push(virusE);
   var virusD = { 
-    spritesheet:'virusF_sprite',
-    image: this.game.add.image(800,780,'virusF'),
-    name: "booster",
-    cost: 20,
-    skill:"Speed up! (Use spacebar!)",
+    spritesheet:'virusD_sprite',
+    image: this.game.add.image(800,780,'virusD'),
+    name: "Mr.boom",
+    cost: 80,
+    skill:"Explode! (Use B Key!) [Only one use]",
     speed: this.baseVirusSpeed*1,
     health: 1,
     size: 1,
-    damage: 20
+    damage: 50
   }
   virusD.text = this.createDisplay(virusD);
   virusD.image.inputEnabled = true;
@@ -232,15 +233,15 @@ TopDownGame.GameLevel6.prototype = {
   }, {global: this});
   allInfo.push(virusD);
   var virusF = { 
-    spritesheet:'virusD_sprite',
-    image: this.game.add.image(800,300,'virusD'),
-    name: "Mr.boom",
-    cost: 80,
-    skill:"Explode! (Use B Key!) [Only one use]",
+    spritesheet:'virusF_sprite',
+    image: this.game.add.image(800,300,'virusF'),
+    name: "booster",
+    cost: 20,
+    skill:"Speed up! (Use spacebar!)",
     speed: this.baseVirusSpeed*1,
     health: 1,
     size: 1,
-    damage: 50
+    damage: 20
   }
   virusF.text = this.createDisplay(virusF);
   virusF.image.inputEnabled = true;

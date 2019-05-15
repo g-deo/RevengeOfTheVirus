@@ -174,12 +174,13 @@ TopDownGame.GameLevel2.prototype = {
   var virusB = { 
     spritesheet:'virusB_sprite',
     image: this.game.add.image(800,570,'virusB'),
-    name: "tanky",
+
+    name: "fast",
     cost: 10,
-    skill:"Tanky, but slow",
-    speed: this.baseVirusSpeed*0.5,
-    health: 8,
-    size: 2.0,
+    skill:"Fast，but frail",
+    speed: this.baseVirusSpeed*2,
+    health: 1,
+    size: 0.5,
     damage: 20
   }
   virusB.text = this.createDisplay(virusB);
@@ -196,12 +197,12 @@ TopDownGame.GameLevel2.prototype = {
   var virusC = { 
     spritesheet:'virusC_sprite',
     image: this.game.add.image(800,360,'virusC'),
-    name: "fast",
+    name: "tanky",
     cost: 10,
-    skill:"Fast，but frail",
-    speed: this.baseVirusSpeed*2,
-    health: 1,
-    size: 0.5,
+    skill:"Tanky, but slow",
+    speed: this.baseVirusSpeed*0.5,
+    health: 8,
+    size: 2.0,
     damage: 20
   }
   virusC.text = this.createDisplay(virusC);
