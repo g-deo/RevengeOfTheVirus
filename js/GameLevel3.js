@@ -669,7 +669,8 @@ TopDownGame.GameLevel3.prototype = {
           defender.animations.play('damage', 8, true);
           this.damageSound.play()
           this.game.time.events.add(Phaser.Timer.SECOND, function(){
-            defender.animations.play('idle',10, true);
+            if(defender.health> 0){defender.animations.play('idle',10, true);}
+            else{defender.animations.play('dead', 10, true);}
           }, this);
           this.game.time.events.start();
         }
@@ -724,7 +725,8 @@ TopDownGame.GameLevel3.prototype = {
           defender.animations.play('damage', 8, true);
           this.damageSound.play()
           this.game.time.events.add(Phaser.Timer.SECOND, function(){
-            defender.animations.play('idle',10, true);
+            if(defender.health> 0){defender.animations.play('idle',10, true);}
+            else{defender.animations.play('dead', 10, true);}
           }, this);
           this.game.time.events.start();
         }
@@ -768,7 +770,7 @@ TopDownGame.GameLevel3.prototype = {
         this.fire(virus,defender,bullets);
       }
       else if(defender.shootCounter > 50){
-        defender.animations.play('idle',18,true);
+        //defender.animations.play('idle',18,true);
         defender.shootCounter = 0;
       }
       else{
@@ -786,7 +788,8 @@ TopDownGame.GameLevel3.prototype = {
           defender.animations.play('damage', 8, true);
           this.damageSound.play()
           this.game.time.events.add(Phaser.Timer.SECOND, function(){
-            defender.animations.play('idle',10, true);
+            if(defender.health > 0){defender.animations.play('idle',10, true);}
+            else {defender.animations.play('dead',10, true);}
           }, this);
           this.game.time.events.start();
         }
@@ -852,7 +855,7 @@ TopDownGame.GameLevel3.prototype = {
           this.hitSound.play();
           bullet.kill();
         }
-        if(this.viruses[i].health<=0){
+        /*if(this.viruses[i].health<=0){
           this.viruses[i].animations.play('die', 10, true);
           this.game.time.events.add(Phaser.Timer.SECOND*0.7,function(){
           }, this);
@@ -860,7 +863,7 @@ TopDownGame.GameLevel3.prototype = {
           this.viruses[i].destroy();
           this.viruses[i] = null;
           this.viruses.splice(i,1);
-        }
+        }*/
       }      
   },
   //Updates the health of the virus or defender

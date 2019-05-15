@@ -971,7 +971,8 @@ TopDownGame.GameLevel6.prototype = {
           defender.animations.play('damage', 8, true);
           this.damageSound.play()
           this.game.time.events.add(Phaser.Timer.SECOND, function(){
-            defender.animations.play('idle',10, true);
+            if(defender.health> 0){defender.animations.play('idle',10, true);}
+            else{defender.animations.play('dead', 10, true);}
           }, this);
           this.game.time.events.start();
         }
@@ -1026,7 +1027,8 @@ TopDownGame.GameLevel6.prototype = {
           defender.animations.play('damage', 8, true);
           this.damageSound.play()
           this.game.time.events.add(Phaser.Timer.SECOND, function(){
-            defender.animations.play('idle',10, true);
+            if(defender.health> 0){defender.animations.play('idle',10, true);}
+            else{defender.animations.play('dead', 10, true);}
           }, this);
           this.game.time.events.start();
         }
@@ -1088,7 +1090,8 @@ TopDownGame.GameLevel6.prototype = {
           defender.animations.play('damage', 8, true);
           this.damageSound.play()
           this.game.time.events.add(Phaser.Timer.SECOND, function(){
-            defender.animations.play('idle',10, true);
+            if(defender.health> 0){defender.animations.play('idle',10, true);}
+            else{defender.animations.play('dead', 10, true);}
           }, this);
           this.game.time.events.start();
         }
@@ -1122,8 +1125,9 @@ TopDownGame.GameLevel6.prototype = {
   },
   fire: function(virus, defender, bullets){
     defender.animations.play('shoot', 18, true);
-    this.game.time.events.add(Phaser.Timer.SECOND * 2, function(){
-      defender.animations.play('idle',10, true);
+    this.game.time.events.add(Phaser.Timer.SECOND * 1, function(){
+      if(defender.health> 0){defender.animations.play('idle',10, true);}
+      else{defender.animations.play('dead', 10, true);}
     }, this);
     this.game.time.events.start();
     //Loading the bullets
