@@ -22,9 +22,9 @@ TopDownGame.GameLevel5.prototype = {
     this.hitSound = this.game.add.audio('hit');
     this.damageSound = this.game.add.audio('damage');
 
-  this.spaceKey = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+  this.bKey = this.game.input.keyboard.addKey(Phaser.Keyboard.B);
 
-  this.game.input.keyboard.addKeyCapture([Phaser.Keyboard.SPACEBAR ]);
+  this.game.input.keyboard.addKeyCapture([Phaser.Keyboard.B ]);
     //STATIC VARIABLES
     this.startingLibSize = 150;
     this.baseVirusSpeed = 200;
@@ -151,15 +151,16 @@ TopDownGame.GameLevel5.prototype = {
 
   ///////////////////////////////////////////////////////////////////////
 
+
   var virusB = { 
     spritesheet:'virusB_sprite',
-    image: this.game.add.image(800,360,'virusB'),
-    name: "tanky",
+    image: this.game.add.image(800,570,'virusB'),
+    name: "fast",
     cost: 10,
-    skill:"Tanky, but slow",
-    speed: this.baseVirusSpeed*0.5,
-    health: 8,
-    size: 2.0,
+    skill:"Fast，but frail",
+    speed: this.baseVirusSpeed*2,
+    health: 1,
+    size: 0.5,
     damage: 20
   }
   virusB.text = this.createDisplay(virusB);
@@ -175,13 +176,13 @@ TopDownGame.GameLevel5.prototype = {
 
   var virusC = { 
     spritesheet:'virusC_sprite',
-    image: this.game.add.image(800,570,'virusC'),
-    name: "fast",
+    image: this.game.add.image(800,360,'virusC'),
+    name: "tanky",
     cost: 10,
-    skill:"Fast",
-    speed: this.baseVirusSpeed*2,
-    health: 1,
-    size: 0.5,
+    skill:"Tanky, but slow",
+    speed: this.baseVirusSpeed*0.5,
+    health: 8,
+    size: 2.0,
     damage: 20
   }
   virusC.text = this.createDisplay(virusC);
@@ -198,7 +199,7 @@ TopDownGame.GameLevel5.prototype = {
     image: this.game.add.image(800,780,'virusD'),
     name: "Mr.boom",
     cost: 80,
-    skill:"Explode!(Use spacebar) [Only one use]",
+    skill:"Explode!(Use B key) [Only one use]",
     speed: this.baseVirusSpeed*1,
     health: 1,
     size: 1,
@@ -442,11 +443,11 @@ TopDownGame.GameLevel5.prototype = {
     imageC =  this.game.add.image(220,610,'virusC');
 
     
-   var vEtext = virusE.name+"    Hot Key: 4"+ "\nCost: "+virusE.cost +"\nSkill: " + virusE.skill;
-   var vEstyle = { font: "30px Arial", fill: "#ffffff", align: "left" };
-    vE = this.game.add.text(330, 800, vEtext, vEstyle);
+   var vDtext = virusD.name+"    Hot Key: 4"+ "\nCost: "+virusD.cost +"\nSkill: " + virusD.skill;
+   var vDstyle = { font: "30px Arial", fill: "#ffffff", align: "left" };
+    vD = this.game.add.text(330, 800, vDtext, vDstyle);
  
-    imageE =  this.game.add.image(220,810,'virusE');
+    imageD =  this.game.add.image(220,810,'virusD');
 
     var style = {fill : '#FFF'}; 
     next = this.game.add.text(this.game.width * 0.5, this.game.height -200, "Press ↑/↓ to check more", style); 
@@ -465,8 +466,8 @@ TopDownGame.GameLevel5.prototype = {
     vC.destroy();
     imageB.destroy();
     vB.destroy();
-    imageE.destroy();
-    vE.destroy();
+    imageD.destroy();
+    vD.destroy();
     tx.destroy();
     librarybackground.destroy();
     
@@ -480,11 +481,11 @@ TopDownGame.GameLevel5.prototype = {
  libtext.anchor.set(0.5, 0.5); 
 
 
- var vDtext = virusD.name+"    Hot Key: 5" + "\nCost: "+virusD.cost + "\nSkill: " + virusD.skill;
- var vDstyle = { font: "30px Arial", fill: "#ffffff", align: "left" };
-  vD = this.game.add.text(330, 200, vDtext, vDstyle);
+ var vEtext = virusE.name+"    Hot Key: 5" + "\nCost: "+virusE.cost + "\nSkill: " + virusE.skill;
+ var vEstyle = { font: "30px Arial", fill: "#ffffff", align: "left" };
+  vE = this.game.add.text(330, 200, vEtext, vEstyle);
 
-  imageD =  this.game.add.image(220,210,'virusD');
+  imageE =  this.game.add.image(220,210,'virusE');
 
   
 
@@ -498,8 +499,8 @@ TopDownGame.GameLevel5.prototype = {
 
   var keyup =this.game.input.keyboard.addKey(Phaser.Keyboard.UP);
   keyup.onDown.add(function(){
-    imageD.destroy();
-    vD.destroy();
+    imageE.destroy();
+    vE.destroy();
     next.destroy();
     libtext.destroy();
     imageA.destroy();
@@ -597,14 +598,14 @@ TopDownGame.GameLevel5.prototype = {
   }, {global:this});
   key4 = this.game.input.keyboard.addKey(Phaser.Keyboard.FOUR);
   key4.onDown.add(function(){
-    this.global.currentvirus = virusE;
+    this.global.currentvirus = virusD;
     current.text = "Selected Virus: " + this.global.currentvirus.name;
 
 
   }, {global:this});
   key5 = this.game.input.keyboard.addKey(Phaser.Keyboard.FIVE);
   key5.onDown.add(function(){
-    this.global.currentvirus = virusD;
+    this.global.currentvirus = virusE;
     current.text = "Selected Virus: " + this.global.currentvirus.name;
 
 
@@ -794,7 +795,7 @@ TopDownGame.GameLevel5.prototype = {
         this.hide(this.virusA);
       }
     }
-    if (this.spaceKey.isDown==true){
+    if (this.bKey.isDown==true){
 
       for(var i = 0; i < this.viruses.length; i++){
      

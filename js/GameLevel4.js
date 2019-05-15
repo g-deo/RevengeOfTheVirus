@@ -22,8 +22,8 @@ TopDownGame.GameLevel4.prototype = {
     this.damageSound = this.game.add.audio('damage');
     //STATIC VARIABLES
 
-  this.spaceKey = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-  this.game.input.keyboard.addKeyCapture([Phaser.Keyboard.SPACEBAR ]);
+  this.bKey = this.game.input.keyboard.addKey(Phaser.Keyboard.B);
+  this.game.input.keyboard.addKeyCapture([Phaser.Keyboard.B ]);
     this.startingLibSize = 150;
     this.baseVirusSpeed = 200;
     this.libX = 900;
@@ -148,15 +148,16 @@ TopDownGame.GameLevel4.prototype = {
 
   ///////////////////////////////////////////////////////////////////////
 
+
   var virusB = { 
     spritesheet:'virusB_sprite',
-    image: this.game.add.image(800,360,'virusB'),
-    name: "tanky",
+    image: this.game.add.image(800,570,'virusB'),
+    name: "fast",
     cost: 10,
-    skill:"Tanky, but slow",
-    speed: this.baseVirusSpeed*0.5,
-    health: 8,
-    size: 2.0,
+    skill:"Fast，but frail",
+    speed: this.baseVirusSpeed*2,
+    health: 1,
+    size: 0.5,
     damage: 20
   }
   virusB.text = this.createDisplay(virusB);
@@ -172,13 +173,13 @@ TopDownGame.GameLevel4.prototype = {
 
   var virusC = { 
     spritesheet:'virusC_sprite',
-    image: this.game.add.image(800,570,'virusC'),
-    name: "fast",
-    cost:10,
-    skill:"Fast ",
-    speed: this.baseVirusSpeed*2,
-    health: 1,
-    size: 0.5,
+    image: this.game.add.image(800,360,'virusC'),
+    name: "tanky",
+    cost: 10,
+    skill:"Tanky, but slow",
+    speed: this.baseVirusSpeed*0.5,
+    health: 8,
+    size: 2.0,
     damage: 20
   }
   virusC.text = this.createDisplay(virusC);
@@ -196,7 +197,7 @@ TopDownGame.GameLevel4.prototype = {
     image: this.game.add.image(800,780,'virusD'),
     name: "Mr.boom",
     cost: 80,
-    skill:"Explode!(Use spacebar) [Only one use]",
+    skill:"Explode!(Use B key) [Only one use]",
     speed: this.baseVirusSpeed*1,
     health: 1,
     size: 1,
@@ -662,7 +663,7 @@ TopDownGame.GameLevel4.prototype = {
       }
     }
 
-    if (this.spaceKey.isDown==true){
+    if (this.bKey.isDown==true){
 
       for(var i = 0; i < this.viruses.length; i++){
      
