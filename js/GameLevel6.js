@@ -7,7 +7,7 @@ var counter = 0;
 TopDownGame.GameLevel6.prototype = {
   
   create: function() {
-
+    this.libstate  ="closed";
     this.game.level = 6;
 
     this.cheatMode = false;
@@ -426,6 +426,7 @@ TopDownGame.GameLevel6.prototype = {
 
   t.inputEnabled = true // 开启输入事件
   t.events.onInputUp.add(function() { 
+    this.libstate = "open1";
   this.game.paused = true; 
 
 
@@ -476,6 +477,8 @@ TopDownGame.GameLevel6.prototype = {
   
   var keyenter =this.game.input.keyboard.addKey(Phaser.Keyboard.DOWN);
   keyenter.onDown.add(function(){ 
+    if(this.libstate =="open1"){
+      this.libstate ="open2";
     next.destroy();
     libtext.destroy();
     imageA.destroy();
@@ -513,7 +516,7 @@ TopDownGame.GameLevel6.prototype = {
 
    var style = {fill : '#FFF'}; 
    next = this.game.add.text(this.game.width * 0.5, this.game.height -200, "Press ↑/↓ to check more", style); 
-   next.anchor.set(0.5, 0.5); 
+   next.anchor.set(0.5, 0.5); }
   }, this);
   t.fixedToCamera = true; 
 
@@ -521,6 +524,8 @@ TopDownGame.GameLevel6.prototype = {
 
   var keyup =this.game.input.keyboard.addKey(Phaser.Keyboard.UP);
   keyup.onDown.add(function(){
+    if (this.libstate == "open2"){
+      this.libstate = "open1";
     imageF.destroy();
     vF.destroy();
     imageD.destroy();
@@ -577,7 +582,7 @@ TopDownGame.GameLevel6.prototype = {
      
     var style = {fill : '#FFF'}; 
     next = this.game.add.text(this.game.width * 0.5, this.game.height -200, "Press ↑/↓ to check more", style); 
-    next.anchor.set(0.5, 0.5);  
+    next.anchor.set(0.5, 0.5);  }
   }, this);
   t.fixedToCamera = true; 
   key1 = this.game.input.keyboard.addKey(Phaser.Keyboard.ONE);
@@ -589,10 +594,10 @@ TopDownGame.GameLevel6.prototype = {
   }, {global:this});
   var keyenter =this.game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
   keyenter.onDown.add(function(){
- 
-    this.game.paused = false; 
-    imageF.destroy();
-    vF.destroy();
+    if (this.libstate == "open1"){
+      this.libstate = "closed";
+    this.game.paused = false;  
+
     imageD.destroy();
     vD.destroy();
     next.destroy();
@@ -603,10 +608,28 @@ TopDownGame.GameLevel6.prototype = {
     vC.destroy();
     imageB.destroy();
     vB.destroy();
-    imageE.destroy();
-    vE.destroy();
     tx.destroy();
+    librarybackground.destroy();}
+    else if (this.libstate =="open2"){
+      this.libstate = "closed";
+      this.game.paused = false; 
+      imageD.destroy();
+      vD.destroy();imageF.destroy();
+      vF.destroy();
+      next.destroy();
+      libtext.destroy();
+      imageA.destroy();
+      vA.destroy();
+      imageC.destroy();
+      vC.destroy();
+      imageB.destroy();
+      vB.destroy();
+      imageE.destroy();
+      vE.destroy();
+      tx.destroy();
+      
     librarybackground.destroy();
+    }
   }, this);
   t.fixedToCamera = true; 
 
