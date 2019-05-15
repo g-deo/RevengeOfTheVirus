@@ -197,7 +197,7 @@ TopDownGame.GameLevel6.prototype = {
   var virusE = { 
     spritesheet:'virusE_sprite',
     image: this.game.add.image(800,150,'virusE'),
-    name: "Mr. unstoppable",
+    name: "Ghost",
     cost: 10,
     skill:"Pass through everything",
     speed: this.baseVirusSpeed*1,
@@ -800,7 +800,7 @@ TopDownGame.GameLevel6.prototype = {
         virus.health = this.currentvirus.health;
         virus.invincible = true;
         virus.alpha = 0.5;
-        if(this.currentvirus.name == "Mr. unstoppable"){
+        if(this.currentvirus.name == "Ghost"){
           virus.ghost = true;
         }
         if(this.currentvirus.name == "Mr.boom"){

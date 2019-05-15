@@ -47,9 +47,9 @@ TopDownGame.Win = function(){// 开始场景
         y: 0.5
     }
 
-    var nextText = "You've unlocked ";
+    var nextText = "Viruses mutated into ";
     if(this.game.level == 0){
-      nextText += " base virus (key 1) and fast virus (key 2)!";
+      nextText += " fast virus (key 2)!";
     }
     else if(this.game.level == 1){
       nextText += " tanky virus (key 3)!";
@@ -58,10 +58,10 @@ TopDownGame.Win = function(){// 开始场景
       nextText = "";
     }
     else if(this.game.level == 3){
-      nextText += " boom virus (key 4)! Press 'B' to explode!\nCan only be used once per level.";
+      nextText += " boom virus (key 4)!\nPress 'B' to explode! Can only be used once per level.";
     }
     else if(this.game.level == 4){
-      nextText += " unstoppable virus (key 5)!";
+      nextText += " ghost virus (key 5)!";
     }
     else if(this.game.level == 5){
       nextText += " boost virus (key 6)!";
