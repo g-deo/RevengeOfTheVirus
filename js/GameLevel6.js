@@ -217,7 +217,7 @@ TopDownGame.GameLevel6.prototype = {
     spritesheet:'virusD_sprite',
     image: this.game.add.image(800,780,'virusD'),
     name: "Mr.boom",
-    cost: 80,
+    cost: 160,
     skill:"Explode! (Use B Key!) [Only one use]",
     speed: this.baseVirusSpeed*1,
     health: 1,
