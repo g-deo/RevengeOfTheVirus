@@ -5,6 +5,24 @@ TopDownGame.Preload = function(){};
 
 TopDownGame.Preload.prototype = {
   preload: function() {
+    //show loading screen
+
+    this.preloadBG = this.game.add.sprite(0,0,'loading_bg');
+    this.preloadBG.x = this.game.world.centerX;
+    this.preloadBG.y = this.game.world.centerY;
+    this.preloadBG.anchor.set(0.5,0.5);
+
+    var loadingStyle = { font: "50px Arial", fill: "#ffffff", align: "center" };
+    this.loadingText = this.game.add.text(this.game.world.centerX,this.game.world.centerY-150,
+        'Loading...',loadingStyle);
+    this.loadingText.anchor.setTo(0.5);
+
+    this.loadingVirus = this.game.add.sprite(this.game.world.centerX,this.game.world.centerY,'virusB_sprite');
+    this.loadingVirus.anchor.set(0.5,0.5);
+    this.loadingVirus.scale.setTo(2.0);
+    this.loadingVirus.animations.add('move', [0,1,2,3], 10, true);
+    this.loadingVirus.play('move',18,true);
+
     //load game assets
     this.load.tilemap('gameMap', 'assets/tilemaps/gameMap.json', null, Phaser.Tilemap.TILED_JSON);
     this.load.tilemap('gameMapEasy', 'assets/tilemaps/gameMapEasy.json', null, Phaser.Tilemap.TILED_JSON);
@@ -20,7 +38,6 @@ TopDownGame.Preload.prototype = {
     this.load.image('library', '/assets/images/library.png');
     
     this.load.image('virusA', '/assets/images/virusA.png');
-    this.load.image('virusB', '/assets/images/virusB.png');
     this.load.image('virusC', '/assets/images/virusC.png');
     this.load.image('virusD', '/assets/images/virusD.png');
     this.load.image('virusE', '/assets/images/virusE.png');
@@ -58,6 +75,7 @@ TopDownGame.Preload.prototype = {
     this.load.audio('damage', 'assets/sounds/damage.wav');
   },
   create: function() {
+    //this.game.stage.backgroundColor = '#000000';
     this.state.start('Cutscene');
   }
 };

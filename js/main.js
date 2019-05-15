@@ -20,5 +20,6 @@ TopDownGame.game.state.add('GameLevel6', TopDownGame.GameLevel6);
 TopDownGame.game.state.add('Win', TopDownGame.Win);
 TopDownGame.game.state.add('Lost', TopDownGame.Lost);
 TopDownGame.game.state.add('Cutscene', TopDownGame.Cutscene);
+TopDownGame.game.state.add('PrePreload', TopDownGame.PrePreload);
 
-TopDownGame.game.state.start('Preload');
+TopDownGame.game.state.start('PrePreload');
