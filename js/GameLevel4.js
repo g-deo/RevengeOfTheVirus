@@ -420,7 +420,7 @@ TopDownGame.GameLevel4.prototype = {
     imageC =  this.game.add.image(220,610,'virusC');
 
     
-   var vDtext = virusC.name+"    Hot Key: 4"+ "\nCost: "+virusD.cost +"\nSkill: " + virusD.skill;
+   var vDtext = virusD.name+"    Hot Key: 4"+ "\nCost: "+virusD.cost +"\nSkill: " + virusD.skill;
    var vDstyle = { font: "30px Arial", fill: "#ffffff", align: "left" };
     vD = this.game.add.text(330, 800, vDtext, vDstyle);
  
