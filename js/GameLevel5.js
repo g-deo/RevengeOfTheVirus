@@ -1074,13 +1074,13 @@ TopDownGame.GameLevel5.prototype = {
     else if(sprite.health>=30){healthbar.frame = 7;}
     else if(sprite.health>=20){healthbar.frame = 8;}
     else if(sprite.health>=10){healthbar.frame = 9;}
-    else {healthbar.frame = 9;}
+    else {healthbar.frame = 10;}
   },
   //Creates the specified number of defender sprites and outputs an array of size num
   createDefenders: function(num){
     var defArr = new Array();
     var defaultX = 90;
-    var defaultY = 120
+    var defaultY = 135
     for(var i =0; i< num; i++){
         //Initialized defender sprite
         var defender = this.game.add.sprite(defaultX+=130, defaultY, 'defender');

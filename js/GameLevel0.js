@@ -74,7 +74,7 @@ TopDownGame.GameLevel0.prototype = {
     this.bullets.physicsBodyType = Phaser.Physics.ARCADE;
 
     //Initialized defender sprite
-    this.defender = this.game.add.sprite(100, 120, 'defender');
+    this.defender = this.game.add.sprite(100, 135, 'defender');
     this.defender.frame = 8;
     this.defender.anchor.set(0.5, 0.5);
     this.game.physics.enable(this.defender, Phaser.Physics.ARCADE);
@@ -672,7 +672,7 @@ TopDownGame.GameLevel0.prototype = {
     else if(sprite.health>=30){healthbar.frame = 7;}
     else if(sprite.health>=20){healthbar.frame = 8;}
     else if(sprite.health>=10){healthbar.frame = 9;}
-    else {healthbar.frame = 9;}
+    else {healthbar.frame = 10;}
   },
   render: function(){
   //  this.game.debug.geom(this.libLine);
