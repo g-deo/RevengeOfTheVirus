@@ -22,9 +22,9 @@ TopDownGame.GameLevel5.prototype = {
     this.hitSound = this.game.add.audio('hit');
     this.damageSound = this.game.add.audio('damage');
 
-  this.spaceKey = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+  this.bKey = this.game.input.keyboard.addKey(Phaser.Keyboard.B);
 
-  this.game.input.keyboard.addKeyCapture([Phaser.Keyboard.SPACEBAR ]);
+  this.game.input.keyboard.addKeyCapture([Phaser.Keyboard.B ]);
     //STATIC VARIABLES
     this.startingLibSize = 150;
     this.baseVirusSpeed = 200;
@@ -199,7 +199,7 @@ TopDownGame.GameLevel5.prototype = {
     image: this.game.add.image(800,780,'virusD'),
     name: "Mr.boom",
     cost: 80,
-    skill:"Explode!(Use spacebar) [Only one use]",
+    skill:"Explode!(Use B key) [Only one use]",
     speed: this.baseVirusSpeed*1,
     health: 1,
     size: 1,
@@ -795,7 +795,7 @@ TopDownGame.GameLevel5.prototype = {
         this.hide(this.virusA);
       }
     }
-    if (this.spaceKey.isDown==true){
+    if (this.bKey.isDown==true){
 
       for(var i = 0; i < this.viruses.length; i++){
      
