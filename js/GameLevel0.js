@@ -160,7 +160,7 @@ TopDownGame.GameLevel0.prototype = {
       skill:"fast, but frail",
       speed: this.baseVirusSpeed*2,
       health: 1,
-      size: 1.0,
+      size: 0.5,
       damage: 20
     }
     virusB.text = this.createDisplay(virusB);
@@ -242,7 +242,7 @@ TopDownGame.GameLevel0.prototype = {
 
     this.fastfoward = "[Fast Forward]";
     this.fastfowardstyle = { font: "30px Arial", fill: "#ffffff", align: "center" };
-    this.fastfowardbtn = this.game.add.text(1040, 100, this.fastfoward, this.fastfowardstyle);
+    this.fastfowardbtn = this.game.add.text(1000, 100, this.fastfoward, this.fastfowardstyle);
     this.fastfowardbtn.bringToTop();
     this.fastfowardbtn.visible=false;
   
@@ -255,10 +255,10 @@ TopDownGame.GameLevel0.prototype = {
        
       }
       
-        this.global.defenders[j].speed*=10;
+        this.global.defenders.speed*=10;
         
        
-      this.baseBulletSpeed*10;
+      this.baseBulletSpeed*=10;
      }
     },{global:this});
 
@@ -442,6 +442,8 @@ TopDownGame.GameLevel0.prototype = {
   update: function() {
     if(this.left==0){
       this.fastfowardbtn.visible=true;
+    }else{
+      this.fastfowardbtn.visible=false;
     }
     this.targetArrow.rotation = this.game.physics.arcade.angleToPointer(this.targetArrow);
 
@@ -538,7 +540,7 @@ TopDownGame.GameLevel0.prototype = {
 
         virus.alpha = 0.5;
         //this.game.physics.enable(virus,Phaser.Physics.ARCADE);
-        this.limit.setText("Viruses Left: " + this.left);
+        this.limit.setText("DNA Pool: " + this.left);
         this.left = this.left-this.currentvirus.cost;
         //alert(this.left);
 

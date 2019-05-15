@@ -161,7 +161,7 @@ TopDownGame.GameLevel1.prototype = {
       skill:"fast, but frail",
       speed: this.baseVirusSpeed*2,
       health: 1,
-      size: 1.0,
+      size: 0.5,
       damage: 20
     }
     virusB.text = this.createDisplay(virusB);
@@ -177,7 +177,7 @@ TopDownGame.GameLevel1.prototype = {
     var defaultVirus = allInfo[0];
     this.currentvirus = defaultVirus;
     
-    var limittext = "Viruses Left: "+this.left;
+    var limittext = "DNA Pool: "+this.left;
     var limitstyle = { font: "30px Arial", fill: "#ffffff", align: "left" };
     this.limit = this.game.add.text(600, 10, limittext, limitstyle); 
     this.limit.bringToTop();
@@ -219,7 +219,7 @@ TopDownGame.GameLevel1.prototype = {
     },{global:this});
     this.fastfoward = "[Fast Forward]";
     this.fastfowardstyle = { font: "30px Arial", fill: "#ffffff", align: "center" };
-    this.fastfowardbtn = this.game.add.text(1040, 100, this.fastfoward, this.fastfowardstyle);
+    this.fastfowardbtn = this.game.add.text(1000, 100, this.fastfoward, this.fastfowardstyle);
     this.fastfowardbtn.bringToTop();
     this.fastfowardbtn.visible=false;
   
@@ -232,29 +232,11 @@ TopDownGame.GameLevel1.prototype = {
        
       }
       
-        this.global.defenders[j].speed*=10;
+        this.global.defenders.speed*=10;
         
        
-      this.baseBulletSpeed*10;
+      this.baseBulletSpeed*=10;
      }
-    },{global:this});
-
-    var fastfoward = "[Fast Forward]";
-    var fastfowardstyle = { font: "30px Arial", fill: "#ffffff", align: "center" };
-    var fastfowardbtn = this.game.add.text(1040, 100, fastfoward, fastfowardstyle);
-    fastfowardbtn.bringToTop();
-    fastfowardbtn.visible=true;
-
-    fastfowardbtn.inputEnabled=true;
-    fastfowardbtn.events.onInputDown.add(function(){ 
-      if (this.global.left==0){
-      for(var i = 0; i < this.global.viruses.length; i++){ 
-        this.global.viruses[i].body.velocity.x*=10;
-        this.global.viruses[i].body.velocity.y*=10;
-       
-      }
-      this.global.defender.speed*=10;
-      this.global.baseBulletSpeed*=10;}
     },{global:this});
     var libtext2 = "[Lib open]";
     var libstyle2 = { font: "30px Arial", fill: "#ffffff", align: "center" };
@@ -430,6 +412,8 @@ TopDownGame.GameLevel1.prototype = {
   update: function() {
     if(this.left==0){
       this.fastfowardbtn.visible=true;
+    }else{
+      this.fastfowardbtn.visible=false;
     }
     this.targetArrow.rotation = this.game.physics.arcade.angleToPointer(this.targetArrow);
 

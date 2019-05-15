@@ -247,7 +247,7 @@ TopDownGame.GameLevel5.prototype = {
   var defaultVirus = allInfo[0];
   this.currentvirus = defaultVirus;
   
-  var limittext = "Viruses Left: "+this.left;
+  var limittext = "DNA Pool: "+this.left;
   var limitstyle = { font: "30px Arial", fill: "#ffffff", align: "left" };
   this.limit = this.game.add.text(600, 10, limittext, limitstyle); 
   this.limit.bringToTop();
@@ -264,7 +264,7 @@ TopDownGame.GameLevel5.prototype = {
   //this.game.physics.arcade.enable(this.wall, Phaser.Physics.ARCADE);
   this.fastfoward = "[Fast Forward]";
   this.fastfowardstyle = { font: "30px Arial", fill: "#ffffff", align: "center" };
-  this.fastfowardbtn = this.game.add.text(1040, 100, this.fastfoward, this.fastfowardstyle);
+  this.fastfowardbtn = this.game.add.text(1000, 100, this.fastfoward, this.fastfowardstyle);
   this.fastfowardbtn.bringToTop();
   this.fastfowardbtn.visible=false;
 
@@ -280,7 +280,7 @@ TopDownGame.GameLevel5.prototype = {
       this.global.defenders[j].speed*=10;
       
      
-    }this.baseBulletSpeed*10;
+    }this.baseBulletSpeed*=10;
    }
   },{global:this});
   
@@ -625,6 +625,8 @@ TopDownGame.GameLevel5.prototype = {
   update: function() {
     if(this.left==0){
       this.fastfowardbtn.visible=true;
+    }else{
+      this.fastfowardbtn.visible=false;
     }
     this.targetArrow.rotation = this.game.physics.arcade.angleToPointer(this.targetArrow);
 
