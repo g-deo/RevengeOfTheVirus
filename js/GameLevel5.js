@@ -726,6 +726,7 @@ TopDownGame.GameLevel5.prototype = {
 
         var virus = this.game.add.sprite(gameX,gameY,this.currentvirus.spritesheet);
         var virusmove = virus.animations.add('move', [0,1,2,3], 10, true);
+        var virusdie = virus.animations.add('die', [4,5,6,7], 10, true);
         virus.animations.play('move', 18, true);
         virus.scale.setTo(this.currentvirus.size);
         virus.health = this.currentvirus.health;
